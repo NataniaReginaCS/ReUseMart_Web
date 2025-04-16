@@ -9,20 +9,21 @@ import fridge from '../assets/images/fridge.jpg';
 import couch from '../assets/images/couch.jpg';
 import shoppingcart from '../assets/images/shoppingcart.png';
 import { Button } from "../components/ui/button"
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faTruckFast, faHeadset, faBagShopping, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 const categories = [
-    { name: "Electronics & Gadgets", image: item1, link: "/category/electronics" },
-    { name: "Clothing & Accessories", image: item1, link: "/category/books" },
-    { name: "Home Furnishings", image: item1, link: "/category/home" },
-    { name: "Books & School", image: item1, link: "/category/fashion" },
-    { name: "Hobbies & Collectibles", image: item1, link: "/category/toys" },
-    { name: "Baby & Kids ", image: item1, link: "/category/sports" },
-    { name: "Automotive", image: item1, link: "/category/automotive" },
-    { name: "Garden & Outdoor ", image: item1, link: "/category/furniture" },
-    { name: "Office & Industrial ", image: item1, link: "/category/health" },
-    { name: "Cosmetics & Skincare", image: item1, link: "/category/others" },
+    { name: "Electronics & Gadgets", image: item1, link: "/shop" },
+    { name: "Clothing & Accessories", image: item1, link: "/shop" },
+    { name: "Home Furnishings", image: item1, link: "/shop" },
+    { name: "Books & School", image: item1, link: "/shop" },
+    { name: "Hobbies & Collectibles", image: item1, link: "/shop" },
+    { name: "Baby & Kids ", image: item1, link: "/shop" },
+    { name: "Automotive", image: item1, link: "/shop" },
+    { name: "Garden & Outdoor ", image: item1, link: "/shop" },
+    { name: "Office & Industrial ", image: item1, link: "/shop" },
+    { name: "Cosmetics & Skincare", image: item1, link: "/shop" },
 ];
 
 const team = [
@@ -36,7 +37,7 @@ const Home = () => {
     const [date, setDate] = React.useState<Date | undefined>(new Date())
 
     return (
-        <div className='flex flex-col bg-white' >
+        <div className='flex flex-col h-full bg-white ' >
             <div className='flex items-center justify-center h-screen max-h-[600px] bg-[#EDF2EE] '>
                 <div className="w-[500px] bg-[#EDF2EE]  ">
                     <p className='text-s text-green-700 font-bold'>WELCOME TO REUSEMART</p>
@@ -44,7 +45,10 @@ const Home = () => {
                         Give Second Chances. Support Circular Change.</p>
                     <p className='text-3xl'>Discover <span className='text-orange-500'>Preloved Treasures</span> Today</p>
                     <p className='text-xs text-gray-400'>Smart Choices for a Smarter Planet</p>
-                    <Button className='mt-4 w-44 h-12 flex justify-center items-center rounded-[50px] bg-[#1F510F] hover:bg-white hover:text-black hover:outline-black' variant="destructive"> Shop Now <FontAwesomeIcon icon={faArrowRight} /></Button>
+
+                    <Button asChild className='mt-4 w-44 h-12 flex justify-center items-center rounded-[50px] bg-[#1F510F] hover:bg-white hover:text-black hover:outline-black'>
+                        <Link to="/shop" > Shop Now <FontAwesomeIcon icon={faArrowRight} /></Link>
+                    </Button>
 
 
                 </div>
@@ -76,7 +80,7 @@ const Home = () => {
                 </div>
             </div>
             <div className='flex items-center flex-col h-full max-h-[700px] mb-8 bg-white'>
-                <p className="mt-24 text-3xl font-semibold text-black mb-6">Categories</p>
+                <p className="mt-42 text-3xl font-semibold text-black mb-6">Categories</p>
                 <div className='h-full'>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 ">
                         {categories.map((category, index) => (
@@ -94,7 +98,7 @@ const Home = () => {
 
             </div>
             <div className='flex items-center flex-col h-full max-h-[1000px] bg-white'>
-                <p className="mt-4 text-3xl font-semibold text-black mb-6">You Might Like</p>
+                <p className="mt-32 text-3xl font-semibold text-black mb-6">You Might Like</p>
                 <div className='flex items-center justify-center w-full h-full gap-6 '>
                     <div
                         style={{
@@ -112,7 +116,7 @@ const Home = () => {
                             <Button className='bg-white text-black hover:text-white w-64 h-12 rounded-3xl font-bold text-lg'>Samsung Fridge</Button>
                         </div>
                     </div>
-                    <div className='w-full max-w-[700px] h-[600px]  rounded-md justify-center'>
+                    <div className='w-full max-w-[650px] h-[600px]  rounded-md justify-center'>
                         <div className='flex flex-col justify-between h-full'>
                             <div className='flex w-full h-full gap-4 justify-center'>
                                 <div style={{
@@ -171,13 +175,14 @@ const Home = () => {
 
                 </div>
             </div>
-            <div className='flex items-center justify-center h-full max-h-[600px] bg-white mt-32 '>
+            <div className='flex items-center justify-center h-full max-h-[600px] bg-white mt-42 '>
                 <div className="w-[500px] bg-white  ">
                     <p className="break-words whitespace-normal text-6xl font-bold mb-2">
                         100% Trusted Preloved Goods.</p>
                     <p className='text-md text-gray-400 break-words whitespace-normal'>At ReuseMart, we believe that every item deserves a second life. Through our curated platform, we connect people with quality preloved goods — helping reduce waste and support a more circular, sustainable future. Whether you're buying or giving, you're part of a greener change.</p>
-                    <Button className='mt-4 w-44 h-12 flex justify-center items-center rounded-[50px] bg-[#1F510F] hover:bg-white hover:text-black hover:outline-black' variant="destructive"> Shop Now <FontAwesomeIcon icon={faArrowRight} /></Button>
-
+                    <Button asChild className='mt-4 w-44 h-12 flex justify-center items-center rounded-[50px] bg-[#1F510F] hover:bg-white hover:text-black hover:outline-black'>
+                        <Link to="/shop" > Shop Now <FontAwesomeIcon icon={faArrowRight} /></Link>
+                    </Button>
 
                 </div>
                 <div className=" w-full h-full max-w-[500px] max-h-[400px]">
@@ -185,7 +190,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className='flex flex-col items-center justify-center h-full max-h-[600px] bg-white mt-32 mb-32 '>
+            <div className='flex flex-col items-center justify-center h-full max-h-[600px] bg-white mt-16 mb-32 '>
                 <p className='text-green-500 font-semibold text-lg'>TEAM</p>
                 <p className='text-black font-bold text-3xl mb-4'>Our Professional Members</p>
                 <div className='h-full'>
