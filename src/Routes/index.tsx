@@ -3,8 +3,9 @@ import { Toaster } from "sonner";
 import MainLayout from "../Layout/MainLayout";
 
 import Home from "../Pages/Home"
-
-
+import Shop from "../Pages/Shop";
+import Item from "../Pages/Item";
+import About from "../Pages/About";
 const router = createBrowserRouter([
     {
         path: "*",
@@ -16,6 +17,18 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />
+            },
+            {
+                path: "/shop",
+                element: <Shop />,
+            },
+            {
+                path: "/item",
+                element: <Item />
+            },
+            {
+                path: "/about",
+                element: <About />
             }
         ]
     }
