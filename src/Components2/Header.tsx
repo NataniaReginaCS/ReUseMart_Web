@@ -40,9 +40,9 @@ const Header = () => {
                 </div>
 
                 <div className='flex items-center gap-6 p-4 font-semibold mr-6'>
-                    <div className='rounded-[50px] bg-gray-500 p-[10px] w-full'>
+                    <a className='rounded-[50px] bg-gray-500 p-[10px] w-full ' href="/cart">
                         tes
-                    </div>
+                    </a>
                     <div className='rounded-[50px] bg-gray-500 p-[10px] w-full'>
                         tes
                     </div>
