@@ -6,6 +6,8 @@ import Home from "../Pages/Home"
 import Shop from "../Pages/Shop";
 import Item from "../Pages/Item";
 import About from "../Pages/About";
+import Cart from "../Pages/Cart";
+
 const router = createBrowserRouter([
     {
         path: "*",
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/about",
                 element: <About />
+            },
+            {
+                path: "/cart",
+                element: <Cart />
             }
         ]
     }
