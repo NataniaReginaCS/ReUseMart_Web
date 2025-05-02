@@ -6,11 +6,7 @@ import Home from "../Pages/Home"
 import Shop from "../Pages/Shop";
 import Item from "../Pages/Item";
 import About from "../Pages/About";
-import Profile from "../Pages/profile_pembeli/profile";
-import EditProfile from "../Pages/profile_pembeli/edit_profile";
-import Login from "../Pages/auth/login";
-import RegisterPembeli from "../Pages/auth/register_pembeli"
-import RegisterOrganisasi from "../Pages/auth/register_organisasi";
+
 
 const router = createBrowserRouter([
     {
@@ -49,14 +45,7 @@ const router = createBrowserRouter([
                 element: <About />
             },
             {
-                path: "/profile",
-                element: <Profile />
-            },
-            {
-                path: "/edit_profile",
-                element: <EditProfile/>
-            },
-            
+
         ]
     }
 ]);
