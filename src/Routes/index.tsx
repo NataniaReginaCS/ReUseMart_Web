@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { Toaster } from "sonner";
 import MainLayout from "../Layout/MainLayout";
 
@@ -11,6 +12,8 @@ import EditProfile from "../Pages/profile_pembeli/edit_profile";
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli"
 import RegisterOrganisasi from "../Pages/auth/register_organisasi";
+import ForgotPassword from "../Pages/auth/forgotPassword";
+import ResetPassword from "../Pages/auth/resetPassword";
 
 
 import Cart from "../Pages/Cart";
@@ -30,6 +33,14 @@ const router = createBrowserRouter([
     {
         path: "/registerOrganisasi",
         element: <RegisterOrganisasi />
+    },
+    {
+        path: "/forgotpassword",
+        element: <ForgotPassword />
+    },
+    {
+        path: "/reset-password",
+        element: <ResetPassword/>
     },
     {
         element: <MainLayout />,
@@ -78,6 +89,18 @@ const router = createBrowserRouter([
 const AppRouter = () => {
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
             <Toaster position="top-center" richColors />
             <RouterProvider router={router} />
         </>

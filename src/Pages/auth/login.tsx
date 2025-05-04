@@ -43,12 +43,12 @@ const login = () => {
 								</label>
 							</div>
 							<div className="relative  flex justify-end">
-								<a href="#" className="text-l text-[#F5CB58]">
+								<Link to="/forgotPassword" className="text-l text-[#F5CB58]">
 									<strong>Forgot Password?</strong>
-								</a>
+								</Link>
 							</div>
 							<div className="relative items-center justify-center flex mt-10">
-								<button className="bg-[#1F510F] text-white rounded-md px-2 py-1 w-3/4 h-12">
+								<button className="bg-[#1F510F] text-white rounded-md px-2 py-1 w-3/4 h-12 cursor-pointer">
 									<strong>Sign in</strong>
 								</button>
 							</div>
