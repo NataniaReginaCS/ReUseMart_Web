@@ -3,8 +3,6 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Frieren from "../../assets/images/Frieren.jpg";
 
-import { Card, Typography } from "@material-tailwind/react";
-
 const TABLE_HEAD = ["Name", "Street", "Country", "City", "Zipcode", "Action"];
 
 const TABLE_ROWS = [
@@ -163,7 +161,7 @@ const edit_profile = () => {
 									id="upload-image"
 									type="file"
 									className="hidden"
-									onChange={(e) => {}}
+									onChange={(e) => { }}
 								/>
 							</div>
 						</div>

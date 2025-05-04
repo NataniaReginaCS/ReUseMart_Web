@@ -6,23 +6,29 @@ import Home from "../Pages/Home"
 import Shop from "../Pages/Shop";
 import Item from "../Pages/Item";
 import About from "../Pages/About";
+import Profile from "../Pages/profile_pembeli/profile";
+import EditProfile from "../Pages/profile_pembeli/edit_profile";
+import Login from "../Pages/auth/login";
+import RegisterPembeli from "../Pages/auth/register_pembeli"
+import RegisterOrganisasi from "../Pages/auth/register_organisasi";
 
 
+import Cart from "../Pages/Cart";
 const router = createBrowserRouter([
     {
         path: "*",
         element: <div>Routes Not Found</div>
     },
     {
-        path:"/login",
+        path: "/login",
         element: <Login />
     },
     {
-        path:"/registerPembeli",
+        path: "/registerPembeli",
         element: <RegisterPembeli />
     },
     {
-        path:"/registerOrganisasi",
+        path: "/registerOrganisasi",
         element: <RegisterOrganisasi />
     },
     {
@@ -45,6 +51,24 @@ const router = createBrowserRouter([
                 element: <About />
             },
             {
+                path: "/profile",
+                element: <Profile />
+            },
+            {
+                path: "/edit_profile",
+                element: <EditProfile />
+            }, {
+                path: "/profile",
+                element: <Profile />
+            },
+            {
+                path: "/edit_profile",
+                element: <EditProfile />
+            },
+            {
+                path: "/cart",
+                element: <Cart />
+            }
 
         ]
     }
