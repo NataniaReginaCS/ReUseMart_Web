@@ -22,6 +22,8 @@ const items = [
 ];
 
 const Shop = () => {
+    const [warranty, setWarranty] = useState(true);
+
     return (
         <div className='flex flex-col h-full bg-white p-12'>
             <div className="flex items-center gap-2">
@@ -81,10 +83,12 @@ const Shop = () => {
                     <p className='self-start text-xl text-black font-bold'>Warranty</p>
                     <div className='flex gap-4 mt-2'>
 
-                        <Button className='w-28 rounded-lg bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white'>
+                        <Button onClick={() => setWarranty(true)}
+                            className={`w-28 rounded-lg  ${warranty ? 'bg-[#1F510F] text-white ' : ' bg-[#F0F0F0] text-black hover:text-white'}`}>
                             Yes
                         </Button>
-                        <Button className='w-28 rounded-lg bg-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-black text-black'>
+                        <Button onClick={() => setWarranty(false)}
+                            className={`w-28 rounded-lg ${warranty ? 'bg-[#F0F0F0] text-black hover:text-white' : ' bg-[#1F510F] text-white '}`}>
                             No
                         </Button>
                     </div>
@@ -144,4 +148,3 @@ const Shop = () => {
     );
 };
 export default Shop;
-

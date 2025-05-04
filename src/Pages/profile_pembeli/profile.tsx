@@ -271,9 +271,9 @@ const profile = () => {
 					<strong>NONACTIVE ACCOUNT</strong>
 				</button>
 
-				<button className=" text-[#1F510F] border-4 border-[#1F510F] p-3 mt-4 ">
+				<a href="/edit_profile" className=" text-[#1F510F] border-4 border-[#1F510F] p-3 mt-4 ">
 					<strong>EDIT PROFILE</strong>
-				</button>
+				</a>
 			</div>
 		</div>
 	);
