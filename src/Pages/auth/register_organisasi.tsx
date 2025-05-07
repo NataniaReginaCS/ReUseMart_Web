@@ -14,7 +14,7 @@ interface RegisterOrganisasiProps {
 	password: string;
 	telp: string;
 	alamat: string;
-	foto?: string;
+	foto?: File;
 }
 
 const Register_Organisasi = () => {
@@ -39,7 +39,9 @@ const Register_Organisasi = () => {
 	const handleChange = (event: any) => {
 		setData({ ...data, [event.target.name]: event.target.value });
 	};
-
+	const handleFotoChange = (event: any) => {
+		setData({ ...data, foto: event.target.files[0] });
+	}
 	const Register = (event: any) => {
 		event.preventDefault();
 		setLoading(true);
@@ -49,8 +51,16 @@ const Register_Organisasi = () => {
 			setLoading(false);
 			return;
 		}
+		const formData = new FormData();
+		formData.append("nama", data.nama);
+		formData.append("email", data.email);
+		formData.append("password", data.password);
+		formData.append("telp", data.telp);
+		formData.append("alamat", data.alamat);
+		formData.append("foto", data.foto || "");
+		
 
-		RegisterOrganisasi(data)
+		RegisterOrganisasi(formData)
 			.then((response) => {
 				toast.success(response.message);
 				setLoading(false);
@@ -167,7 +177,7 @@ const Register_Organisasi = () => {
 	
 						<div className="w-full">
 							<Label htmlFor="file" className="mb-2 block text-gray-600 text-sm">Image</Label>
-							<FileInput id="file" />
+							<FileInput id="file" name="foto" accept="image/*" onChange={handleFotoChange}/>
 						</div>
 	
 						<div className="flex justify-center mt-6">

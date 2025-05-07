@@ -7,23 +7,25 @@ import Home from "../Pages/Home"
 import Shop from "../Pages/Shop";
 import Item from "../Pages/Item";
 import About from "../Pages/About";
-import Profile from "../Pages/profile_pembeli/Profile";
-import EditProfile from "../Pages/profile_pembeli/Edit_profile";
+import Profile from "../Pages/profile_pembeli/profile";
+import EditProfile from "../Pages/profile_pembeli/edit_profile";
 import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
+import Order from "../Pages/profile_pembeli/Order";
 
-
-import Login from "../Pages/auth/Login";
-import RegisterPembeli from "../Pages/auth/Register_pembeli"
-import RegisterOrganisasi from "../Pages/auth/Register_organisasi";
-import ForgotPassword from "../Pages/auth/ForgotPassword";
-import ResetPassword from "../Pages/auth/ResetPassword";
-
+import Login from "../Pages/auth/login";
+import RegisterPembeli from "../Pages/auth/register_pembeli"
+import RegisterOrganisasi from "../Pages/auth/register_organisasi";
+import ForgotPassword from "../Pages/auth/forgotPassword";
+import ResetPassword from "../Pages/auth/resetPassword";
+import Unauthorized from "./Unauthorized";
 
 import Cart from "../Pages/Cart";
+import ProtectedRoutes from "./ProtectedRoutes";
+
 const router = createBrowserRouter([
     {
-        path: "*",
-        element: <div>Routes Not Found</div>
+        path: "/unauthorized",
+        element: <Unauthorized />
     },
     {
         path: "/login",
@@ -47,7 +49,10 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin-organisasi",
-        element: <AdminOrganisasi />
+        element: 
+        <ProtectedRoutes allowedRoles={["Admin"]}>
+            <AdminOrganisasi/>
+        </ProtectedRoutes>
     },
 
     {
@@ -79,6 +84,10 @@ const router = createBrowserRouter([
             }, {
                 path: "/profile",
                 element: <Profile />
+            },
+            {
+                path: "/order",
+                element: <Order />
             },
             {
                 path: "/edit_profile",
