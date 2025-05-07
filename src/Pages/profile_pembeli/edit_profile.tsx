@@ -1,7 +1,11 @@
 import React from "react";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Frieren from "../../assets/images/Frieren.jpg";
+import {
+	faSearch,
+	faHouse,
+	faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const TABLE_HEAD = ["Name", "Street", "Country", "City", "Zipcode", "Action"];
 
@@ -161,7 +165,7 @@ const edit_profile = () => {
 									id="upload-image"
 									type="file"
 									className="hidden"
-									onChange={(e) => { }}
+									onChange={(e) => {}}
 								/>
 							</div>
 						</div>
@@ -235,10 +239,22 @@ const edit_profile = () => {
 			</div>
 
 			<div className="w-full bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10 shadow-md">
-				<div className="px-4 py-10">
+				<div className="px-4 py-10 flex justify-between items-center">
 					<p>
 						<strong>ADD ADDRESS</strong>
 					</p>
+
+					<div className="relative w-1/2 self-end">
+						<FontAwesomeIcon
+							icon={faSearch}
+							className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"
+						/>
+						<input
+							type="text"
+							className="w-full h-10 bg-[#F0F0F0] rounded-4xl pl-10 pr-4 py-2 focus:outline-none"
+							placeholder="Search Products..."
+						/>
+					</div>
 				</div>
 				<table className="w-full min-w-max table-auto text-left ">
 					<thead className="bg-[#2A3042] text-white text-center">
@@ -291,13 +307,23 @@ const edit_profile = () => {
 											</p>
 										</td>
 										<td className={classes}>
+											
+											<button
+												color="blue-gray"
+												className="font-medium bg-red-500 text-white rounded-2xl w-20 me-4"
+											>
+												Delete
+											</button>
 											<button
 												color="blue-gray"
 												className="font-medium bg-yellow-400 text-white rounded-2xl w-20 me-4"
 											>
 												Edit
 											</button>
-											<button color="blue-gray" className="font-medium text-white bg-[#1F510F] rounded-2xl w-20">
+											<button
+												color="blue-gray"
+												className="font-medium text-white bg-[#1F510F] rounded-2xl w-20"
+											>
 												Set
 											</button>
 										</td>

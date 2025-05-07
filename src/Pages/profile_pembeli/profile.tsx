@@ -1,17 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { MdDashboard } from "react-icons/md";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import Frieren from "../../assets/images/Frieren.jpg";
+import {
+	faSearch,
+	faHouse,
+	faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
-const profile = () => {
+
+const Profile = () => {
 	const [showCurrentPassword, setCurrentPassword] = useState(false);
 	const [showNewPassword, setNewPassword] = useState(false);
 	const [showConfirmPassword, setConfirmPassword] = useState(false);
+
 	const toggleCurrentPasswordVisibility = () => {
 		setCurrentPassword((prev) => !prev);
 	};
@@ -279,4 +285,4 @@ const profile = () => {
 	);
 };
 
-export default profile;
+export default Profile;

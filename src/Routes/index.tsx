@@ -9,6 +9,9 @@ import Item from "../Pages/Item";
 import About from "../Pages/About";
 import Profile from "../Pages/profile_pembeli/profile";
 import EditProfile from "../Pages/profile_pembeli/edit_profile";
+import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
+
+
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli"
 import RegisterOrganisasi from "../Pages/auth/register_organisasi";
@@ -42,6 +45,11 @@ const router = createBrowserRouter([
         path: "/reset-password",
         element: <ResetPassword/>
     },
+    {
+        path: "/admin-organisasi",
+        element: <AdminOrganisasi/>
+    },
+    
     {
         element: <MainLayout />,
         children: [
@@ -79,7 +87,7 @@ const router = createBrowserRouter([
             {
                 path: "/cart",
                 element: <Cart />
-            }
+            },
 
         ]
     }
