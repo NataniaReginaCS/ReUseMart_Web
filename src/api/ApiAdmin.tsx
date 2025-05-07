@@ -13,11 +13,11 @@ const FetchOrganisasi = async () => {
     }
 };
 
-const UpdateOrganisasi = async (data : any, idOrganisasi : number) => {
+const UpdateOrganisasi = async (data : FormData, idOrganisasi : number) => {
     try {
         const response = await useAxios.post(`/updateOrganisasi/${idOrganisasi}`, data, {
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data",
             },
         });
         return response.data;

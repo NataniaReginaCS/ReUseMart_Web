@@ -1,22 +1,73 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import Frieren from "../../assets/images/Frieren.jpg";
+import { Logout } from "../../api/apiAuth";
+import { toast } from "react-toastify";
+import { fetchPembeli } from "../../api/ApiPembeli";
+import { getAlamatUtama } from "../../api/ApiPembeli";
+import SidebarNav from "../../Components2/SideBarNav";
 import {
 	faSearch,
 	faHouse,
 	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
+interface Pembeli{
+	id_pembeli: number;
+	nama: string;
+	email: string;
+	telepon: string;
+	foto: string;
+}
+
+interface AlamatUtama {
+	nama_alamat : string,
+	nama_kota : string,
+	kode_pos : Int16Array,
+}
 
 const Profile = () => {
+	const navigate = useNavigate();
+	const [profile, setProfile] = useState<Pembeli>();
 	const [showCurrentPassword, setCurrentPassword] = useState(false);
+	const [alamatUtama, setAlamatUtama] = useState<AlamatUtama>();
 	const [showNewPassword, setNewPassword] = useState(false);
 	const [showConfirmPassword, setConfirmPassword] = useState(false);
+	
+	const fetchProfile = () => {
+		fetchPembeli()
+			.then((response) => {
+				console.log(response);
+				setProfile(response);
+			})
+			.catch((error) => {
+				console.error("Error fetching profile:", error);
+			});
+	};
+
+	const fetchAlamatUtama = () => {
+
+		getAlamatUtama()
+			.then((response) => {
+				console.log(response);
+				setAlamatUtama(response);
+				console.log(response);
+			})
+			.catch((error) => {
+				console.error("Error fetching address:", error);
+			});
+	};
+
+	useEffect(() => {
+		fetchProfile();
+		fetchAlamatUtama();
+	}, []);
 
 	const toggleCurrentPasswordVisibility = () => {
 		setCurrentPassword((prev) => !prev);
@@ -86,33 +137,12 @@ const Profile = () => {
 				</ol>
 			</div>
 			<div className="flex flex-row">
-				<div className="flex flex-col w-1/6 border-1 border-gray-300 rounded-lg bg-white py-5 pe-10 mt-5 ">
-					<h3 className="px-4">
-						<strong>Navigation</strong>
-					</h3>
-					<div className="flex items-center gap-2 mt-2 bg-[#E6E6E6] p-4 border-l-green-700  border-l-5">
-						<MdDashboard />
-						<p>Profile</p>
-					</div>
-
-					<div className="flex items-center gap-2 mt-2 text-gray-500 p-4">
-						<FaArrowsRotate />
-						<p>Order History</p>
-					</div>
-					<div className="flex items-center gap-2 mt-2 text-gray-500 p-4">
-						<HiOutlineShoppingBag />
-						<p>Shopping Cart</p>
-					</div>
-					<div className="flex items-center gap-2 mt-2  text-gray-500 p-4">
-						<RiLogoutBoxRLine />
-						<p>Log-out</p>
-					</div>
-				</div>
+				<SidebarNav />
 
 				<div className="flex flex-col flex-1 w-full p-4 mt-5 ms-10">
 					<div>
 						<h3>
-							<strong>Hello, Rereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</strong>
+							<strong>Hello, {profile?.nama}</strong>
 						</h3>
 						<p className="text-gray-500">
 							From your account dashboard. you can easily check & view your{" "}
@@ -137,13 +167,13 @@ const Profile = () => {
 					<div className="flex flex-row gap-4 mt-5">
 						<div className="flex flex-row w-2/5 bg-white rounded-lg border-1 border-gray-300 justify-center items-center gap-10">
 							<img
-								src={Frieren}
+								src={`${"http://127.0.0.1:8000"}/storage/${profile?.foto}`}
 								alt=""
 								className="w-50 h-50 rounded-full max-sm:w-20 max-sm:h-20"
 							/>
 							<div className="text-center">
-								<p className="text-2xl font-bold mt-2">Rereeeeeeeee</p>
-								<p className="text-gray-500">Alamat email@gmail.com</p>
+								<p className="text-2xl font-bold mt-2">{profile?.nama}</p>
+								<p className="text-gray-500">{profile?.email}</p>
 								<p className="text-gray-500">Buyer</p>
 							</div>
 						</div>
@@ -246,22 +276,21 @@ const Profile = () => {
 								<strong>BILLING ADDRESS</strong>
 							</p>
 
-							<div className="gap-2 p-4">
+							<div className="space-y-2 p-2">
 								<p>
-									<strong>Kevin Gilbert</strong>
+									<strong>{alamatUtama?.nama_alamat || "Alamat masih kosong"}</strong>
 								</p>
 								<p className="text-[#5F6C72]">
-									East Tejturi Bazar, Word No. 04, Road No. 13/x, House no.
-									1320/C, Flat No. 5D, Dhaka - 1200, Bangladesh
+									{alamatUtama?.nama_kota || "Alamat masih kosong"}
 								</p>
 								<p>
-									<strong>Phone Number : </strong>
-									<span className="text-[#5F6C72]">+1-202-555-0118</span>
+									<strong>Street : </strong>
+									<span className="text-[#5F6C72]">{alamatUtama?.nama_kota || "Alamat masih kosong"}</span>
 								</p>
 								<p>
-									<strong>Email : </strong>
+									<strong>Postal Code : </strong>
 									<span className="text-[#5F6C72]">
-										kevin.gilbert@gmail.com
+										{alamatUtama?.kode_pos || "Alamat masih kosong"}
 									</span>
 								</p>
 								<button className=" text-[#1F510F] border-4 border-[#1F510F] p-3 mt-4 w-3/4">

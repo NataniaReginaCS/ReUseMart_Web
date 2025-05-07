@@ -8,6 +8,7 @@ import {
 	ModalBody,
 	ModalHeader,
 	TextInput,
+	FileInput,
 } from "flowbite-react";
 
 import { UpdateOrganisasi } from "../../../api/ApiAdmin";
@@ -25,7 +26,7 @@ interface ModalEditOrganisasiProps {
 	onClose: () => void;
 	idOrganisasi: number;
 	show: boolean;
-    onSuccessEdit: () => void;
+	onSuccessEdit: () => void;
 }
 
 const ModalEditOrganisasi = ({
@@ -33,10 +34,15 @@ const ModalEditOrganisasi = ({
 	onClose,
 	idOrganisasi,
 	show,
-    onSuccessEdit,
+	onSuccessEdit,
 }: ModalEditOrganisasiProps) => {
 	const [data, setData] = useState(dataOrganisasi);
 	const [isPending, setIsPending] = useState(false);
+	const [previewImage, setPreviewImage] = useState<string | null>(
+		dataOrganisasi.foto
+			? `${"http://127.0.0.1:8000"}/storage/${dataOrganisasi.foto}` // Gantilah ini dengan path URL foto yang sesuai
+			: null
+	);
 	const handleClose = () => {
 		onClose();
 	};
@@ -45,10 +51,23 @@ const ModalEditOrganisasi = ({
 		const { name, value } = event.target;
 		setData({ ...data, [name]: value });
 	};
+
+	const handleFotoChange = (event: any) => {
+		setData({ ...data, foto: event.target.files[0] });
+	};
 	const submitData = (event: any, idOrganisasi: number) => {
 		event.preventDefault();
 		setIsPending(true);
-		UpdateOrganisasi(data, idOrganisasi)
+
+		const formData = new FormData();
+		formData.append("nama", data.nama);
+		formData.append("alamat", data.alamat);
+		formData.append("telp", data.telp);
+		formData.append("email", data.email);
+		formData.append("password", data.password);
+		formData.append("foto", data.foto || "");
+
+		UpdateOrganisasi(formData, idOrganisasi)
 			.then((response) => {
 				setIsPending(false);
 				toast.success(response.message);
@@ -62,12 +81,7 @@ const ModalEditOrganisasi = ({
 				toast.dark(err.message);
 			});
 	};
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
-		if (file) {
-			setData({ ...data, foto: file });
-		}
-	};
+
 	return (
 		<>
 			<Modal show={show} dismissible size="md" popup onClose={handleClose}>
@@ -78,6 +92,18 @@ const ModalEditOrganisasi = ({
 							<h3 className="text-xl font-medium text-gray-900 dark:text-white">
 								Edit Organization
 							</h3>
+							{previewImage ? (
+								<div className="flex justify-center items-center">
+								<img
+									src={previewImage}
+									alt="Preview Image"
+									className="w-32 h-32 object-cover"
+								/>
+								</div>
+							) : (
+								<p>No image selected</p>
+							)}
+
 							<div>
 								<div className="mb-2 block">
 									<Label htmlFor="nama">Edit organization name</Label>
@@ -117,6 +143,24 @@ const ModalEditOrganisasi = ({
 									onChange={handleChange}
 									required
 								/>
+							</div>
+							<div>
+								<div className="mb-2 block">
+								<Label
+									htmlFor="file"
+									className=" text-gray-600 text-sm"
+								>
+									
+									Edit Organization Image
+								</Label>
+								</div>
+								<FileInput
+									id="file"
+									name="foto"
+									accept="image/*"
+									onChange={handleFotoChange}
+								/>
+							
 							</div>
 
 							<div

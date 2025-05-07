@@ -12,7 +12,7 @@ interface registerProps{
 	telepon : string
 }
 
-const register_pembeli = () => {
+const Register_Pembeli = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 
@@ -60,14 +60,14 @@ const register_pembeli = () => {
 	}
 
 	return (
-		<div className="flex flex-row w-full">
-			<div className="flex flex-col w-1/2 h-screen bg-white  ">
+		<div className="flex flex-col md:flex-row w-full h-full min-h-screen">
+			<div className="hidden md:flex flex-col w-full md:w-1/2 h-auto bg-white">
 				<img src={RegisterImage} alt="Login" className="w-full h-full" />
 			</div>
-			<div className="flex flex-col w-1/2 h-screen bg-gray-100 justify-start  p-20 max-sm:w-full">
-				<h1 className="text-6xl font-bold mb-4">ReUseMart</h1>
-				<h3 className="self-start mt-20">
-					<strong className="text-3xl">Create Account as Buyer</strong>
+			<div className="flex flex-col w-full md:w-1/2 bg-gray-100 justify-start h-auto p-10 sm:p-20">
+				<h1 className="text-4xl sm:text-6xl font-bold mb-4">ReUseMart</h1>
+				<h3 className="self-start mt-4 sm:mt-10">
+					<strong className="text-2xl sm:text-3xl">Create Account as Buyer</strong>
 				</h3>
 				<form className="flex flex-col gap-4 w-full mt-5" onSubmit={Register}>
 				
@@ -160,4 +160,4 @@ const register_pembeli = () => {
 	);
 };
 
-export default register_pembeli;
+export default Register_Pembeli;
