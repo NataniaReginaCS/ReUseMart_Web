@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import RegisterImage from "../../assets/images/registerImage.png";
-import {RegisterPembeli} from "../../api/apiAuth";
+import { RegisterPembeli } from "../../api/apiAuth";
 import { toast } from "react-toastify";
-import {SyncLoader} from "react-spinners";
+import { SyncLoader } from "react-spinners";
 
-interface registerProps{
+interface registerProps {
 	nama: string,
-	email : string,
+	email: string,
 	password: string,
-	telepon : string
+	telepon: string
 }
 
-const register_pembeli = () => {
+const Register_pembeli = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 
-	const[data, setData]= useState<registerProps>({
+	const [data, setData] = useState<registerProps>({
 		nama: "",
 		email: "",
 		password: "",
@@ -29,34 +29,34 @@ const register_pembeli = () => {
 
 	const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-	const handleChange = (event :any) =>{
-		setData({...data, [event.target.name] : event.target.value});
+	const handleChange = (event: any) => {
+		setData({ ...data, [event.target.name]: event.target.value });
 	}
 
-	const Register = (event : any) =>{
+	const Register = (event: any) => {
 		event.preventDefault();
 		setLoading(true);
 
-		if(data.password != confirmPassword){
+		if (data.password != confirmPassword) {
 			toast.error("Password dan Confirm Password tidak sesuai!");
 			setLoading(false);
 			return;
 		}
-		
+
 		RegisterPembeli(data)
-		.then((response)=>{
-			toast.success(response.message);
-			setLoading(false);
-			setTimeout(() => {
-				navigate("/login");
-			}, 2000);
-		})
-		.catch((err) => {
-			setLoading(false);
-			toast.error(err.message);
-		}).finally(() => {
-			setLoading(false);
-		});
+			.then((response) => {
+				toast.success(response.message);
+				setLoading(false);
+				setTimeout(() => {
+					navigate("/login");
+				}, 2000);
+			})
+			.catch((err) => {
+				setLoading(false);
+				toast.error(err.message);
+			}).finally(() => {
+				setLoading(false);
+			});
 	}
 
 	return (
@@ -70,7 +70,7 @@ const register_pembeli = () => {
 					<strong className="text-3xl">Create Account as Buyer</strong>
 				</h3>
 				<form className="flex flex-col gap-4 w-full mt-5" onSubmit={Register}>
-				
+
 					<div className="divide-y divide-gray-200">
 						<div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
 							<div className="relative w-1/2">
@@ -100,7 +100,7 @@ const register_pembeli = () => {
 								</label>
 							</div>
 
-                            <div className="relative w-1/2">
+							<div className="relative w-1/2">
 								<input
 									id="telepon"
 									name="telepon"
@@ -114,7 +114,7 @@ const register_pembeli = () => {
 								</label>
 							</div>
 
-                            <div className="relative w-1/2">
+							<div className="relative w-1/2">
 								<input
 									id="password"
 									name="password"
@@ -128,7 +128,7 @@ const register_pembeli = () => {
 								</label>
 							</div>
 
-                            <div className="relative w-1/2">
+							<div className="relative w-1/2">
 								<input
 									id="confirmpassword"
 									name="confirmpassword"
@@ -141,14 +141,14 @@ const register_pembeli = () => {
 									Confirm Password
 								</label>
 							</div>
-                            
+
 							<div className="relative items-center justify-center flex mt-15">
 								<button className="bg-[#1F510F] text-white rounded-md px-2 py-1 w-3/4 h-12 cursor-pointer" type="submit">
-									{loading ? <SyncLoader size={10} color="white"/> : <strong>Create Account</strong>}
+									{loading ? <SyncLoader size={10} color="white" /> : <strong>Create Account</strong>}
 								</button>
 							</div>
-                            <div className="relative  flex justify-center">
-								<p  className="text-l ">
+							<div className="relative  flex justify-center">
+								<p className="text-l ">
 									<strong>Already have an account ?<Link to="/login" className="text-[#F5CB58]"> Login</Link> </strong>
 								</p>
 							</div>
@@ -160,4 +160,4 @@ const register_pembeli = () => {
 	);
 };
 
-export default register_pembeli;
+export default Register_pembeli;

@@ -7,16 +7,16 @@ import Home from "../Pages/Home"
 import Shop from "../Pages/Shop";
 import Item from "../Pages/Item";
 import About from "../Pages/About";
-import Profile from "../Pages/profile_pembeli/profile";
-import EditProfile from "../Pages/profile_pembeli/edit_profile";
+import Profile from "../Pages/profile_pembeli/Profile";
+import EditProfile from "../Pages/profile_pembeli/Edit_profile";
 import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 
 
-import Login from "../Pages/auth/login";
-import RegisterPembeli from "../Pages/auth/register_pembeli"
-import RegisterOrganisasi from "../Pages/auth/register_organisasi";
-import ForgotPassword from "../Pages/auth/forgotPassword";
-import ResetPassword from "../Pages/auth/resetPassword";
+import Login from "../Pages/auth/Login";
+import RegisterPembeli from "../Pages/auth/Register_pembeli"
+import RegisterOrganisasi from "../Pages/auth/Register_organisasi";
+import ForgotPassword from "../Pages/auth/ForgotPassword";
+import ResetPassword from "../Pages/auth/ResetPassword";
 
 
 import Cart from "../Pages/Cart";
@@ -43,13 +43,13 @@ const router = createBrowserRouter([
     },
     {
         path: "/reset-password",
-        element: <ResetPassword/>
+        element: <ResetPassword />
     },
     {
         path: "/admin-organisasi",
-        element: <AdminOrganisasi/>
+        element: <AdminOrganisasi />
     },
-    
+
     {
         element: <MainLayout />,
         children: [

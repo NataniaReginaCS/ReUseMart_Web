@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const resetPassword = () => {
+const ResetPassword = () => {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 
@@ -34,7 +34,7 @@ const resetPassword = () => {
 		} catch (error: any) {
 			toast.error("Password dan Konfirmasi Password tidak sesuai!");
 			setMessage(error.response?.data?.message || "Terjadi kesalahan.");
-		}finally {
+		} finally {
 			setLoading(false);
 		}
 	};
@@ -82,7 +82,7 @@ const resetPassword = () => {
 
 							<div className="relative items-center justify-center flex mt-10">
 								<button className="bg-[#1F510F] text-white rounded-md px-2 py-1 w-3/4 h-12 cursor-pointer" type="submit">
-									{loading ? <SyncLoader size={10} color="white"/> : <strong>Submit</strong> }
+									{loading ? <SyncLoader size={10} color="white" /> : <strong>Submit</strong>}
 								</button>
 							</div>
 						</div>
@@ -93,4 +93,4 @@ const resetPassword = () => {
 	);
 };
 
-export default resetPassword;
+export default ResetPassword;

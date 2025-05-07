@@ -1,10 +1,10 @@
 import React from "react";
 import LoginImage from "../../assets/images/login_image.png";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-const login = () => {
-    const navigate = useNavigate();
+const Login = () => {
+	const navigate = useNavigate();
 	return (
 		<div className="flex flex-row w-full">
 			<div className="flex flex-col w-1/2 h-screen bg-white  ">
@@ -61,13 +61,13 @@ const login = () => {
 					</div>
 				</div>
 				<div className="flex flex-row gap-14 items-center justify-center mt-5">
-                    
+
 					<button className="border-[#F5CB58]  border-2 rounded-md px-2 py-1 w-1/3 h-15" onClick={() => navigate('/registerPembeli')}>
 						<Link to='/registerPembeli'><strong className="text-[#F5CB58]">Register as Buyer</strong></Link>
 					</button>
-					<button className="border-[#F5CB58] border-2 rounded-md px-2 py-1 w-1/3 h-15 hover:pointer"  onClick={() => navigate('/registerOrganisasi')}>
+					<button className="border-[#F5CB58] border-2 rounded-md px-2 py-1 w-1/3 h-15 hover:pointer" onClick={() => navigate('/registerOrganisasi')}>
 						<strong className="text-[#F5CB58] ">
-                        <Link to='/registerOrganisasi'>Register as Organization</Link>
+							<Link to='/registerOrganisasi'>Register as Organization</Link>
 						</strong>
 					</button>
 				</div>
@@ -76,4 +76,4 @@ const login = () => {
 	);
 };
 
-export default login;
+export default Login;

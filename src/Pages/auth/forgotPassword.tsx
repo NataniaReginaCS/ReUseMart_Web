@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAxios from "../../api";
 import { toast } from "react-toastify";
-import {SyncLoader} from "react-spinners";
+import { SyncLoader } from "react-spinners";
 
-const forgotPassword = () => {
+const ForgotPassword = () => {
 	const [email, setEmail] = useState("");
 	const [message, setMessage] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -15,18 +15,18 @@ const forgotPassword = () => {
 		e.preventDefault();
 		setLoading(true);
 		setMessage("");
-        console.log('Email yang dikirim: ', email);
+		console.log('Email yang dikirim: ', email);
 		try {
-		
-			const response = await useAxios.post("/forgot-password", {email}
+
+			const response = await useAxios.post("/forgot-password", { email }
 			);
-            toast.success("Berhasil Mengirim Email");
+			toast.success("Berhasil Mengirim Email");
 			setMessage(response.data.message);
-            
+
 		} catch (error: any) {
-            
+
 			setMessage(error.response?.data?.message || "Terjadi kesalahan.");
-            toast.error("Gagal Mengirim Email");
+			toast.error("Gagal Mengirim Email");
 		} finally {
 			setLoading(false);
 		}
@@ -51,7 +51,7 @@ const forgotPassword = () => {
 									type="text"
 									className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
 									placeholder="Email address"
-                                    onChange={(e) => setEmail(e.target.value)} required
+									onChange={(e) => setEmail(e.target.value)} required
 								/>
 								<label className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
 									Email
@@ -60,7 +60,7 @@ const forgotPassword = () => {
 
 							<div className="relative items-center justify-center flex mt-10">
 								<button className="bg-[#1F510F] text-white rounded-md px-2 py-1 w-3/4 h-12 cursor-pointer" type="submit">
-                                {loading ? <SyncLoader size={10} color="white"/> : <strong>Send Confirmation Mail</strong>}
+									{loading ? <SyncLoader size={10} color="white" /> : <strong>Send Confirmation Mail</strong>}
 								</button>
 							</div>
 						</div>
@@ -77,4 +77,4 @@ const forgotPassword = () => {
 	);
 };
 
-export default forgotPassword;
+export default ForgotPassword;

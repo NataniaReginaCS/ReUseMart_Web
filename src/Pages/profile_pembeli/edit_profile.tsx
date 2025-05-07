@@ -47,7 +47,7 @@ const TABLE_ROWS = [
 	},
 ];
 
-const edit_profile = () => {
+const Edit_profile = () => {
 	return (
 		<div className="h-full px-10 py-5">
 			<div className="mt-5 max-sm:mt-0">
@@ -165,7 +165,7 @@ const edit_profile = () => {
 									id="upload-image"
 									type="file"
 									className="hidden"
-									onChange={(e) => {}}
+									onChange={(e) => { }}
 								/>
 							</div>
 						</div>
@@ -307,7 +307,7 @@ const edit_profile = () => {
 											</p>
 										</td>
 										<td className={classes}>
-											
+
 											<button
 												color="blue-gray"
 												className="font-medium bg-red-500 text-white rounded-2xl w-20 me-4"
@@ -338,4 +338,4 @@ const edit_profile = () => {
 	);
 };
 
-export default edit_profile;
+export default Edit_profile;
