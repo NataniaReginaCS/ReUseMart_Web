@@ -1,3 +1,4 @@
+import axios from "axios";
 import useAxios from ".";
 import { getToken } from "./ApiPembeli";
 
@@ -10,12 +11,12 @@ const FetchOrganisasi = async () => {
             },
         });
         return response.data;
-    } catch (error : any) {
-        throw error.response.data  ;
+    } catch (error: any) {
+        throw error.response.data;
     }
 };
 
-const UpdateOrganisasi = async (data : FormData, idOrganisasi : number) => {
+const UpdateOrganisasi = async (data: FormData, idOrganisasi: number) => {
     try {
         const response = await useAxios.post(`/updateOrganisasi/${idOrganisasi}`, data, {
             headers: {
@@ -24,24 +25,96 @@ const UpdateOrganisasi = async (data : FormData, idOrganisasi : number) => {
             },
         });
         return response.data;
-    } catch (error : any) {
-        throw error.response.data  ;
+    } catch (error: any) {
+        throw error.response.data;
     }
 };
 
-const DeleteOrganisasi = async (idOrganisasi : number) => {
+const DeleteOrganisasi = async (idOrganisasi: number) => {
     try {
         const response = await useAxios.delete(`/deleteOrganisasi/${idOrganisasi}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`,
-                
+
             },
         });
         return response.data;
-    } catch (error : any) {
-        throw error.response.data  ;
+    } catch (error: any) {
+        throw error.response.data;
     }
 }
 
-export {FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi};
+
+const FetchPenitip = async () => {
+    try {
+        const response = await useAxios.get("/fetchPenitip", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response.data;
+    }
+};
+
+export async function UpdatePenitip(data: FormData, id: number) {
+    try {
+        const response = await axios.post(
+            `http://127.0.0.1:8000/api/updatePenitip/${id}`,
+            data,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${getToken()}`,
+
+                },
+
+            }
+        );
+        return response.data;
+    } catch (error: any) {
+        console.error("UpdatePenitip error:", error);
+        // return custom error message
+        throw new Error(
+            error.response?.data?.message || "Something went wrong"
+        );
+    }
+}
+
+
+const DeletePenitip = async (idPenitip: number) => {
+    try {
+        const response = await useAxios.delete(`/deletePenitip/${idPenitip}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response.data;
+    }
+}
+
+
+
+export const AddPenitip = (formData: FormData) => {
+    return axios
+        .post("http://127.0.0.1:8000/api/addPenitip", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${getToken()}`,
+
+            },
+        })
+        .then((response) => response.data)
+        .catch((err) => {
+            throw err;
+        });
+};
+
+
+export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip };

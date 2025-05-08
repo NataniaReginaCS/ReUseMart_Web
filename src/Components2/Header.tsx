@@ -75,7 +75,7 @@ const Header = () => {
                             {/* Profile picture based on role */}
                             {role === 'Admin' && (
                                 <a
-                                    href="/profile-organisasi"
+                                    href="/admin/organisasi"
                                     className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
                                 >
                                     <img src={noprofile} alt="Profile" className="w-full h-full object-cover" />

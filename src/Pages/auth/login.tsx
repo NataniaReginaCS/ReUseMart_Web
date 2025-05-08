@@ -24,20 +24,21 @@ const Login = () => {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
 		}
-	
+
 		LoginApi(data)
 			.then((response) => {
-				
+
 				localStorage.setItem("token", response.token);
-				
+				localStorage.setItem("role", response.role);
+
 				toast.success("Login successful!");
-		
+
 				if (response.role === "Pembeli") {
 					navigate("/");
 				} else if (response.role === "Organisasi") {
 					navigate("/homeOrganisasi");
 				} else if (response.role === "CS") {
-					
+
 				} else if (response.role === "Admin") {
 					navigate("/admin/organisasi");
 				} else if (response.role === "Gudang") {

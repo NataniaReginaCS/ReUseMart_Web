@@ -11,8 +11,8 @@ const SidebarNavAdmin = () => {
     const navigate = useNavigate();
 
     const navItems = [
-        { label: "Employees", icon: <MdDashboard />, path: "/profile" },
-        { label: "Organizations", icon: <FaArrowsRotate />, path: "/admin-organisasi" },
+        { label: "Employees", icon: <MdDashboard />, path: "/admin/penitip" },
+        { label: "Organizations", icon: <FaArrowsRotate />, path: "/admin/organisasi" },
         { label: "Penitip", icon: <HiOutlineShoppingBag />, path: "/cart" },
         { label: "Buyer", icon: <HiOutlineShoppingBag />, path: "/cart" },
         { label: "Merchandise", icon: <HiOutlineShoppingBag />, path: "/cart" },
