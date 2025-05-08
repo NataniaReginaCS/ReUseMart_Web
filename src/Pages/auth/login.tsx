@@ -1,18 +1,18 @@
 import React, { useRef } from "react";
 import LoginImage from "../../assets/images/login_image.png";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginApi } from "../../api/apiAuth";
 import { toast } from "react-toastify";
 
 
 const Login = () => {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const emailRef = useRef<any>(null);
 	const passwordRef = useRef<any>(null);
 
 	const HandleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		const data= { 
+		const data = {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
 		}
@@ -20,28 +20,28 @@ const Login = () => {
 		LoginApi(data)
 			.then((response) => {
 				console.log(response);
-					localStorage.setItem("token", response.token);
-					
-					toast.success("Login successful!");
-					if(response.role === "Pembeli"){
-						navigate("/");
-					}else if(response.role === "Organisasi"){
-						navigate("/homeOrganisasi");
-					}else if(response.role ==="CS" ){
-						
-					}else if(response.role === "Admin"){
-						navigate("/admin-organisasi");
-					}else if(response.role === "Gudang"){
+				localStorage.setItem("token", response.token);
+				localStorage.setItem("role", response.role);
+				toast.success("Login successful!");
+				if (response.role === "Pembeli") {
+					navigate("/");
+				} else if (response.role === "Organisasi") {
+					navigate("/profile-organisasi");
+				} else if (response.role === "CS") {
 
-					}else if(response.role === "Owner"){
-					
-					}
+				} else if (response.role === "Admin") {
+					navigate("/admin-organisasi");
+				} else if (response.role === "Gudang") {
+
+				} else if (response.role === "Owner") {
+
+				}
 			})
 			.catch((error) => {
 				toast.error(error.response.data.message);
 				alert("Login failed. Please check your credentials.");
 			});
-		
+
 
 	}
 	return (

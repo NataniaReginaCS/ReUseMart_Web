@@ -19,6 +19,10 @@ import ForgotPassword from "../Pages/auth/forgotPassword";
 import ResetPassword from "../Pages/auth/resetPassword";
 import Unauthorized from "./Unauthorized";
 
+import ProfileOrganisasi from "../Pages/profile_organisasi/ProfileOrganisasi";
+import OrderOrganisasi from "../Pages/profile_organisasi/OrderOrganisasi";
+import RequestDonasi from "../Pages/profile_organisasi/RequestDonasi";
+
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -49,10 +53,10 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin-organisasi",
-        element: 
-        <ProtectedRoutes allowedRoles={["Admin"]}>
-            <AdminOrganisasi/>
-        </ProtectedRoutes>
+        element:
+            <ProtectedRoutes allowedRoles={["Admin"]}>
+                <AdminOrganisasi />
+            </ProtectedRoutes>
     },
 
     {
@@ -96,6 +100,18 @@ const router = createBrowserRouter([
             {
                 path: "/cart",
                 element: <Cart />
+            },
+            {
+                path: "/profile-organisasi",
+                element: <ProfileOrganisasi />
+            },
+            {
+                path: "/order-organisasi",
+                element: <OrderOrganisasi />
+            },
+            {
+                path: "/request-donasi",
+                element: <RequestDonasi />
             },
 
         ]
