@@ -6,18 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "../api/apiAuth";
 import { toast } from "react-toastify";
 
-const SidebarNavAdmin = () => {
+const SidebarNavOrg = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
-    const navItems = [
-        { label: "Employees", icon: <MdDashboard />, path: "/profile" },
-        { label: "Organizations", icon: <FaArrowsRotate />, path: "/admin-organisasi" },
-        { label: "Penitip", icon: <HiOutlineShoppingBag />, path: "/cart" },
-        { label: "Buyer", icon: <HiOutlineShoppingBag />, path: "/cart" },
-        { label: "Merchandise", icon: <HiOutlineShoppingBag />, path: "/cart" },
-    ];
-
     const handleLogout = () => {
         Logout()
             .then((response) => {
@@ -30,6 +21,11 @@ const SidebarNavAdmin = () => {
                 console.error("Logout failed:", error);
             });
     };
+    const navItems = [
+        { label: "Profile", icon: <MdDashboard />, path: "/profile-organisasi" },
+        { label: "Donation", icon: <FaArrowsRotate />, path: "/order-organisasi" },
+        { label: "Request Donation", icon: <HiOutlineShoppingBag />, path: "/request-donasi" },
+    ];
 
     return (
         <div className="flex flex-col w-2/6 max-w-[300px] border border-gray-300 rounded-lg bg-white py-5 pe-10 mt-5 min-h-[500px]">
@@ -39,17 +35,19 @@ const SidebarNavAdmin = () => {
             {navItems.map((item, index) => {
                 const isActive = location.pathname === item.path;
                 return (
-                    <div
-                        key={index}
-                        onClick={() => navigate(item.path)}
-                        className={`flex items-center gap-2 p-4 cursor-pointer transition-colors ${isActive
-                            ? "bg-[#E6E6E6] border-l-4 border-green-700 text-black"
-                            : "text-gray-500 hover:bg-[#E6E6E6]"
-                            }`}
-                    >
-                        {item.icon}
-                        <p>{item.label}</p>
-                    </div>
+                    <>
+                        <div
+                            key={index}
+                            onClick={() => navigate(item.path)}
+                            className={`flex items-center gap-2 p-4 cursor-pointer transition-colors ${isActive
+                                ? "bg-[#E6E6E6] border-l-4 border-green-700 text-black"
+                                : "text-gray-500 hover:bg-[#E6E6E6]"
+                                }`}
+                        >
+                            {item.icon}
+                            <p>{item.label}</p>
+                        </div>
+                    </>
                 );
             })}
             <button
@@ -63,4 +61,4 @@ const SidebarNavAdmin = () => {
     );
 };
 
-export default SidebarNavAdmin;
+export default SidebarNavOrg;
