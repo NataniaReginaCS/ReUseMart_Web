@@ -12,7 +12,7 @@ const Unauthorized = () => {
                     Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.
                 </p>
                 <button
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate("/")}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition"
                 >
                     Kembali

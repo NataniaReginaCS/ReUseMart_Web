@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { RiLogoutBoxRLine } from "react-icons/ri";
 import { FetchOrganisasi } from "../../../api/ApiAdmin";
 import { SyncLoader } from "react-spinners";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
@@ -14,6 +10,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import Header from "../../../Components2/Header";
 import SideBarNavAdmin from "../../../Components2/SideBarNavAdmin";
+
 type Organisasi = {
 	id_organisasi: number;
 	nama: string;

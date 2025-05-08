@@ -1,47 +1,57 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import LoginImage from "../../assets/images/login_image.png";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginApi } from "../../api/apiAuth";
 import { toast } from "react-toastify";
 
 
 const Login = () => {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const emailRef = useRef<any>(null);
 	const passwordRef = useRef<any>(null);
 
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			toast.error("Anda sudah login!");
+			navigate("/");
+		}
+	}, [navigate]);
+
 	const HandleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		const data= { 
+		const data = {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
 		}
-		console.log(data);
+
 		LoginApi(data)
 			.then((response) => {
-				console.log(response);
-					localStorage.setItem("token", response.token);
-					
-					toast.success("Login successful!");
-					if(response.role === "Pembeli"){
-						navigate("/");
-					}else if(response.role === "Organisasi"){
-						navigate("/homeOrganisasi");
-					}else if(response.role ==="CS" ){
-						
-					}else if(response.role === "Admin"){
-						navigate("/admin-organisasi");
-					}else if(response.role === "Gudang"){
 
-					}else if(response.role === "Owner"){
-					
-					}
+				localStorage.setItem("token", response.token);
+				localStorage.setItem("role", response.role);
+
+				toast.success("Login successful!");
+
+				if (response.role === "Pembeli") {
+					navigate("/");
+				} else if (response.role === "Organisasi") {
+					navigate("/homeOrganisasi");
+				} else if (response.role === "CS") {
+
+				} else if (response.role === "Admin") {
+					navigate("/admin/organisasi");
+				} else if (response.role === "Gudang") {
+
+				} else if (response.role === "Owner") {
+
+				}
 			})
 			.catch((error) => {
 				toast.error(error.response.data.message);
 				alert("Login failed. Please check your credentials.");
 			});
-		
+
 
 	}
 	return (
@@ -102,13 +112,13 @@ const Login = () => {
 					</div>
 				</div>
 				<div className="flex flex-row gap-14 items-center justify-center mt-5">
-                    
+
 					<button className="border-[#F5CB58]  border-2 rounded-md px-2 py-1 w-1/3 h-15" onClick={() => navigate('/registerPembeli')}>
 						<Link to='/registerPembeli'><strong className="text-[#F5CB58]">Register as Buyer</strong></Link>
 					</button>
-					<button className="border-[#F5CB58] border-2 rounded-md px-2 py-1 w-1/3 h-15 hover:pointer"  onClick={() => navigate('/registerOrganisasi')}>
+					<button className="border-[#F5CB58] border-2 rounded-md px-2 py-1 w-1/3 h-15 hover:pointer" onClick={() => navigate('/registerOrganisasi')}>
 						<strong className="text-[#F5CB58] ">
-                        <Link to='/registerOrganisasi'>Register as Organization</Link>
+							<Link to='/registerOrganisasi'>Register as Organization</Link>
 						</strong>
 					</button>
 				</div>

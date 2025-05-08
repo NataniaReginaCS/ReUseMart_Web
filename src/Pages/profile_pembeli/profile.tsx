@@ -1,21 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { RiLogoutBoxRLine } from "react-icons/ri";
+
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import Frieren from "../../assets/images/Frieren.jpg";
-import { Logout } from "../../api/apiAuth";
-import { toast } from "react-toastify";
 import { fetchPembeli } from "../../api/ApiPembeli";
 import { getAlamatUtama } from "../../api/ApiPembeli";
 import SidebarNav from "../../Components2/SideBarNav";
 import {
-	faSearch,
 	faHouse,
-	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface Pembeli{
@@ -29,6 +21,7 @@ interface Pembeli{
 interface AlamatUtama {
 	nama_alamat : string,
 	nama_kota : string,
+	nama_jalan : string,
 	kode_pos : Int16Array,
 }
 
@@ -55,9 +48,9 @@ const Profile = () => {
 
 		getAlamatUtama()
 			.then((response) => {
-				console.log(response);
-				setAlamatUtama(response);
-				console.log(response);
+				console.log(response.alamatUtama);
+				setAlamatUtama(response.alamatUtama);
+				
 			})
 			.catch((error) => {
 				console.error("Error fetching address:", error);
@@ -285,7 +278,7 @@ const Profile = () => {
 								</p>
 								<p>
 									<strong>Street : </strong>
-									<span className="text-[#5F6C72]">{alamatUtama?.nama_kota || "Alamat masih kosong"}</span>
+									<span className="text-[#5F6C72]">{alamatUtama?.nama_jalan || "Alamat masih kosong"}</span>
 								</p>
 								<p>
 									<strong>Postal Code : </strong>
@@ -293,7 +286,7 @@ const Profile = () => {
 										{alamatUtama?.kode_pos || "Alamat masih kosong"}
 									</span>
 								</p>
-								<button className=" text-[#1F510F] border-4 border-[#1F510F] p-3 mt-4 w-3/4">
+								<button className=" text-[#1F510F] border-4 border-[#1F510F] p-3 mt-4 w-3/4 cursor-pointer" onClick={() => navigate("/edit_profile")}>
 									<strong>EDIT ADDRESS</strong>
 								</button>
 							</div>

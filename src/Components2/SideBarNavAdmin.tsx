@@ -3,19 +3,33 @@ import { FaArrowsRotate } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Logout } from "../api/apiAuth";
+import { toast } from "react-toastify";
 
 const SidebarNavAdmin = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
     const navItems = [
-        { label: "Employees", icon: <MdDashboard />, path: "/profile" },
-        { label: "Organizations", icon: <FaArrowsRotate />, path: "/admin-organisasi" },
+        { label: "Employees", icon: <MdDashboard />, path: "/admin/penitip" },
+        { label: "Organizations", icon: <FaArrowsRotate />, path: "/admin/organisasi" },
         { label: "Penitip", icon: <HiOutlineShoppingBag />, path: "/cart" },
         { label: "Buyer", icon: <HiOutlineShoppingBag />, path: "/cart" },
         { label: "Merchandise", icon: <HiOutlineShoppingBag />, path: "/cart" },
-        { label: "Log-out", icon: <RiLogoutBoxRLine />, path: "/logout" },
     ];
+
+    const handleLogout = () => {
+        Logout()
+            .then((response) => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("role");
+                toast.success("Logout successful!");
+                navigate("/login");
+            })
+            .catch((error) => {
+                console.error("Logout failed:", error);
+            });
+    };
 
     return (
         <div className="flex flex-col w-2/6 max-w-[300px] border border-gray-300 rounded-lg bg-white py-5 pe-10 mt-5 min-h-[500px]">
@@ -38,6 +52,13 @@ const SidebarNavAdmin = () => {
                     </div>
                 );
             })}
+            <button
+                className={`flex items-center gap-2 p-4 cursor-pointer transition-colors hover:bg-[#E6E6E6] text-gray-500`}
+                onClick={handleLogout}
+            >
+                <RiLogoutBoxRLine />
+                <p>LogOut</p>
+            </button>
         </div>
     );
 };

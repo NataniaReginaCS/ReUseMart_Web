@@ -21,6 +21,14 @@ const Register_Organisasi = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			toast.error("Anda sudah login!");
+			navigate("/");
+		} 
+	}, [navigate]);
+
 	const [data, setData] = useState<RegisterOrganisasiProps>({
 		nama: "",
 		email: "",
