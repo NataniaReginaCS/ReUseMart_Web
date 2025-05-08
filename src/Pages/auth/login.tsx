@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import LoginImage from "../../assets/images/login_image.png";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginApi } from "../../api/apiAuth";
@@ -10,27 +10,36 @@ const Login = () => {
 	const emailRef = useRef<any>(null);
 	const passwordRef = useRef<any>(null);
 
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			toast.error("Anda sudah login!");
+			navigate("/");
+		}
+	}, [navigate]);
+
 	const HandleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
 		const data = {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
 		}
-		console.log(data);
+	
 		LoginApi(data)
 			.then((response) => {
-				console.log(response);
+				
 				localStorage.setItem("token", response.token);
-				localStorage.setItem("role", response.role);
+				
 				toast.success("Login successful!");
+		
 				if (response.role === "Pembeli") {
 					navigate("/");
 				} else if (response.role === "Organisasi") {
-					navigate("/profile-organisasi");
+					navigate("/homeOrganisasi");
 				} else if (response.role === "CS") {
-
+					
 				} else if (response.role === "Admin") {
-					navigate("/admin-organisasi");
+					navigate("/admin/organisasi");
 				} else if (response.role === "Gudang") {
 
 				} else if (response.role === "Owner") {

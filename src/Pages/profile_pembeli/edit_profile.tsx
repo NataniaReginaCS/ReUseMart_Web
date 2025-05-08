@@ -1,10 +1,9 @@
-import React from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Frieren from "../../assets/images/Frieren.jpg";
 import {
 	faSearch,
 	faHouse,
-	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 const TABLE_HEAD = ["Name", "Street", "Country", "City", "Zipcode", "Action"];

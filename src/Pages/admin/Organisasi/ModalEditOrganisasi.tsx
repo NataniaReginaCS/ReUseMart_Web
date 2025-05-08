@@ -21,7 +21,7 @@ interface ModalEditOrganisasiProps {
 		email: string;
 		telp: string;
 		password: string;
-		foto: File; // bisa juga File kalau mau langsung upload
+		foto: File | string; 
 	};
 	onClose: () => void;
 	idOrganisasi: number;
@@ -53,8 +53,13 @@ const ModalEditOrganisasi = ({
 	};
 
 	const handleFotoChange = (event: any) => {
-		setData({ ...data, foto: event.target.files[0] });
+		const file = event.target.files[0];
+		if (file) {
+			setData({ ...data, foto: event.target.files[0] });
+			setPreviewImage(URL.createObjectURL(file));
+		}
 	};
+
 	const submitData = (event: any, idOrganisasi: number) => {
 		event.preventDefault();
 		setIsPending(true);
@@ -65,7 +70,9 @@ const ModalEditOrganisasi = ({
 		formData.append("telp", data.telp);
 		formData.append("email", data.email);
 		formData.append("password", data.password);
-		formData.append("foto", data.foto || "");
+		if (data.foto instanceof File) {
+			formData.append("foto", data.foto);
+		}
 
 		UpdateOrganisasi(formData, idOrganisasi)
 			.then((response) => {
@@ -167,14 +174,14 @@ const ModalEditOrganisasi = ({
 								className="w-full rounded-2xl bg-[#B33739] p-2 text-center text-white cursor-pointer"
 								onClick={handleClose}
 							>
-								<button className="w-full">
+								<button className="w-full cursor-pointer">
 									{" "}
 									<strong>Cancel</strong>
 								</button>
 							</div>
 
 							<div className="w-full rounded-2xl bg-[#1F510F] p-2 text-center text-white cursor-pointer">
-								<button type="submit" className="w-full">
+								<button type="submit" className="w-full cursor-pointer">
 									{isPending ? (
 										<SyncLoader color="#F5CB58" size={10} />
 									) : (

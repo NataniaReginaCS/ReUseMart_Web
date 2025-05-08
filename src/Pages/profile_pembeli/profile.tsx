@@ -293,7 +293,7 @@ const Profile = () => {
 										{alamatUtama?.kode_pos || "Alamat masih kosong"}
 									</span>
 								</p>
-								<button className=" text-[#1F510F] border-4 border-[#1F510F] p-3 mt-4 w-3/4">
+								<button className=" text-[#1F510F] border-4 border-[#1F510F] p-3 mt-4 w-3/4 cursor-pointer" onClick={() => navigate("/edit_profile")}>
 									<strong>EDIT ADDRESS</strong>
 								</button>
 							</div>

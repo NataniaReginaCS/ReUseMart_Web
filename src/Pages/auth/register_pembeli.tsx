@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import RegisterImage from "../../assets/images/registerImage.png";
 import { RegisterPembeli } from "../../api/apiAuth";
@@ -15,6 +15,14 @@ interface registerProps {
 const Register_Pembeli = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			toast.error("Anda sudah login!");
+			navigate("/");
+		} 
+	}, [navigate]);
 
 	const [data, setData] = useState<registerProps>({
 		nama: "",

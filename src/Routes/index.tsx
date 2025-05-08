@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "sonner";
 import MainLayout from "../Layout/MainLayout";
@@ -52,13 +52,19 @@ const router = createBrowserRouter([
         element: <ResetPassword />
     },
     {
-        path: "/admin-organisasi",
-        element:
+        path: "/admin",
+        element: (
             <ProtectedRoutes allowedRoles={["Admin"]}>
-                <AdminOrganisasi />
+                <Outlet/>
             </ProtectedRoutes>
-    },
+        ),
+        children:[
+            {   path: "organisasi", 
+                element: <AdminOrganisasi /> 
+            },
+        ]
 
+    },
     {
         element: <MainLayout />,
         children: [
