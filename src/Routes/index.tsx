@@ -12,6 +12,7 @@ import EditProfile from "../Pages/profile_pembeli/edit_profile";
 import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
+import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli"
 import RegisterOrganisasi from "../Pages/auth/register_organisasi";
@@ -55,12 +56,16 @@ const router = createBrowserRouter([
         path: "/admin",
         element: (
             <ProtectedRoutes allowedRoles={["Admin"]}>
-                <Outlet/>
+                <Outlet />
             </ProtectedRoutes>
         ),
-        children:[
-            {   path: "organisasi", 
-                element: <AdminOrganisasi /> 
+        children: [
+            {
+                path: "organisasi",
+                element: <AdminOrganisasi />
+            }, {
+                path: "penitip",
+                element: <AdminPenitip />
             },
         ]
 
