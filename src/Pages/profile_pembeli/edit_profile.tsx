@@ -1,52 +1,70 @@
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import Frieren from "../../assets/images/Frieren.jpg";
-import {
-	faSearch,
-	faHouse,
-} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { FetchAlamat } from "../../api/ApiAlamat";
+import { faSearch, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
+import { PiTarget } from "react-icons/pi";
+import { SyncLoader } from "react-spinners";
 
-const TABLE_HEAD = ["Name", "Street", "Country", "City", "Zipcode", "Action"];
+type Alamat = {
+	id_alamat: number;
+	nama_jalan: string;
+	nama_alamat: string;
+	nama_kota: string;
+	kode_pos: Int16Array;
+	isUtama: boolean;
+};
 
-const TABLE_ROWS = [
-	{
-		name: "Kalvin Lawinata",
-		Street: "Jalan Prof Hm Yamin Sh III No. 42, Perintis",
-		country: "Indonesia",
-		city: "Kota Medan",
-		zipcode: "20231",
-	},
-	{
-		name: "Kalvin Lawinata",
-		Street: "Jalan Prof Hm Yamin Sh III No. 42, Perintis",
-		country: "Indonesia",
-		city: "Kota Medan",
-		zipcode: "20231",
-	},
-	{
-		name: "Kalvin Lawinata",
-		Street: "Jalan Prof Hm Yamin Sh III No. 42, Perintis",
-		country: "Indonesia",
-		city: "Kota Medan",
-		zipcode: "20231",
-	},
-	{
-		name: "Kalvin Lawinata",
-		Street: "Jalan Prof Hm Yamin Sh III No. 42, Perintis",
-		country: "Indonesia",
-		city: "Kota Medan",
-		zipcode: "20231",
-	},
-	{
-		name: "Kalvin Lawinata",
-		Street: "Jalan Prof Hm Yamin Sh III No. 42, Perintis",
-		country: "Indonesia",
-		city: "Kota Medan",
-		zipcode: "20231",
-	},
-];
+const TABLE_HEAD = ["Name", "Street", "City", "Zipcode", "Action"];
 
 const Edit_profile = () => {
+	const [data, setData] = useState<Alamat[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [dataPerPage, setDataPerPage] = useState(10);
+	const [searchTerm, setSearchTerm] = useState("");
+
+	const [showModal, setShowModal] = useState(false);
+	const [selectedAlamat, setSelectedOrganisasi] = useState<Alamat | null>(null);
+	const [showModalDelete, setShowModalDelete] = useState(false);
+
+	const fetchAlamat = () => {
+		FetchAlamat()
+			.then((response) => {
+				setIsLoading(true);
+				setData(response.alamat);
+			})
+			.catch((error: any) => {
+				console.error("Error fetching address:", error);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	};
+
+	useEffect(() => {
+		fetchAlamat();
+	}, []);
+
+	const filteredData = data.filter(
+		(alamat) =>
+			alamat.nama_jalan.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			alamat.nama_kota.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			alamat.kode_pos
+				.toLocaleString()
+				.toLowerCase()
+				.includes(searchTerm.toLowerCase()) ||
+			alamat.nama_alamat.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
+	const indexOfLastData = currentPage * dataPerPage;
+	const indexOfFirstData = indexOfLastData - dataPerPage;
+	const currentData = filteredData.slice(indexOfFirstData, indexOfLastData);
+	const totalPages = Math.ceil(filteredData.length / dataPerPage);
+
 	return (
 		<div className="h-full px-10 py-5">
 			<div className="mt-5 max-sm:mt-0">
@@ -164,7 +182,7 @@ const Edit_profile = () => {
 									id="upload-image"
 									type="file"
 									className="hidden"
-									onChange={(e) => { }}
+									onChange={(e) => {}}
 								/>
 							</div>
 						</div>
@@ -237,101 +255,97 @@ const Edit_profile = () => {
 				</div>
 			</div>
 
-			<div className="w-full bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10 shadow-md">
-				<div className="px-4 py-10 flex justify-between items-center">
+			<div className="bg-white w-full lg:w-full border border-gray-300 text-start gap-y-4 shadow-md mt-5">
+				<div className="px-4 py-6 flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
 					<p>
-						<strong>ADD ADDRESS</strong>
+						<strong>ADDRESS</strong>
 					</p>
-
-					<div className="relative w-1/2 self-end">
+					<div className="relative w-full sm:w-1/2">
 						<FontAwesomeIcon
 							icon={faSearch}
 							className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"
 						/>
 						<input
 							type="text"
+							value={searchTerm}
+							onChange={(e) => {
+								setSearchTerm(e.target.value);
+								setCurrentPage(1);
+							}}
 							className="w-full h-10 bg-[#F0F0F0] rounded-4xl pl-10 pr-4 py-2 focus:outline-none"
-							placeholder="Search Products..."
+							placeholder="Search..."
 						/>
 					</div>
 				</div>
-				<table className="w-full min-w-max table-auto text-left ">
-					<thead className="bg-[#2A3042] text-white text-center">
-						<tr>
-							{TABLE_HEAD.map((head) => (
-								<th
-									key={head}
-									className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
-								>
-									<p className="font-normal leading-none opacity-70">
-										<strong>{head}</strong>
-									</p>
-								</th>
-							))}
-						</tr>
-					</thead>
-					<tbody className="text-center">
-						{TABLE_ROWS.map(
-							({ name, Street, country, city, zipcode }, index) => {
-								const isLast = index === TABLE_ROWS.length - 1;
-								const classes = isLast
-									? "p-4 "
-									: "p-4 border-b border-blue-gray-50 ";
+			
+				<div className="justify-center items-center text-center">
+					<SyncLoader color="#F5CB58" size={10} className="mx-auto" />
+					<h6 className="mt-2 mb-0">Loading...</h6>
+				</div>
+				
 
-								return (
-									<tr key={name}>
-										<td className={classes}>
-											<p color="blue-gray" className="font-normal">
-												{name}
+					<div className="overflow-x-auto">
+						<table className="w-full min-w-max table-auto text-left">
+							<thead className="bg-[#2A3042] text-white text-center">
+								<tr>
+									{TABLE_HEAD.map((head) => (
+										<th
+											key={head}
+											className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+										>
+											<p className="font-normal leading-none opacity-70">
+												<strong>{head}</strong>
 											</p>
-										</td>
-										<td className={classes}>
-											<p color="blue-gray" className="font-normal">
-												{Street}
-											</p>
-										</td>
-										<td className={classes}>
-											<p color="blue-gray" className="font-normal">
-												{country}
-											</p>
-										</td>
-										<td className={classes}>
-											<p color="blue-gray" className="font-normal">
-												{city}
-											</p>
-										</td>
-										<td className={classes}>
-											<p color="blue-gray" className="font-normal">
-												{zipcode}
-											</p>
-										</td>
-										<td className={classes}>
+										</th>
+									))}
+								</tr>
+								
+							</thead>
+							<tbody className="text-center border">
+								{currentData.map((alamat: any, index) => {
+									const isLast = index === currentData.length;
+									const classes = isLast
+										? "p-4"
+										: "p-4 border-b border-blue-gray-50";
+									return (
+										<tr key={alamat.id_alamat}>
+											<td className={classes}>
+												<p className="font-normal">{alamat.nama_alamat}</p>
+											</td>
+											<td className={classes}>
+												<p className="font-normal">{alamat.nama_jalan}</p>
+											</td>
+											<td className={classes}>
+												<p className="font-normal">{alamat.nama_kota}</p>
+											</td>
+											<td className={classes}>
+												<p className="font-normal">{alamat.kode_post}</p>
+											</td>
+											<td className={classes}>
+												<div className="flex flex-row justify-center space-x-2">
+													<button className="font-medium  bg-[#F3B200] rounded-3xl text-white w-30  cursor-pointer flex text-center items-center justify-center gap-1 p-1 ">
+														<IoPersonCircleOutline size={20} /> Edit
+													</button>
 
-											<button
-												color="blue-gray"
-												className="font-medium bg-red-500 text-white rounded-2xl w-20 me-4"
-											>
-												Delete
-											</button>
-											<button
-												color="blue-gray"
-												className="font-medium bg-yellow-400 text-white rounded-2xl w-20 me-4"
-											>
-												Edit
-											</button>
-											<button
-												color="blue-gray"
-												className="font-medium text-white bg-[#1F510F] rounded-2xl w-20"
-											>
-												Set
-											</button>
-										</td>
-									</tr>
-								);
-							}
-						)}
-					</tbody>
-				</table>
+													<button className="font-medium bg-red-500 text-white rounded-3xl w-30 flex cursor-pointer text-center items-center justify-center gap-1 p-1">
+														<MdDelete size={20} /> Delete
+													</button>
+
+													<button
+														className={`font-medium ${
+															alamat.isUtama ? "hidden" : ""
+														} bg-green-500 text-white rounded-3xl w-30 flex cursor-pointer text-center items-center justify-center gap-1 p-1`}
+													>
+														<PiTarget size={20} /> Set
+													</button>
+												</div>
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
 			</div>
 		</div>
 	);
