@@ -1,12 +1,14 @@
 import { faChevronRight, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import hpitem from '../assets/images/hpitem.png';
 import item1 from '../assets/images/item1.png';
 import { Textarea } from '../components/ui/textarea';
 import { Label } from '@radix-ui/react-label';
+import { FetchBarang, FetchBarangById, FetchBarangByKategori, FetchRelatedProducts } from '../api/ApiBarang';
+import { set } from 'date-fns';
 const items = [
     { name: "TOZO T6 True Wireless Earbuds Bluetooth Headphones", image: hpitem, namaPenitip: "AgusGanteng", price: "16.000.000", link: "/Item" },
     { name: "Samsung Galaxy S25 Ultra", image: item1, namaPenitip: "AgusGanteng", price: "16.000.000", link: "/Item" },
@@ -21,7 +23,107 @@ const comments = [
     { name: "Lopek", image: hpitem, comment: "I was honestly a bit skeptical at first, but this turned out way better than expected. The quality is solid, the materials feel premium, and everything works perfectly out of the box. Kudos to the team!", date: "2023-10-01" },
 ]
 
+type Barang = {
+    id_barang: number;
+    id_penitipan: number;
+    id_kategori: string;
+    id_hunter: string;
+    nama: string;
+    deskripsi: string;
+    foto: string;
+    berat: number;
+    isGaransi: boolean;
+    akhir_garansi: string;
+    status_perpanjangan: string;
+    harga: number;
+    tanggal_akhir: string;
+    batas_ambil: string;
+    status_barang: string;
+    tanggal_ambil: string;
+};
+
+
 const Item = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const barang = location.state?.barang || null; 
+    const [isLoading, setIsLoading] = useState(false);
+    const [data, setData] = useState<Barang[]>([]);
+    
+    const fetchBarangById = (id_barang: number) => {
+        setIsLoading(true);
+        FetchBarangById(id_barang)
+            .then((response) => {
+                const barang = response.data;
+                setIsLoading(false);
+                navigate('/item', { state: { barang } });
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    };
+
+    const namaGaransi = (akhir_garansi: Date) => {
+        const currentDate = new Date();
+        const endDate = new Date(akhir_garansi);
+        const timeDiff = endDate.getTime() - currentDate.getTime();
+        const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        if (daysDiff > 0) {
+            return `${daysDiff} days left`;
+        } else if (daysDiff === 0) {
+            return "Warranty expired today";
+        } else {
+            return "Warranty expired";
+        }
+    };
+
+    const namaKategori = (id_kategori: string) => {
+            if (parseInt(id_kategori) >= 0 && parseInt(id_kategori) < 11) {
+                return "Electronic & Gadget";
+            }else if (parseInt(id_kategori) >= 11 && parseInt(id_kategori) < 21) {
+                return "Clothing & Accessories";
+            }else if (parseInt(id_kategori) >= 21 && parseInt(id_kategori) < 31) {
+                return "Home Furnishings";
+            }
+            else if (parseInt(id_kategori) >= 31 && parseInt(id_kategori) < 41) {
+                return "Books & School Supplies";
+            }
+            else if (parseInt(id_kategori) >= 41 && parseInt(id_kategori) < 51) {
+                return "Hobbies & Collectibles";
+            }
+            else if (parseInt(id_kategori) >= 51 && parseInt(id_kategori) < 61) {
+                return "Baby & Kids Equipment";
+            }   else if (parseInt(id_kategori) >= 61 && parseInt(id_kategori) < 71) {
+                return "Automotive";
+            } else if (parseInt(id_kategori) >= 71 && parseInt(id_kategori) < 81) {
+                return "Garden & Outdoor Supplies";
+            } else if (parseInt(id_kategori) >= 81 && parseInt(id_kategori) < 91) {
+                return "Office & Industrial Equipment";
+            } else if (parseInt(id_kategori) >= 91 && parseInt(id_kategori) < 101) {
+                return "Cosmetics & Personal Care";
+            }
+    }        
+    const fetchRelatedProducts = (id_kategori: string) => {
+        setIsLoading(true);
+        FetchRelatedProducts(id_kategori)
+            .then((response) => {
+                const relatedBarang = response.data;
+                setData(relatedBarang);
+                setIsLoading(false);
+                
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    };
+
+        useEffect(() => {
+            fetchRelatedProducts(barang.id_kategori);
+        }, []);
+
+
     return (
         <div className='flex flex-col h-full bg-white p-12'>
             <div className="flex items-center gap-2">
@@ -32,23 +134,21 @@ const Item = () => {
                 <p className="text-sm font-bold text-green-500">Detail Product</p>
             </div>
             <div className='flex mt-4 gap-12 '>
-                <div className='w-1/2 h-[600px] bg-gray-500'>
-                    <img src="https://via.placeholder.com/150" alt="Product" className='w-1/2 h-auto rounded-lg' />
+                <div className='w-1/3 h-[600px] bg-gray-500'>
+                    <img src={barang.foto} alt={barang.nama} className='object-fit rounded-lg' />
                 </div>
                 <div className='flex flex-col w-1/2 h-[600px]'>
-                    <p className='text-3xl font-semibold text-black'>TOZO T6 True Wireless Earbuds Bluetooth Headphones</p>
+                    <p className='text-3xl font-semibold text-black'>{barang.nama}</p>
                     <div className='flex gap-4 mt-2'>
-                        <p>inibintang</p>
-                        <p className='text-gray-600'>4 Review</p>
-                        <p className='font-bold'>Item Id <span className='text-gray-600'>R-24</span></p>
+                        {/* <p>inibintang</p>
+                        <p className='text-gray-600'>4 Review</p> */}
+                        <p className='font-bold'>Barang Id : <span className='text-gray-600'>{barang.id_barang}</span></p>
                     </div>
-                    <p className='text-2xl font-bold text-green-600 mt-2'>Rp 16.000.000</p>
+                    <p className='text-2xl font-bold text-green-600 mt-2'>Rp {barang.harga}</p>
                     <hr className="my-2 border-t  w-[95%] border-gray-300" />
-                    <p className='text-lg font-bold '>AgusGantengStore</p>
+                    {/* <p className='text-lg font-bold '>ini toko penitipnya</p> */}
                     <p className='text-md font-semibold '>Description :</p>
-                    <p className='text-sm font-normal text-gray-500 break-words whitespace-normal'>High-Performance Gaming Laptop – Unleash Your Power
-                        Take your gaming to the next level with this high-performance gaming laptop, built for speed, power, and stunning visuals. Equipped with the latest Intel Core i7/i9 or AMD Ryzen 7/9 processor, NVIDIA GeForce RTX 40-series graphics, and a high-refresh-rate 15.6”/17.3” Full HD or QHD display, this laptop delivers ultra-smooth gameplay and breathtaking graphics.
-                        Key Features: ✅ Blazing-Fast Performance – Multitask with ease using up to 32GB RAM and 1TB SSD storage. ✅ Immersive Graphics – Experience realistic visuals with Ray Tracing and high FPS gaming. ✅ Advanced Cooling System – Stay cool under pressure with an efficient thermal design. ✅ Customizable RGB Keyboard – Game in style with per-key RGB lighting. ✅ Long-Lasting Battery & Fast Charging – Play longer and charge quickly.</p>
+                    <p className='text-sm font-normal text-gray-500 break-words whitespace-normal'>{barang.deskripsi}</p>
                     <hr className="my-2 border-t  w-full border-gray-300" />
                     <div className='flex gap-4 mt-4 mb-4 justify-center'>
                         <Button className='w-[45%] h-10 rounded-md bg-[#000000] hover:bg-[#F0F0F0] hover:text-black text-white border-1 border-black'>
@@ -59,24 +159,24 @@ const Item = () => {
                         </Button>
                     </div>
                     <hr className="my-2 border-t  w-full border-gray-300" />
-                    <p className='text-sm font-bold'>Category: <span className='text-sm font-normal text-gray-500'>Gadget</span></p>
-                    <p className='text-sm font-bold'>Warranty: <span className='text-sm font-normal text-gray-500'>No</span></p>
+                    <p className='text-sm font-bold'>Category: <span className='text-sm font-normal text-gray-500'>{namaKategori(barang.id_kategori)}</span></p>
+                    <p className='text-sm font-bold'>Warranty: <span className='text-sm font-normal text-gray-500'>{namaGaransi(barang.akhir_garansi)}</span></p>
                 </div>
             </div>
             <div className='flex flex-col w-full h-full items-center justify-start'>
                 <p className="mt-32 text-3xl font-semibold text-black mb-6">Related Products</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4">
-                    {items.map((item, index) => (
-                        <Link
+                    {data.map((item, index) => (
+                        <div
                             key={index}
-                            to={item.link}
+                            onClick={() => fetchBarangById(item.id_barang)}
                             className="w-64 h-72 bg-white p-4 shadow-md rounded-lg border flex flex-col items-start  hover:scale-105 transition-transform"
                         >
-                            <img src={item.image} alt={item.name} className="h-[60%] w-full object-contain" />
-                            <p className='mt-2 font-light text-gray-400 text-xs'>{item.namaPenitip}</p>
-                            <p className="mt-2 font-normal break-words whitespace-normal ">{item.name}</p>
-                            <p className='font-bold text-green-900 text-md'>Rp {item.price}</p>
-                        </Link>
+                            <img src={item.foto} alt={item.nama} className="h-[60%] w-full object-contain" />
+                            <p className='mt-2 font-light text-gray-400 text-xs'>{item.berat}</p>
+                            <p className="mt-2 font-normal break-words whitespace-normal ">{item.nama}</p>
+                            <p className='font-bold text-green-900 text-md'>Rp {item.harga}</p>
+                        </div>
                     ))}
                 </div>
             </div>
