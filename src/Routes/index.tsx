@@ -12,6 +12,7 @@ import EditProfile from "../Pages/profile_pembeli/edit_profile";
 import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
+import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
 import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli";
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
 			{
 				path: "penitip",
 				element: <AdminPenitip />,
+			},
+			{
+				path: "pegawai",
+				element: <AdminPegawai />,
 			},
 		],
 	},
