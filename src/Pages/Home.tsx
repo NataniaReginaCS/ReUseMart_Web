@@ -64,50 +64,15 @@ const Home = () => {
     const [data, setData] = useState<Barang[]>([]);
     const [kategori, setKategori] = useState<Kategori[]>([]);
 
-    const fetchBarang = () => {
-		setIsLoading(true);
-		FetchBarang()
-			.then((response) => {
-				setData(response.barang);
-				setIsLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-				setIsLoading(false);
-			});
-	};
-
-    const fetchKategori = () => {
-        setIsLoading(true);
-        FetchKategori()
-            .then((response) => {
-                    setKategori(response.data);
-                    setIsLoading(false);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    setIsLoading(false);
-                });
-    }
-    
     const fetchBarangByKategori = (id_kategori: string) => {
         setIsLoading(true);
-        FetchBarangByKategori(id_kategori)
-            .then((response) => {
-                const barang = response.data;
-                setIsLoading(false);
-
-                navigate('/shop', {state: { barang }});
-            })
-            .catch((err) => {
-                console.log(err);
-                setIsLoading(false);
-            });
+        const selectedKategori = Number(id_kategori) + Number(id_kategori) * 10;
+        console.log("Selected Kategori:", selectedKategori);  
+        navigate('/shop', { state: { selectedKategori } });
     };
 
+
 	useEffect(() => {
-		fetchBarang();
-        fetchKategori();
 	}, []);
     
     const [date, setDate] = React.useState<Date | undefined>(new Date())

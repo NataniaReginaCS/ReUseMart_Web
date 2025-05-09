@@ -169,26 +169,43 @@ const Shop = () => {
 	};
 
     const location = useLocation();
-    
-        useEffect(() => {
-            const params = new URLSearchParams(location.search);
-            const searchQuery = params.get("search");
 
-            if (searchQuery) {
-                setSearchTerm(searchQuery);
-                handleSearch(searchQuery); 
-            }else {
-                fetchBarang(); 
-            }
-            if (location.pathname === "/shop") {
-                resetFilters();
-                fetchBarang();
-            }
+    const fetchdariHome = (id_kategori: string) => {
+        setIsLoading(true);
+        FetchBarangByKategori(id_kategori)
+            .then((response) => {
+                setData(response.data);
+                setAllData(response.data); 
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    }
 
-        }, [location.state?.refresh, location.pathname, location.search]);
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const searchQuery = params.get("search");
+
+        if (location.state?.selectedKategori) {
+            console.log("Selected Kategori di ShopPage:", location.state.selectedKategori);
+            setSelectedKategori(location.state.selectedKategori);
+            fetchdariHome(location.state.selectedKategori);
+        } else if (location.pathname == "/shop") {
+            resetFilters();
+            fetchBarang();
+        }  
+
+        if (searchQuery) {
+            setSearchTerm(searchQuery);
+            handleSearch(searchQuery);
+        } 
+
+    }, [location.state?.refresh, location.pathname, location.search, location.state]);
+
     
     const [warranty, setWarranty] = useState<boolean | null>(null);
-    const barangByKategori = location.state?.barang || null; 
     return (
         <div className='flex flex-col h-full bg-white p-12'>
             <div className="flex items-center gap-2">
@@ -308,26 +325,26 @@ const Shop = () => {
                     </div>
                     <div className='h-full mt-8'>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-6">
-                                {(barangByKategori != null ? barangByKategori : data).map((item: any, index: React.Key) => (
-                                    <div
+                            {data.map((item: any, index: React.Key) => (
+                                <div
                                     key={index}
                                     onClick={() => fetchBarangById(item.id_barang)}
                                     className="w-64 h-72 bg-white p-4 shadow-md rounded-lg border flex flex-col items-start hover:scale-105 transition-transform"
-                                        >                                        
-                                        <img src={item.foto} alt={item.name || item.nama} className="h-[60%] w-full object-contain" />
-                                        <p className='mt-2 font-light text-gray-400 text-xs'>
-                                            {namaKategori(item.id_kategori)};
-                                        </p>
-                                        <p className="mt-2 font-normal break-words whitespace-normal ">
-                                            {item.nama}
-                                        </p>
-                                        <p className='font-bold text-green-900 text-md'>
-                                            Rp {item.harga}
-                                        </p>
-                                    </div>
-                                ))} 
+                                >                                        
+                                    <img src={item.foto} alt={item.name || item.nama} className="h-[60%] w-full object-contain" />
+                                    <p className='mt-2 font-light text-gray-400 text-xs'>
+                                        {namaKategori(item.id_kategori)}
+                                    </p>
+                                    <p className="mt-2 font-normal break-words whitespace-normal ">
+                                        {item.nama}
+                                    </p>
+                                    <p className='font-bold text-green-900 text-md'>
+                                        Rp {item.harga}
+                                    </p>
+                                </div>
+                            ))}
                             </div>
-                            {barangByKategori == null && data.length === 0 && (
+                            {data.length === 0 && (
                                 <div className="w-full h-72 flex items-center justify-center">
                                     <p className="text-gray-500">No items found</p>
                                 </div>
