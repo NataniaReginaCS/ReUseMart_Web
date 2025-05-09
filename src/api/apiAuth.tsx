@@ -39,6 +39,7 @@ const LoginApi = async (data: { email: string, password: string }) => {
                 "Content-Type": "application/json",
             },
         });
+        console.log(response.data);
         return response.data;
     } catch (error: any) {
         throw error.response?.data;

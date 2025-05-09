@@ -10,7 +10,7 @@ type ProtectedRoutesProps = {
 
 const ProtectedRoutes = ({ allowedRoles, children }: ProtectedRoutesProps) => {
 	const navigate = useNavigate();
-	const token = localStorage.getItem("token");
+	const token = sessionStorage.getItem("token");
 	const [role, setRole] = useState();
 	const [loading, setLoading] = useState(false);
 
@@ -24,6 +24,7 @@ const ProtectedRoutes = ({ allowedRoles, children }: ProtectedRoutesProps) => {
 						Authorization: `Bearer ${token}`,
 					},
 				});
+				console.log(response);
 				setRole(response.data.role);
 			} catch (error: any) {
 				console.error("Error fetching role:", error);

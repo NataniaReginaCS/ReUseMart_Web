@@ -21,8 +21,7 @@ const SidebarNavAdmin = () => {
     const handleLogout = () => {
         Logout()
             .then((response) => {
-                localStorage.removeItem("token");
-                localStorage.removeItem("role");
+                sessionStorage.removeItem("token");
                 toast.success("Logout successful!");
                 navigate("/login");
             })

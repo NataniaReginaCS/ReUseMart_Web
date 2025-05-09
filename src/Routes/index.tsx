@@ -24,6 +24,9 @@ import ProfileOrganisasi from "../Pages/profile_organisasi/ProfileOrganisasi";
 import OrderOrganisasi from "../Pages/profile_organisasi/OrderOrganisasi";
 import RequestDonasi from "../Pages/profile_organisasi/RequestDonasi";
 
+//Penitip
+import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
+
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -71,16 +74,35 @@ const router = createBrowserRouter([
 		],
 	},
 	{
+		path: "/penitip",
+		element: 
+			<ProtectedRoutes allowedRoles={["Penitip"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		,
+		children: [
+			{
+				path: "profile",
+				element: <ProfilePenitip />,
+			},
+		],
+	},
+	{
+		element: <MainLayout />,
+		children: [
+			{
+				path: "/",
+				element: <Home />,
+			},
+		],
+	},
+	{
 		element: (
 			<ProtectedRoutes allowedRoles={["Pembeli"]}>
 				<MainLayout />
 			</ProtectedRoutes>
 		),
 		children: [
-			{
-				path: "/",
-				element: <Home />,
-			},
 			{
 				path: "/shop",
 				element: <Shop />,
