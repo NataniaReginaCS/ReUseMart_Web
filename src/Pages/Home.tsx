@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Calendar } from "../components/ui/calendar"
 import homeimage from '../assets/images/HomeImage.png';
 import item1 from '../assets/images/item1.png';
@@ -12,18 +12,19 @@ import { Button } from "../components/ui/button"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faTruckFast, faHeadset, faBagShopping, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { FetchBarang, FetchBarangByKategori, FetchKategori } from '../api/ApiBarang';
 
 const categories = [
-    { name: "Electronics & Gadgets", image: item1, link: "/shop" },
-    { name: "Clothing & Accessories", image: item1, link: "/shop" },
-    { name: "Home Furnishings", image: item1, link: "/shop" },
-    { name: "Books & School", image: item1, link: "/shop" },
-    { name: "Hobbies & Collectibles", image: item1, link: "/shop" },
-    { name: "Baby & Kids ", image: item1, link: "/shop" },
-    { name: "Automotive", image: item1, link: "/shop" },
-    { name: "Garden & Outdoor ", image: item1, link: "/shop" },
-    { name: "Office & Industrial ", image: item1, link: "/shop" },
-    { name: "Cosmetics & Skincare", image: item1, link: "/shop" },
+    { name: "Electronics & Gadgets", image: item1, link: "/shop", id: "0"},
+    { name: "Clothing & Accessories", image: item1, link: "/shop", id: "1" },
+    { name: "Home Furnishings", image: item1, link: "/shop", id: "2" },
+    { name: "Books & School", image: item1, link: "/shop", id: "3" },
+    { name: "Hobbies & Collectibles", image: item1, link: "/shop", id: "4" },
+    { name: "Baby & Kids ", image: item1, link: "/shop", id: "5" },
+    { name: "Automotive", image: item1, link: "/shop", id:"6" },
+    { name: "Garden & Outdoor ", image: item1, link: "/shop", id:"7" },
+    { name: "Office & Industrial ", image: item1, link: "/shop", id: "8" },
+    { name: "Cosmetics & Skincare", image: item1, link: "/shop", id: "9" },
 ];
 
 const team = [
@@ -33,7 +34,47 @@ const team = [
     { name: "Jeff Bezos", role: "CEO & Founder", sosmed: "@asu", image: item1, },
 ]
 
+type Barang = {
+    id_barang: number;
+    id_penitipan: number;
+    id_kategori: string;
+    id_hunter: string;
+    nama: string;
+    deskripsi: string;
+    foto: string;
+    berat: number;
+    isGaransi: boolean;
+    akhir_garansi: string;
+    status_perpanjangan: string;
+    harga: number;
+    tanggal_akhir: string;
+    batas_ambil: string;
+    status_barang: string;
+    tanggal_ambil: string;
+};
+
+type Kategori = {
+    id_kategori: string;
+    nama: string;
+}
+
 const Home = () => {
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const [data, setData] = useState<Barang[]>([]);
+    const [kategori, setKategori] = useState<Kategori[]>([]);
+
+    const fetchBarangByKategori = (id_kategori: string) => {
+        setIsLoading(true);
+        const selectedKategori = Number(id_kategori) + Number(id_kategori) * 10;
+        console.log("Selected Kategori:", selectedKategori);  
+        navigate('/shop', { state: { selectedKategori } });
+    };
+
+
+	useEffect(() => {
+	}, []);
+    
     const [date, setDate] = React.useState<Date | undefined>(new Date())
 
     return (
@@ -84,14 +125,14 @@ const Home = () => {
                 <div className='h-full'>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 ">
                         {categories.map((category, index) => (
-                            <Link
+                            <div
                                 key={index}
-                                to={category.link}
+                                onClick={() => fetchBarangByKategori(category.id)}
                                 className="w-52 h-52 bg-white p-4 shadow-md rounded-lg border flex flex-col items-center justify-center hover:scale-105 transition-transform"
                             >
                                 <img src={category.image} alt={category.name} className="h-20 w-20 object-contain" />
                                 <p className="mt-2 font-semibold text-center">{category.name}</p>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 </div>

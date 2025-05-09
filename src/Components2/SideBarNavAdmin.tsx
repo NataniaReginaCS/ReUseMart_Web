@@ -11,9 +11,9 @@ const SidebarNavAdmin = () => {
     const navigate = useNavigate();
 
     const navItems = [
-        { label: "Employees", icon: <MdDashboard />, path: "/admin/penitip" },
+        { label: "Employees", icon: <MdDashboard />, path: "/admin/pegawai" },
         { label: "Organizations", icon: <FaArrowsRotate />, path: "/admin/organisasi" },
-        { label: "Penitip", icon: <HiOutlineShoppingBag />, path: "/cart" },
+        { label: "Penitip", icon: <HiOutlineShoppingBag />, path: "/admin/penitip" },
         { label: "Buyer", icon: <HiOutlineShoppingBag />, path: "/cart" },
         { label: "Merchandise", icon: <HiOutlineShoppingBag />, path: "/cart" },
     ];
@@ -21,8 +21,7 @@ const SidebarNavAdmin = () => {
     const handleLogout = () => {
         Logout()
             .then((response) => {
-                localStorage.removeItem("token");
-                localStorage.removeItem("role");
+                sessionStorage.removeItem("token");
                 toast.success("Logout successful!");
                 navigate("/login");
             })

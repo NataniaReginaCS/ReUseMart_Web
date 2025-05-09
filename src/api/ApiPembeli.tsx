@@ -1,7 +1,7 @@
 import useAxios from ".";
 
 const getToken = () => {
-    const token = localStorage.getItem("token") || null;
+    const token = sessionStorage.getItem("token") || null;
     return token;
 }
 
