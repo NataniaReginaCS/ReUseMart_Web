@@ -36,7 +36,7 @@ const Login = () => {
 				if (response.role === "Pembeli") {
 					navigate("/");
 				} else if (response.role === "Organisasi") {
-					navigate("/homeOrganisasi");
+					navigate("/profile-organisasi");
 				} else if (response.role === "CS") {
 
 				} else if (response.role === "Admin") {
@@ -45,6 +45,8 @@ const Login = () => {
 
 				} else if (response.role === "Owner") {
 
+				} else if (response.role === "Penitip") {
+					navigate("/");
 				}
 			})
 			.catch((error) => {
