@@ -3,7 +3,7 @@ import { getToken } from "./ApiPembeli";
 
 const FetchPenitip = async () => {
     try {
-        const response = await useAxios.get("/fetchPenitip", {
+        const response = await useAxios.get("/fetchPenitipByLogin", {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`,
