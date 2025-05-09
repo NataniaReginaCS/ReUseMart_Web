@@ -115,7 +115,7 @@ const AdminPenitip = () => {
                             </p>
                             <button
                                 className="font-medium bg-[#1ee04b] rounded-lg text-white w-30 cursor-pointer flex text-center items-center justify-center gap-1 p-1"
-                                onClick={() => setShowModalAdd(true)} // Open the modal
+                                onClick={() => setShowModalAdd(true)} 
                             >
                                 Add Penitip
                             </button>

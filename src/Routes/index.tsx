@@ -12,6 +12,7 @@ import EditProfile from "../Pages/profile_pembeli/edit_profile";
 import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
+import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
 import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli";
@@ -23,6 +24,9 @@ import Unauthorized from "./Unauthorized";
 import ProfileOrganisasi from "../Pages/profile_organisasi/ProfileOrganisasi";
 import OrderOrganisasi from "../Pages/profile_organisasi/OrderOrganisasi";
 import RequestDonasi from "../Pages/profile_organisasi/RequestDonasi";
+
+//Penitip
+import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -68,6 +72,33 @@ const router = createBrowserRouter([
 				path: "penitip",
 				element: <AdminPenitip />,
 			},
+			{
+				path: "pegawai",
+				element: <AdminPegawai />,
+			},
+		],
+	},
+	{
+		path: "/penitip",
+		element: 
+			<ProtectedRoutes allowedRoles={["Penitip"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		,
+		children: [
+			{
+				path: "profile",
+				element: <ProfilePenitip />,
+			},
+		],
+	},
+	{
+		element: <MainLayout />,
+		children: [
+			{
+				path: "/",
+				element: <Home />,
+			},
 		],
 	},
 	{
@@ -98,10 +129,6 @@ const router = createBrowserRouter([
 			</ProtectedRoutes>
 		),
 		children: [
-			{
-				path: "/",
-				element: <Home />,
-			},
 			{
 				path: "/shop",
 				element: <Shop />,

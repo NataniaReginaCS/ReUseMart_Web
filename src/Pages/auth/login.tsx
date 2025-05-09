@@ -11,7 +11,7 @@ const Login = () => {
 	const passwordRef = useRef<any>(null);
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
+		const token = sessionStorage.getItem("token");
 		if (token) {
 			toast.error("Anda sudah login!");
 			navigate("/");
@@ -50,8 +50,10 @@ const Login = () => {
 				}
 			})
 			.catch((error) => {
-				toast.error(error.response.data.message);
-				alert("Login failed. Please check your credentials.");
+
+				console.log(error);
+				toast.error(error.message);
+
 			});
 
 

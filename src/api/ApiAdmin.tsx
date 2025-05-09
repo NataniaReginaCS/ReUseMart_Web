@@ -99,8 +99,6 @@ const DeletePenitip = async (idPenitip: number) => {
     }
 }
 
-
-
 export const AddPenitip = (formData: FormData) => {
     return axios
         .post("http://127.0.0.1:8000/api/addPenitip", formData, {
@@ -116,5 +114,59 @@ export const AddPenitip = (formData: FormData) => {
         });
 };
 
+const FetchPegawai = async () => {
+    try {
+        const response = await useAxios.get("/fetchPegawai", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response.data;
+    }
+};
 
-export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip };
+const UpdatePegawai = async (data: FormData, idPegawai: number) => {
+    try {
+        const response = await useAxios.post(`/updatePegawai/${idPegawai}`, data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response.data;
+    }
+};
+
+const DeletePegawai = async (idPegawai: number) => {
+    try {
+        const response = await useAxios.delete(`/deletePegawai/${idPegawai}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response.data;
+    }
+}
+
+const AddPegawai = async (data: FormData) => {
+    try {
+        const response = await useAxios.post(`/addPegawai`, data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+};
+export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip, AddPegawai, FetchPegawai, UpdatePegawai, DeletePegawai };
