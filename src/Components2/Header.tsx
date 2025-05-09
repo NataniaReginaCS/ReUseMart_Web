@@ -4,6 +4,7 @@ import Freiren from '../assets/images/Frieren.jpg';
 import noprofile from '../assets/images/noprofile.jpg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FetchSearchBarang } from '../api/ApiBarang';
+import useAxios from '../api/index';
 
 const Header = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -40,9 +41,23 @@ const Header = () => {
     };
         
     useEffect(() => {
-        const storedRole = localStorage.getItem('role');
-        setRole(storedRole);
-    }, []);
+        const fetchRole = async () => {
+            try {
+                const response = await useAxios.get("/cekRole", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                    },
+                });
+                setRole(response.data.role);
+            } catch (error: any) {
+                console.error("Error fetching role:", error);
+            }
+        };
+    
+        fetchRole(); 
+    }, []); 
+    
 
     // Roles that should NOT see nav options or search
     const isPrivileged = role === 'Admin' || role === 'Organisasi';

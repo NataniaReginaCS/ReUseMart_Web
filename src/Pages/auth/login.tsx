@@ -11,7 +11,7 @@ const Login = () => {
 	const passwordRef = useRef<any>(null);
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
+		const token = sessionStorage.getItem("token");
 		if (token) {
 			toast.error("Anda sudah login!");
 			navigate("/");
@@ -25,18 +25,20 @@ const Login = () => {
 			password: passwordRef.current?.value,
 		}
 
+		console.log(data);
+		
+
 		LoginApi(data)
 			.then((response) => {
-
-				localStorage.setItem("token", response.token);
-				localStorage.setItem("role", response.role);
-
+				console.log(response);
+				sessionStorage.setItem("token", response.token);
+				
 				toast.success("Login successful!");
-
+				
 				if (response.role === "Pembeli") {
 					navigate("/");
 				} else if (response.role === "Organisasi") {
-					navigate("/homeOrganisasi");
+					navigate("/");
 				} else if (response.role === "CS") {
 
 				} else if (response.role === "Admin") {
@@ -45,13 +47,15 @@ const Login = () => {
 
 				} else if (response.role === "Owner") {
 
+				} else if(response.role === "Penitip"){
+					navigate("/");
 				}
 			})
 			.catch((error) => {
-				toast.error(
-					error.response?.data?.message || "Login failed. Please try again."
-				);
-				alert("Login failed. Please check your credentials.");
+
+				console.log(error);
+				toast.error(error.message);
+
 			});
 
 

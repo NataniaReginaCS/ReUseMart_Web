@@ -17,7 +17,7 @@ const Register_Pembeli = () => {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
+		const token = sessionStorage.getItem("token");
 		if (token) {
 			toast.error("Anda sudah login!");
 			navigate("/");
