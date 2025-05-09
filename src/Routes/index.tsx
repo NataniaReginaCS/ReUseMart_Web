@@ -103,6 +103,27 @@ const router = createBrowserRouter([
 	},
 	{
 		element: (
+			<ProtectedRoutes allowedRoles={["Organisasi"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		), children: [
+
+			{
+				path: "/profile-organisasi",
+				element: <ProfileOrganisasi />,
+			},
+			{
+				path: "/order-organisasi",
+				element: <OrderOrganisasi />,
+			},
+			{
+				path: "/request-donasi",
+				element: <RequestDonasi />,
+			},
+		]
+	},
+	{
+		element: (
 			<ProtectedRoutes allowedRoles={["Pembeli"]}>
 				<MainLayout />
 			</ProtectedRoutes>
@@ -144,18 +165,7 @@ const router = createBrowserRouter([
 				path: "/cart",
 				element: <Cart />,
 			},
-			{
-				path: "/profile-organisasi",
-				element: <ProfileOrganisasi />,
-			},
-			{
-				path: "/order-organisasi",
-				element: <OrderOrganisasi />,
-			},
-			{
-				path: "/request-donasi",
-				element: <RequestDonasi />,
-			},
+
 		],
 	},
 ]);

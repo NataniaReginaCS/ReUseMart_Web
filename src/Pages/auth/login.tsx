@@ -38,7 +38,8 @@ const Login = () => {
 				if (response.role === "Pembeli") {
 					navigate("/");
 				} else if (response.role === "Organisasi") {
-					navigate("/");
+          		navigate("/profile-organisasi");
+
 				} else if (response.role === "CS") {
 
 				} else if (response.role === "Admin") {
@@ -46,8 +47,8 @@ const Login = () => {
 				} else if (response.role === "Gudang") {
 
 				} else if (response.role === "Owner") {
+} else if (response.role === "Penitip") 
 
-				} else if(response.role === "Penitip"){
 					navigate("/");
 				}
 			})
