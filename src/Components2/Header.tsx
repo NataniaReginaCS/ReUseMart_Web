@@ -2,12 +2,44 @@ import { useEffect, useState } from 'react';
 import logo from '../assets/images/LOGO.png';
 import Freiren from '../assets/images/Frieren.jpg';
 import noprofile from '../assets/images/noprofile.jpg';
-import useAxios from '../api';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FetchSearchBarang } from '../api/ApiBarang';
+import useAxios from '../api/index';
 
 const Header = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
+    const location = useLocation();
     const [role, setRole] = useState<string | null>(null);
 
+    const handleShopClick = () => {
+        if (location.pathname === "/shop") {
+            navigate("/shop", { state: { refresh: Date.now() } });
+        } else {
+            navigate("/shop");
+        }
+    };
+
+    const searchBarang = (query: string) => {
+        setIsLoading(true);
+        if (query.trim() === "") {
+            setIsLoading(false);
+            navigate("/shop")
+            return;
+        }
+        FetchSearchBarang(query)
+            .then(() => {
+                setIsLoading(false);    
+                setSearchTerm("");
+                navigate(`/shop?search=${encodeURIComponent(query)}`)
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    };
+        
     useEffect(() => {
         const fetchRole = async () => {
             try {
@@ -47,12 +79,12 @@ const Header = () => {
                             >
                                 Home
                             </a>
-                            <a
-                                className="hover:bg-white hover:text-black h-full px-6 flex items-center justify-center"
-                                href="/shop"
+                            <button
+                            onClick={handleShopClick}
+                            className='hover:bg-white hover:text-black h-[80px] w-[150px] max-w-[100px] justify-center flex items-center'
                             >
                                 Shop
-                            </a>
+                            </button>
                             <a
                                 className="hover:bg-white hover:text-black h-full px-6 flex items-center justify-center"
                                 href="#"
@@ -70,11 +102,20 @@ const Header = () => {
                             <div className="w-2/3 bg-white text-black rounded-l">
                                 <input
                                     type="text"
-                                    className="w-full h-10 px-4 focus:outline-none"
+                                    className="w-full h-full rounded-l-sm px-4 focus:outline-none"
                                     placeholder="Search..."
+                                    value={searchTerm} 
+                                    onChange={(e) => setSearchTerm(e.target.value)} 
+                                    onKeyPress={(e) => {
+                                        if (e.key === "Enter") {   
+                                            searchBarang(searchTerm); 
+                                        }
+                                    }}
                                 />
                             </div>
-                            <button className="bg-[#F5CB58] text-black font-semibold px-4 h-10 rounded-r">
+                            <button className=' bg-[#F5CB58] font-semibold items-center flex rounded-r-sm px-4'
+                                onClick={() => searchBarang(searchTerm)}
+                            >
                                 Search
                             </button>
                         </div>
