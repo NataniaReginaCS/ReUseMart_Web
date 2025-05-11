@@ -25,21 +25,17 @@ const Login = () => {
 			password: passwordRef.current?.value,
 		}
 
-		console.log(data);
-		
-
 		LoginApi(data)
 			.then((response) => {
-				console.log(response);
+
 				sessionStorage.setItem("token", response.token);
-				
+
 				toast.success("Login successful!");
-				
+
 				if (response.role === "Pembeli") {
 					navigate("/");
 				} else if (response.role === "Organisasi") {
-          		navigate("/profile-organisasi");
-
+					navigate("/profile-organisasi");
 				} else if (response.role === "CS") {
 
 				} else if (response.role === "Admin") {
@@ -47,8 +43,8 @@ const Login = () => {
 				} else if (response.role === "Gudang") {
 
 				} else if (response.role === "Owner") {
-} else if (response.role === "Penitip") 
 
+				} else if (response.role === "Penitip") {
 					navigate("/");
 				}
 			})

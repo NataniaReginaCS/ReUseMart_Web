@@ -10,19 +10,20 @@ import {
 	faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 
-interface Pembeli{
+interface Pembeli {
 	id_pembeli: number;
 	nama: string;
 	email: string;
 	telepon: string;
 	foto: string;
+	poin: number;
 }
 
 interface AlamatUtama {
-	nama_alamat : string,
-	nama_kota : string,
-	nama_jalan : string,
-	kode_pos : Int16Array,
+	nama_alamat: string,
+	nama_kota: string,
+	nama_jalan: string,
+	kode_pos: Int16Array,
 }
 
 const Profile = () => {
@@ -32,7 +33,7 @@ const Profile = () => {
 	const [alamatUtama, setAlamatUtama] = useState<AlamatUtama>();
 	const [showNewPassword, setNewPassword] = useState(false);
 	const [showConfirmPassword, setConfirmPassword] = useState(false);
-	
+
 	const fetchProfile = () => {
 		fetchPembeli()
 			.then((response) => {
@@ -50,7 +51,7 @@ const Profile = () => {
 			.then((response) => {
 				console.log(response.alamatUtama);
 				setAlamatUtama(response.alamatUtama);
-				
+
 			})
 			.catch((error) => {
 				console.error("Error fetching address:", error);
@@ -174,7 +175,7 @@ const Profile = () => {
 						<div className="flex flex-col w-1/4 bg-white rounded-lg p-5 border-1 border-gray-300 text-start gap-y-4">
 							<p className="text-[#999999]">TOTAL POINT</p>
 							<p>
-								<strong>200 pts</strong>
+								<strong>{profile?.poin}</strong>
 							</p>
 							<p className="text-[#999999]">TOTAL ORDER</p>
 							<p>
