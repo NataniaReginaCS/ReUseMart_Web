@@ -199,16 +199,6 @@ const ModalEditPenitip = ({
 
                             </div>
 
-                            <div
-                                className="w-full rounded-2xl bg-[#B33739] p-2 text-center text-white cursor-pointer"
-                                onClick={handleClose}
-                            >
-                                <button className="w-full cursor-pointer">
-                                    {" "}
-                                    <strong>Cancel</strong>
-                                </button>
-                            </div>
-
                             <div className="w-full rounded-2xl bg-[#1F510F] p-2 text-center text-white cursor-pointer">
                                 <button type="submit" className="w-full cursor-pointer">
                                     {isPending ? (
@@ -216,6 +206,16 @@ const ModalEditPenitip = ({
                                     ) : (
                                         <strong>Edit</strong>
                                     )}
+                                </button>
+                            </div>
+
+                            <div
+                                className="w-full rounded-2xl bg-[#B33739] p-2 text-center text-white cursor-pointer"
+                                onClick={handleClose}
+                            >
+                                <button className="w-full cursor-pointer">
+                                    {" "}
+                                    <strong>Cancel</strong>
                                 </button>
                             </div>
                         </div>

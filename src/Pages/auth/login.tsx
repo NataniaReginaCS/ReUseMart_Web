@@ -28,8 +28,7 @@ const Login = () => {
 		LoginApi(data)
 			.then((response) => {
 
-				localStorage.setItem("token", response.token);
-				localStorage.setItem("role", response.role);
+				sessionStorage.setItem("token", response.token);
 
 				toast.success("Login successful!");
 

@@ -15,14 +15,14 @@ import { faArrowRight, faTruckFast, faHeadset, faBagShopping, faCartShopping } f
 import { FetchBarang, FetchBarangByKategori, FetchKategori } from '../api/ApiBarang';
 
 const categories = [
-    { name: "Electronics & Gadgets", image: item1, link: "/shop", id: "0"},
+    { name: "Electronics & Gadgets", image: item1, link: "/shop", id: "0" },
     { name: "Clothing & Accessories", image: item1, link: "/shop", id: "1" },
     { name: "Home Furnishings", image: item1, link: "/shop", id: "2" },
     { name: "Books & School", image: item1, link: "/shop", id: "3" },
     { name: "Hobbies & Collectibles", image: item1, link: "/shop", id: "4" },
     { name: "Baby & Kids ", image: item1, link: "/shop", id: "5" },
-    { name: "Automotive", image: item1, link: "/shop", id:"6" },
-    { name: "Garden & Outdoor ", image: item1, link: "/shop", id:"7" },
+    { name: "Automotive", image: item1, link: "/shop", id: "6" },
+    { name: "Garden & Outdoor ", image: item1, link: "/shop", id: "7" },
     { name: "Office & Industrial ", image: item1, link: "/shop", id: "8" },
     { name: "Cosmetics & Skincare", image: item1, link: "/shop", id: "9" },
 ];
@@ -67,14 +67,14 @@ const Home = () => {
     const fetchBarangByKategori = (id_kategori: string) => {
         setIsLoading(true);
         const selectedKategori = Number(id_kategori) + Number(id_kategori) * 10;
-        console.log("Selected Kategori:", selectedKategori);  
+        console.log("Selected Kategori:", selectedKategori);
         navigate('/shop', { state: { selectedKategori } });
     };
 
 
-	useEffect(() => {
-	}, []);
-    
+    useEffect(() => {
+    }, []);
+
     const [date, setDate] = React.useState<Date | undefined>(new Date())
 
     return (

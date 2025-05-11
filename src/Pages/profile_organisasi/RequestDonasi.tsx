@@ -18,12 +18,12 @@ import { FetchOrganisasi } from "../../api/ApiAdmin";
 import { SyncLoader } from "react-spinners";
 import ModalDeleteRequestDonasi from "./ModalDeleteRequest";
 import ModalEditOrganisasi from "../admin/Organisasi/ModalEditOrganisasi";
-import { fetchRequestDonasi } from "../../api/ApiOrganisasi";
+import { addRequestDonasi, fetchRequestDonasi } from "../../api/ApiOrganisasi";
 import { showRequestDonasiById } from "../../api/ApiOrganisasi";
-
+import ModalEditRequest from "./ModalEditRequest";
 
 type RequestDonasi = {
-    id: number;
+    id_request: number;
     id_organisasi: number;
     tanggal_request: string;
     deskripsi: string;
@@ -70,9 +70,34 @@ const RequestDonasi = () => {
         setShowModalDelete(true);
     };
 
+    const handleAddRequest = async () => {
+        if (!newDeskripsi.trim()) {
+            alert("Please enter a description.");
+            return;
+        }
+
+        const payload = {
+            deskripsi: newDeskripsi,
+            tanggal_request: new Date().toISOString().split("T")[0], // e.g. "2025-05-11"
+            status_terpenuhi: false,
+        };
+
+        try {
+            setIsLoading(true);
+            await addRequestDonasi(payload);
+            setNewDeskripsi("");
+            await fetchRequestDonasiById(); // Refresh data
+        } catch (error) {
+            console.error("Add request error:", error);
+            alert("Failed to add donation request.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
     const filteredData = data.filter(
         (req) =>
-            req.id.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
             req.deskripsi.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -156,10 +181,19 @@ const RequestDonasi = () => {
                 <div className="flex flex-col w-full h-full mt-5">
                     <p className="text-2xl font-bold">Add Request Donation</p>
                     <div className="grid w-full gap-1.5 mt-2">
-                        <Textarea className='h-30 border-green-500' placeholder="Type your comment here." id="message" />
+                        <Textarea
+                            className="h-30 border-green-500"
+                            placeholder="Type your request here."
+                            id="message"
+                            value={newDeskripsi}
+                            onChange={(e) => setNewDeskripsi(e.target.value)}
+                        />
                     </div>
-                    <Button className="max-w-[200px] mt-4 bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white border-1 border-black rounded-md h-10">
-                        <strong >Add Request</strong>
+                    <Button
+                        onClick={handleAddRequest}
+                        className="max-w-[200px] mt-4 bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white border-1 border-black rounded-md h-10"
+                    >
+                        <strong>Add Request</strong>
                     </Button>
 
                     {isLoading ? (
@@ -211,9 +245,9 @@ const RequestDonasi = () => {
                                         {data.map((req: any, index) => {
 
                                             return (
-                                                <tr key={req.id}>
+                                                <tr key={req.id_request}>
                                                     <td className="p-4 border-b border-blue-gray-50 w-[100px]">
-                                                        <p className="font-normal">{req.id}</p>
+                                                        <p className="font-normal">{req.id_request}</p>
                                                     </td>
                                                     <td className="p-4 border-b border-blue-gray-50 w-[500px]">
                                                         <p className="font-normal">{req.deskripsi}</p>
@@ -293,7 +327,15 @@ const RequestDonasi = () => {
                             </div>
                         </div>
                     )}
-
+                    {showModal && selectedOrganisasi && (
+                        <ModalEditRequest
+                            show={showModal}
+                            dataOrganisasi={selectedOrganisasi}
+                            idRequest={selectedOrganisasi.id_organisasi}
+                            onClose={() => setShowModal(false)}
+                            onSuccessEdit={fetchRequestDonasiById}
+                        />
+                    )}
 
                     {showModalDelete && selectedOrganisasi && (
                         <ModalDeleteRequestDonasi
