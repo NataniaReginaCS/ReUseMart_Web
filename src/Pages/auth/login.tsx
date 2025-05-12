@@ -43,7 +43,7 @@ const Login = () => {
 				} else if (response.role === "Gudang") {
 
 				} else if (response.role === "Owner") {
-
+					navigate("/owner/donasi");
 				} else if (response.role === "Penitip") {
 					navigate("/");
 				}

@@ -30,6 +30,8 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
+import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
+import OwnerHistory from "../Pages/owner/history/OwnerHistory";
 
 const router = createBrowserRouter([
 	{
@@ -55,6 +57,24 @@ const router = createBrowserRouter([
 	{
 		path: "/reset-password",
 		element: <ResetPassword />,
+	},
+	{
+		path: "/owner",
+		element: (
+			<ProtectedRoutes allowedRoles={["Owner"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		),
+		children: [
+			{
+				path: "donasi",
+				element: <OwnerDonasi />,
+			},
+			{
+				path: "history",
+				element: <OwnerHistory />,
+			}
+		],
 	},
 	{
 		path: "/admin",
