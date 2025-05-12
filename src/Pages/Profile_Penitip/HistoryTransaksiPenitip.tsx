@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { useEffect, useState } from "react";
 
 import SidebarNav from "../../Components2/SideBarNav";
@@ -17,6 +17,7 @@ import {
 import { toast } from "react-toastify";
 
 import { SyncLoader } from "react-spinners";
+
 import ModalDetailHistory from "./ModalDetailHistory";
 
 const HistoryTransaksiPenitip = () => {

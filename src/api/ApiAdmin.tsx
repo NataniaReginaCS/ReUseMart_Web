@@ -169,4 +169,19 @@ const AddPegawai = async (data: FormData) => {
         throw err;
     }
 };
-export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip, AddPegawai, FetchPegawai, UpdatePegawai, DeletePegawai };
+
+const ResetPassword = async (id: number) => {
+    try{
+        const response = await useAxios.post(`/resetPassword/${id}` , {},{
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+        return response.data;
+
+    }catch( error: any){
+        throw error.response.data;
+    }
+}
+export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip, AddPegawai, FetchPegawai, UpdatePegawai, DeletePegawai, ResetPassword };

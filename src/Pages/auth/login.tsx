@@ -23,10 +23,7 @@ const Login = () => {
 		const data = {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
-		}
-
-		console.log(data);
-		
+		}		
 
 		LoginApi(data)
 			.then((response) => {
@@ -40,7 +37,7 @@ const Login = () => {
 				} else if (response.role === "Organisasi") {
 					navigate("/");
 				} else if (response.role === "CS") {
-
+					navigate("/CS/diskusi");
 				} else if (response.role === "Admin") {
 					navigate("/admin/organisasi");
 				} else if (response.role === "Gudang") {

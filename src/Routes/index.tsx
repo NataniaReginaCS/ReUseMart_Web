@@ -14,6 +14,8 @@ import Order from "../Pages/profile_pembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
 import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
+import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
+
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli";
 import RegisterOrganisasi from "../Pages/auth/register_organisasi";
@@ -27,6 +29,10 @@ import RequestDonasi from "../Pages/profile_organisasi/RequestDonasi";
 
 //Penitip
 import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
+import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
+
+//CS
+import Diskusi from "../Pages/Cs/Diskusi/Diskusi";
 
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -57,6 +63,20 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
+		path: "/CS",
+		element: (
+			<ProtectedRoutes allowedRoles={["CS"]}>
+				<Outlet />
+			</ProtectedRoutes>
+		),
+		children:[
+			{
+				path:"diskusi",
+				element:<Diskusi/>
+			}
+		]
+	},
+	{
 		path: "/admin",
 		element: (
 			<ProtectedRoutes allowedRoles={["Admin"]}>
@@ -76,19 +96,27 @@ const router = createBrowserRouter([
 				path: "pegawai",
 				element: <AdminPegawai />,
 			},
+			{
+				path: "reset-password-pegawai",
+				element: <ResetPasswordPegawai />,
+			}
 		],
 	},
 	{
 		path: "/penitip",
-		element: 
+		element: (
 			<ProtectedRoutes allowedRoles={["Penitip"]}>
 				<MainLayout />
 			</ProtectedRoutes>
-		,
+		),
 		children: [
 			{
 				path: "profile",
 				element: <ProfilePenitip />,
+			},
+			{
+				path: "history-transaksi",
+				element: <HistoryTransaksiPenitip />,
 			},
 		],
 	},
