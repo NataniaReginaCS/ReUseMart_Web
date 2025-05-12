@@ -28,27 +28,6 @@ const ModalAddPegawai = ({ onClose, show, onSuccessAdd }: ModalAddPegawaiProps) 
         setData({ ...data, [name]: value });
     };
 
-    const cekInput = () => {
-        const currentDate = new Date();
-        const c = currentDate.toISOString().split('T')[0];
-        if (data.id_role === 0) {
-            toast.error("Role is required");
-            return false;
-        }
-        if (data.password.length < 8) {
-            toast.error("Password is required and must be at least 8 characters long");
-            return false;
-        }
-        if (data.tanggal_masuk > c) {
-            toast.error("Hire date is required and must be in the past");
-            return false;
-        }
-        if (data.tanggal_lahir > c) {
-            toast.error("Born date is required and must be in the past");
-            return false;
-        }
-    }
-
     const submitData = (event: any) => {
         event.preventDefault();
         setIsPending(true);
@@ -62,16 +41,34 @@ const ModalAddPegawai = ({ onClose, show, onSuccessAdd }: ModalAddPegawaiProps) 
         formData.append("wallet", data.wallet.toString());
 
         AddPegawai(formData)
-            .then((response) => {
+            .then(() => {
                 setIsPending(false);
-                toast.success(response.message);
+                toast.success("Employee added successfully");
                 onSuccessAdd();
                 onClose();
             })
-            .catch((err) => {
-                console.log(err);
+            .catch(() => {
                 setIsPending(false);
-                toast.error("Email already exists");
+                const currentDate = new Date();
+                const c = currentDate.toISOString().split('T')[0];
+                if (data.id_role === 0) {
+                    toast.error("Role is required");
+                    return false;
+                } else if(data.nama === "") {
+                    toast.error("Name is required");
+                    return false;
+                } else if (data.password.length < 8) {
+                    toast.error("Password is required and must be at least 8 characters long");
+                    return false;
+                } else if (data.tanggal_masuk < data.tanggal_lahir) {
+                    toast.error("Hire date must be greater than born date");
+                    return false;
+                } else if (data.tanggal_lahir >= c ) {
+                    toast.error("Born date is required and must be in the past");
+                    return false;
+                } else {
+                    toast.error("Email already exists");
+                }
             });
     };
 
@@ -185,7 +182,7 @@ const ModalAddPegawai = ({ onClose, show, onSuccessAdd }: ModalAddPegawaiProps) 
                             />
                         </div>
                         <div className="w-full rounded-2xl bg-[#1F510F] p-2 text-center text-white cursor-pointer">
-                            <button type="submit" className="w-full" onClick={cekInput}>
+                            <button type="submit" className="w-full">
                                 {isPending ? (
                                     <SyncLoader color="#F5CB58" size={10} />
                                 ) : (
