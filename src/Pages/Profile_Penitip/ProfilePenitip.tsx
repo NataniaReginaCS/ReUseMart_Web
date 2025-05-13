@@ -9,7 +9,7 @@ import SidebarNav from "../../Components2/SideBarNav";
 import {
 	faHouse,
 } from "@fortawesome/free-solid-svg-icons";
-import { FetchPenitip } from "../../api/ApiAdmin";
+import { FetchPenitipByLogin } from "../../api/ApiPenitip";
 
 
 
@@ -24,11 +24,9 @@ const ProfilePenitip = () => {
     
 	
 	const fetchPenitip = () => {
-		FetchPenitip()
-			.then((response) => {
-                console.log("Profile Penitip:", response);
+		FetchPenitipByLogin()
+			.then((response) => {  
 				setProfile(response.penitip);
-				console.log(profile);
 			})
 			.catch((error) => {
 				console.error("Error fetching profile:", error);

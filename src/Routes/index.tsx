@@ -13,7 +13,9 @@ import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
-import AdminPenitip from "../Pages/cs/Penitip/CSPenitip";
+import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
+import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
+
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli";
 import RegisterOrganisasi from "../Pages/auth/register_organisasi";
@@ -27,11 +29,15 @@ import RequestDonasi from "../Pages/profile_organisasi/RequestDonasi";
 
 //Penitip
 import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
+import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
+
+//CS
+import Diskusi from "../Pages/Cs/Diskusi/Diskusi";
 
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
-import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
-import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
+import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
+import OwnerHistory from "../Pages/owner/history/OwnerHistory";
 
 const router = createBrowserRouter([
 	{
@@ -59,7 +65,25 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
-		path: "/cs",
+		path: "/owner",
+		element: (
+			<ProtectedRoutes allowedRoles={["Owner"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		),
+		children: [
+			{
+				path: "donasi",
+				element: <OwnerDonasi />,
+			},
+			{
+				path: "history",
+				element: <OwnerHistory />,
+			}
+		],
+	},
+	{
+		path: "/CS",
 		element: (
 			<ProtectedRoutes allowedRoles={["CS"]}>
 				<Outlet />
@@ -67,13 +91,11 @@ const router = createBrowserRouter([
 		),
 		children: [
 			{
-				path: "penitip",
-				element: <CSPenitip />,
-			},
-
-		],
+				path: "diskusi",
+				element: <Diskusi />
+			}
+		]
 	},
-
 	{
 		path: "/admin",
 		element: (
@@ -94,19 +116,27 @@ const router = createBrowserRouter([
 				path: "pegawai",
 				element: <AdminPegawai />,
 			},
+			{
+				path: "reset-password-pegawai",
+				element: <ResetPasswordPegawai />,
+			}
 		],
 	},
 	{
 		path: "/penitip",
-		element:
+		element: (
 			<ProtectedRoutes allowedRoles={["Penitip"]}>
 				<MainLayout />
 			</ProtectedRoutes>
-		,
+		),
 		children: [
 			{
 				path: "profile",
 				element: <ProfilePenitip />,
+			},
+			{
+				path: "history-transaksi",
+				element: <HistoryTransaksiPenitip />,
 			},
 		],
 	},
