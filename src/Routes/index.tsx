@@ -13,7 +13,7 @@ import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
-import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
+import AdminPenitip from "../Pages/cs/Penitip/CSPenitip";
 import Login from "../Pages/auth/login";
 import RegisterPembeli from "../Pages/auth/register_pembeli";
 import RegisterOrganisasi from "../Pages/auth/register_organisasi";
@@ -30,6 +30,8 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
+import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
+import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
 
 const router = createBrowserRouter([
 	{
@@ -57,6 +59,22 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
+		path: "/cs",
+		element: (
+			<ProtectedRoutes allowedRoles={["CS"]}>
+				<Outlet />
+			</ProtectedRoutes>
+		),
+		children: [
+			{
+				path: "penitip",
+				element: <CSPenitip />,
+			},
+
+		],
+	},
+
+	{
 		path: "/admin",
 		element: (
 			<ProtectedRoutes allowedRoles={["Admin"]}>
@@ -80,7 +98,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/penitip",
-		element: 
+		element:
 			<ProtectedRoutes allowedRoles={["Penitip"]}>
 				<MainLayout />
 			</ProtectedRoutes>
@@ -156,6 +174,10 @@ const router = createBrowserRouter([
 			{
 				path: "/order",
 				element: <Order />,
+			},
+			{
+				path: "/order-details/:id",
+				element: <OrderDetails />,
 			},
 			{
 				path: "/edit_profile",

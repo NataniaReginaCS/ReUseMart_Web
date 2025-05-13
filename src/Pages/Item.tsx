@@ -46,14 +46,15 @@ type Barang = {
 const Item = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const barang = location.state?.barang || null; 
+    const barang = location.state?.barang || null;
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<Barang[]>([]);
-    
+
     const fetchBarangById = (id_barang: number) => {
         setIsLoading(true);
         FetchBarangById(id_barang)
             .then((response) => {
+
                 const barang = response.data;
                 setIsLoading(false);
                 navigate('/item', { state: { barang } });
@@ -79,31 +80,31 @@ const Item = () => {
     };
 
     const namaKategori = (id_kategori: string) => {
-            if (parseInt(id_kategori) >= 0 && parseInt(id_kategori) < 11) {
-                return "Electronic & Gadget";
-            }else if (parseInt(id_kategori) >= 11 && parseInt(id_kategori) < 21) {
-                return "Clothing & Accessories";
-            }else if (parseInt(id_kategori) >= 21 && parseInt(id_kategori) < 31) {
-                return "Home Furnishings";
-            }
-            else if (parseInt(id_kategori) >= 31 && parseInt(id_kategori) < 41) {
-                return "Books & School Supplies";
-            }
-            else if (parseInt(id_kategori) >= 41 && parseInt(id_kategori) < 51) {
-                return "Hobbies & Collectibles";
-            }
-            else if (parseInt(id_kategori) >= 51 && parseInt(id_kategori) < 61) {
-                return "Baby & Kids Equipment";
-            }   else if (parseInt(id_kategori) >= 61 && parseInt(id_kategori) < 71) {
-                return "Automotive";
-            } else if (parseInt(id_kategori) >= 71 && parseInt(id_kategori) < 81) {
-                return "Garden & Outdoor Supplies";
-            } else if (parseInt(id_kategori) >= 81 && parseInt(id_kategori) < 91) {
-                return "Office & Industrial Equipment";
-            } else if (parseInt(id_kategori) >= 91 && parseInt(id_kategori) < 101) {
-                return "Cosmetics & Personal Care";
-            }
-    }        
+        if (parseInt(id_kategori) >= 0 && parseInt(id_kategori) < 11) {
+            return "Electronic & Gadget";
+        } else if (parseInt(id_kategori) >= 11 && parseInt(id_kategori) < 21) {
+            return "Clothing & Accessories";
+        } else if (parseInt(id_kategori) >= 21 && parseInt(id_kategori) < 31) {
+            return "Home Furnishings";
+        }
+        else if (parseInt(id_kategori) >= 31 && parseInt(id_kategori) < 41) {
+            return "Books & School Supplies";
+        }
+        else if (parseInt(id_kategori) >= 41 && parseInt(id_kategori) < 51) {
+            return "Hobbies & Collectibles";
+        }
+        else if (parseInt(id_kategori) >= 51 && parseInt(id_kategori) < 61) {
+            return "Baby & Kids Equipment";
+        } else if (parseInt(id_kategori) >= 61 && parseInt(id_kategori) < 71) {
+            return "Automotive";
+        } else if (parseInt(id_kategori) >= 71 && parseInt(id_kategori) < 81) {
+            return "Garden & Outdoor Supplies";
+        } else if (parseInt(id_kategori) >= 81 && parseInt(id_kategori) < 91) {
+            return "Office & Industrial Equipment";
+        } else if (parseInt(id_kategori) >= 91 && parseInt(id_kategori) < 101) {
+            return "Cosmetics & Personal Care";
+        }
+    }
     const fetchRelatedProducts = (id_kategori: string) => {
         setIsLoading(true);
         FetchRelatedProducts(id_kategori)
@@ -111,7 +112,7 @@ const Item = () => {
                 const relatedBarang = response.data;
                 setData(relatedBarang);
                 setIsLoading(false);
-                
+
             })
             .catch((err) => {
                 console.log(err);
@@ -119,9 +120,9 @@ const Item = () => {
             });
     };
 
-        useEffect(() => {
-            fetchRelatedProducts(barang.id_kategori);
-        }, []);
+    useEffect(() => {
+        fetchRelatedProducts(barang.id_kategori);
+    }, []);
 
 
     return (

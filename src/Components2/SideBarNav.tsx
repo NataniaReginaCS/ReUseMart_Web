@@ -13,7 +13,7 @@ const SidebarNav = () => {
 		Logout()
 			.then((response) => {
 				sessionStorage.removeItem("token");
-				
+
 				toast.success("Logout successful!");
 				navigate("/login");
 			})
@@ -40,11 +40,10 @@ const SidebarNav = () => {
 						<div
 							key={index}
 							onClick={() => navigate(item.path)}
-							className={`flex items-center gap-2 p-4 cursor-pointer transition-colors ${
-								isActive
+							className={`flex items-center gap-2 p-4 cursor-pointer transition-colors ${isActive
 									? "bg-[#E6E6E6] border-l-4 border-green-700 text-black"
 									: "text-gray-500 hover:bg-[#E6E6E6]"
-							}`}
+								}`}
 						>
 							{item.icon}
 							<p>{item.label}</p>
@@ -54,7 +53,7 @@ const SidebarNav = () => {
 			})}
 			<button
 				className={`flex items-center gap-2 p-4 cursor-pointer transition-colors hover:bg-[#E6E6E6] text-gray-500`}
-                onClick={handleLogout}
+				onClick={handleLogout}
 			>
 				<RiLogoutBoxRLine />
 				<p>LogOut</p>
