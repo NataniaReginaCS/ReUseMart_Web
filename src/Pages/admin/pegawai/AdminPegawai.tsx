@@ -220,19 +220,22 @@ const AdminPegawai = () => {
                                                 <td className={classes}>
                                                     <div className="flex flex-row justify-evenly gap-2">
 
+                                                    {getNamaRole(org.id_role).toLowerCase() !== "admin" && (
+                                                        <>
+                                                            <button
+                                                                className="font-medium  bg-[#F3B200] rounded-3xl text-white w-30  cursor-pointer flex text-center items-center justify-center gap-1 p-1 "
+                                                                onClick={() => handleEditClick(org)}
+                                                            >
+                                                                <IoPersonCircleOutline size={20} /> Edit
+                                                            </button>
 
-                                                        <button
-                                                            className="font-medium  bg-[#F3B200] rounded-3xl text-white w-30  cursor-pointer flex text-center items-center justify-center gap-1 p-1 "
-                                                            onClick={() => handleEditClick(org)}
-                                                        >
-                                                            <IoPersonCircleOutline size={20} /> Edit
-                                                        </button>
-
-                                                        <button className="font-medium bg-red-500 text-white rounded-3xl w-30 flex cursor-pointer text-center items-center justify-center gap-1 p-1"
-                                                            onClick={() => handleDeleteClick(org)}
-                                                        >
-                                                            <MdDelete size={20} /> Delete
-                                                        </button>
+                                                            <button className="font-medium bg-red-500 text-white rounded-3xl w-30 flex cursor-pointer text-center items-center justify-center gap-1 p-1"
+                                                                onClick={() => handleDeleteClick(org)}
+                                                            >
+                                                                <MdDelete size={20} /> Delete
+                                                            </button>
+                                                        </>
+                                                    )}
                                                     </div>
                                                 </td>
                                             </tr>

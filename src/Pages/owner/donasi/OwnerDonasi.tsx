@@ -132,7 +132,8 @@ const OwnerDonasi = () => {
             org.id_organisasi.toString().includes(searchTerm.toLowerCase()) ||
 			getNamaOrganisasi(org.id_organisasi).toLowerCase().includes(searchTerm.toLowerCase()) ||
 			org.tanggal_request.toString().includes(searchTerm.toLowerCase()) ||
-			org.deskripsi.toString().includes(searchTerm.toLowerCase())
+			org.deskripsi.toString().includes(searchTerm.toLowerCase()) ||
+			getyesOrNo(org.status_terpenuhi).toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	const indexOfLastData = currentPage * dataPerPage;
