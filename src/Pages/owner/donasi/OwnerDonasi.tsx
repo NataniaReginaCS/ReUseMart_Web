@@ -347,14 +347,14 @@ const OwnerDonasi = () => {
 						dataDetailDonasi={selectedDonasi}
 						id_detaildonasi={selectedDonasi.id_detaildonasi}
 						onClose={() => setShowModal(false)}
-						onSuccessEdit={fetchRequestDonasi}
+						onSuccessEdit={FetchDetailDonasi}
 					/>
 				)}
 				{showModalAdd && selectedDonasi && (
 					<ModalAddDonasi
 						show={showModalAdd}
 						onClose={() => setShowModalAdd(false)}
-						onSuccessAdd={fetchDetailDonasi}
+						onSuccessAdd={FetchDetailDonasi}
 						requestData={selectedDonasi}
 					/>
 				)}
@@ -364,7 +364,7 @@ const OwnerDonasi = () => {
 						dataDetailDonasi={selectedDonasi}
 						id_detaildonasi={selectedDonasi.id_detaildonasi}
 						onClose={() => setShowModalView(false)}
-						onSuccessEdit={fetchRequestDonasi}
+						onSuccessEdit={fetchRequest}
 					/>
 				)}
 			</div>

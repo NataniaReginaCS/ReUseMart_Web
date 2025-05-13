@@ -31,8 +31,8 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
 
 //CS
-import Diskusi from "../Pages/cs/Diskusi/Diskusi";
-import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
+import Diskusi from "../Pages/Cs/Diskusi/DiskusiHome";
+import CSPenitip from "../Pages/Cs/Penitip/CSPenitip";
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";

@@ -11,6 +11,7 @@ import {
 } from "flowbite-react";
 
 import { updateDetailDonasi } from "../../../api/ApiOwner";
+import { fetchRequestDonasi, fetchDetailDonasi } from "../../../api/ApiOwner";
 
 interface ModalEditDonasiProps {
 	dataDetailDonasi: {
@@ -59,7 +60,7 @@ const ModalEditDonasi = ({
 				setIsPending(false);
 				toast.success(response.message);
 				onSuccessEdit();
-
+				
 				handleClose();
 			})
 			.catch((err) => {

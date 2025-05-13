@@ -21,6 +21,7 @@ import ModalEditOrganisasi from "../admin/Organisasi/ModalEditOrganisasi";
 import { addRequestDonasi, fetchRequestDonasi } from "../../api/ApiOrganisasi";
 import { showRequestDonasiById } from "../../api/ApiOrganisasi";
 import ModalEditRequest from "./ModalEditRequest";
+import { toast } from "react-toastify";
 
 type RequestDonasi = {
     id_request: number;
@@ -78,7 +79,7 @@ const RequestDonasi = () => {
 
         const payload = {
             deskripsi: newDeskripsi,
-            tanggal_request: new Date().toISOString().split("T")[0], // e.g. "2025-05-11"
+            tanggal_request: new Date().toISOString().split("T")[0], 
             status_terpenuhi: false,
         };
 
@@ -86,7 +87,8 @@ const RequestDonasi = () => {
             setIsLoading(true);
             await addRequestDonasi(payload);
             setNewDeskripsi("");
-            await fetchRequestDonasiById(); // Refresh data
+            toast.success("Request added successfully!");
+            await fetchRequestDonasiById(); 
         } catch (error) {
             console.error("Add request error:", error);
             alert("Failed to add donation request.");

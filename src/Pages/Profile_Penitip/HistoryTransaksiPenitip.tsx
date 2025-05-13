@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { useEffect, useState } from "react";
 
-import SidebarNav from "../../Components2/SideBarNav";
+import SidebarNavPenitip from "../../Components2/SideBarNavPenitip";
 import { FetchHistoryTransaksi } from "../../api/ApiPenitip";
 import {
 	Carousel,
@@ -108,7 +108,7 @@ const HistoryTransaksiPenitip = () => {
 				</ol>
 			</div>
 			<div className="flex flex-row gap-4">
-				<SidebarNav></SidebarNav>
+				<SidebarNavPenitip></SidebarNavPenitip>
 				<div className="flex flex-col w-full min-h-[500px] mt-5 border-1 border-gray-300 rounded-lg">
 					<p className="text-2xl font-bold ml-8 mt-5">Order History</p>
 					<Carousel>

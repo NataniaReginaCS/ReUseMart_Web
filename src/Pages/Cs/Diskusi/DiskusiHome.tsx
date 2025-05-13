@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FetchOrganisasi } from "../../../api/ApiAdmin";
 import { SyncLoader } from "react-spinners";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { MdDelete } from "react-icons/md";
 import Header from "../../../Components2/Header";
-import SideBarNavAdmin from "../../../Components2/SideBarNavAdmin";
+import SideBarNavCS from "../../../Components2/SideBarNavCS";
 import { FetchDiskusiCS } from "../../../api/ApiDiskusi";
 import ModalDetailDiskusi from "./ModalDetailDiskusi";
+
 
 
 type Diskusi = {
@@ -81,12 +78,12 @@ const Diskusi = () => {
 		"Action",
 	];
 
-	return (
+	return (	
 		<>
 			<Header />
 			<div className="flex max-lg:flex-wrap p-5 gap-5 lg:flex-nowrap lg:p-20 lg:gap-10 ">
 
-				<SideBarNavAdmin></SideBarNavAdmin>
+				<SideBarNavCS></SideBarNavCS>
 
 				{isLoading ? (
 					<div className="justify-center items-center text-center ">
