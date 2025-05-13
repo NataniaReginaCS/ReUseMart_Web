@@ -15,14 +15,13 @@ import { UpdatePegawai } from "../../../api/ApiAdmin";
 interface ModalEditPegawaiProps {
 	dataPegawai: {
 		id_pegawai: number;
-        id_role: number;
+		id_role: number;
 		nama: string;
-        email: string;
-        password: string;
-        tanggal_masuk: Date;
-        tanggal_lahir: Date;
-        wallet: number;
-
+		email: string;
+		password: string;
+		tanggal_masuk: Date;
+		tanggal_lahir: Date;
+		wallet: number;
 	};
 	onClose: () => void;
 	idPegawai: number;
@@ -37,13 +36,13 @@ const ModalEditPegawai = ({
 	show,
 	onSuccessEdit,
 }: ModalEditPegawaiProps) => {
-
-    const [data, setData] = useState({
-        ...dataPegawai,
-        wallet: dataPegawai.wallet ?? 0,
-        tanggal_masuk: new Date(dataPegawai.tanggal_masuk),
-        tanggal_lahir: new Date(dataPegawai.tanggal_lahir),
-    }); useState(dataPegawai);
+	const [data, setData] = useState({
+		...dataPegawai,
+		wallet: dataPegawai.wallet ?? 0,
+		tanggal_masuk: new Date(dataPegawai.tanggal_masuk),
+		tanggal_lahir: new Date(dataPegawai.tanggal_lahir),
+	});
+	useState(dataPegawai);
 	const [isPending, setIsPending] = useState(false);
 
 	const handleClose = () => {
@@ -51,51 +50,73 @@ const ModalEditPegawai = ({
 	};
 
 	const cekInput = () => {
-        const currentDate = new Date();
-        const c = currentDate.toISOString().split('T')[0];
-        if (data.id_role === 0) {
-            toast.error("Role is required");
-            return false;
-        }
-        if (data.password.length < 8) {
-            toast.error("Password is required and must be at least 8 characters long");
-            return false;
-        }
-		if (data.tanggal_masuk.toISOString().split('T')[0] > c) {
-            toast.error("Hire date is required and must be in the past");
-            return false;
-        }
-        if (data.tanggal_lahir.toISOString().split('T')[0] > c) {
-            toast.error("Born date is required and must be in the past");
-            return false;
-        }
-    }
+		const currentDate = new Date();
+		const c = currentDate.toISOString().split("T")[0];
+		if (data.id_role === 0) {
+			toast.error("Role is required");
+			return false;
+		}
+		if (
+			data.password &&
+			data.password.trim() !== "" &&
+			data.password.length < 8
+		) {
+			toast.error("Password must be at least 8 characters long");
+			return false;
+		}
+		if (data.tanggal_masuk.toISOString().split("T")[0] > c) {
+			toast.error("Hire date is required and must be in the past");
+			return false;
+		}
+		if (data.tanggal_lahir.toISOString().split("T")[0] > c) {
+			toast.error("Born date is required and must be in the past");
+			return false;
+		}
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
+		return true;
+	};
 
-        if (name === "wallet" || name === "id_role") {
-            setData({ ...data, [name]: Number(value) });
-        } else if (name === "tanggal_masuk" || name === "tanggal_lahir") {
-            setData({ ...data, [name]: new Date(value) });
-        } else {
-            setData({ ...data, [name]: value });
-        }
-    };
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = event.target;
+
+		if (name === "wallet" || name === "id_role") {
+			setData({ ...data, [name]: Number(value) });
+		} else if (name === "tanggal_masuk" || name === "tanggal_lahir") {
+			setData({ ...data, [name]: new Date(value) });
+		} else {
+			setData({ ...data, [name]: value });
+		}
+	};
 
 	const submitData = (event: any, idPegawai: number) => {
 		event.preventDefault();
 		setIsPending(true);
+		if (!cekInput()) {
+			setIsPending(false);
+			return;
+		}
 
 		const formData = new FormData();
 		formData.append("id_role", data.id_role.toString());
-        formData.append("nama", data.nama);
-        formData.append("email", data.email);
-        formData.append("password", data.password);
-        formData.append("tanggal_masuk", new Date(data.tanggal_masuk).toISOString().split('T')[0]);
-        formData.append("tanggal_lahir", new Date(data.tanggal_lahir).toISOString().split('T')[0]);
-        formData.append("wallet", data.wallet.toString());
-        console.log(idPegawai);
+		formData.append("nama", data.nama);
+		formData.append("email", data.email);
+		if (
+			data.password &&
+			data.password.trim() !== "" &&
+			data.password.length >= 8
+		) {
+			formData.append("password", data.password);
+		}
+		formData.append(
+			"tanggal_masuk",
+			new Date(data.tanggal_masuk).toISOString().split("T")[0]
+		);
+		formData.append(
+			"tanggal_lahir",
+			new Date(data.tanggal_lahir).toISOString().split("T")[0]
+		);
+		formData.append("wallet", data.wallet.toString());
+
 		UpdatePegawai(formData, idPegawai)
 			.then((response) => {
 				setIsPending(false);
@@ -107,26 +128,34 @@ const ModalEditPegawai = ({
 			.catch((err) => {
 				console.log(err);
 				setIsPending(false);
-                const currentDate = new Date();
-                const c = currentDate.toISOString().split('T')[0];
-                if (data.id_role === 0) {
-                    toast.error("Role is required");
-                    return false;
-                } else if (data.nama === "") {
+				const currentDate = new Date();
+				const c = currentDate.toISOString().split("T")[0];
+				if (data.id_role === 0) {
+					toast.error("Role is required");
+					return false;
+				} else if (data.nama === "") {
 					toast.error("Name is required");
 					return false;
 				} else if (data.password.length < 8) {
-                    toast.error("Password is required and must be at least 8 characters long");
-                    return false;
-                } else if (data.tanggal_lahir.toISOString().split('T')[0] > c || data.tanggal_lahir.toISOString().split('T')[0] == c) {
+					toast.error(
+						"Password is required and must be at least 8 characters long"
+					);
+					return false;
+				} else if (
+					data.tanggal_lahir.toISOString().split("T")[0] > c ||
+					data.tanggal_lahir.toISOString().split("T")[0] == c
+				) {
 					toast.error("Born date is required and must be in the past");
 					return false;
-				} else if (data.tanggal_masuk.toISOString().split('T')[0] < data.tanggal_lahir.toISOString().split('T')[0]) {
-					toast.error("Born date must be less than hire date");	
-					return false; 
+				} else if (
+					data.tanggal_masuk.toISOString().split("T")[0] <
+					data.tanggal_lahir.toISOString().split("T")[0]
+				) {
+					toast.error("Born date must be less than hire date");
+					return false;
 				} else {
-                    toast.error(err.message);
-                }
+					toast.error(err.message);
+				}
 			});
 	};
 
@@ -140,41 +169,61 @@ const ModalEditPegawai = ({
 							<h3 className="text-xl font-medium text-gray-900 dark:text-white">
 								Edit Employee
 							</h3>
-                            <div className="mb-2 block">
-                                <Label htmlFor="id_role">Edit Role</Label>
-                            </div>
-                            <div className="flex items-center justify-between gap-1">
-                                <div
-                                    onClick={() => setData({ ...data, id_role: 2 })}
-                                    className={`px-4 py-2 rounded ${data.id_role === 2 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-                                >
-                                    Owner
-                                </div>
-                                <div
-                                    onClick={() => setData({ ...data, id_role: 3 })}
-                                    className={`px-4 py-2 rounded ${data.id_role === 3 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-                                >
-                                    Kurir
-                                </div>
-                                <div
-                                    onClick={() => setData({ ...data, id_role: 4 })}
-                                    className={`px-4 py-2 rounded ${data.id_role === 4 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-                                >
-                                    Hunter
-                                </div>
-                                <div
-                                    onClick={() => setData({ ...data, id_role: 5 })}
-                                    className={`px-4 py-2 rounded ${data.id_role === 5 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-                                >
-                                    Gudang
-                                </div>
-                                <div
-                                    onClick={() => setData({ ...data, id_role: 6 })}
-                                    className={`px-4 py-2 rounded ${data.id_role === 6 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}`}
-                                >
-                                    CS
-                                </div>
-                            </div>
+							<div className="mb-2 block">
+								<Label htmlFor="id_role">Edit Role</Label>
+							</div>
+							<div className="flex items-center justify-between gap-1">
+								<div
+									onClick={() => setData({ ...data, id_role: 2 })}
+									className={`px-4 py-2 rounded ${
+										data.id_role === 2
+											? "bg-blue-500 text-white"
+											: "bg-gray-200 text-black"
+									}`}
+								>
+									Owner
+								</div>
+								<div
+									onClick={() => setData({ ...data, id_role: 3 })}
+									className={`px-4 py-2 rounded ${
+										data.id_role === 3
+											? "bg-blue-500 text-white"
+											: "bg-gray-200 text-black"
+									}`}
+								>
+									Kurir
+								</div>
+								<div
+									onClick={() => setData({ ...data, id_role: 4 })}
+									className={`px-4 py-2 rounded ${
+										data.id_role === 4
+											? "bg-blue-500 text-white"
+											: "bg-gray-200 text-black"
+									}`}
+								>
+									Hunter
+								</div>
+								<div
+									onClick={() => setData({ ...data, id_role: 5 })}
+									className={`px-4 py-2 rounded ${
+										data.id_role === 5
+											? "bg-blue-500 text-white"
+											: "bg-gray-200 text-black"
+									}`}
+								>
+									Gudang
+								</div>
+								<div
+									onClick={() => setData({ ...data, id_role: 6 })}
+									className={`px-4 py-2 rounded ${
+										data.id_role === 6
+											? "bg-blue-500 text-white"
+											: "bg-gray-200 text-black"
+									}`}
+								>
+									CS
+								</div>
+							</div>
 							<div>
 								<div className="mb-2 block">
 									<Label htmlFor="nama">Edit employee name</Label>
@@ -209,10 +258,8 @@ const ModalEditPegawai = ({
 								<TextInput
 									id="password"
 									name="password"
-									type="text"
-									value={data.password}
+									type="password"
 									onChange={handleChange}
-									required
 								/>
 							</div>
 							<div>
@@ -223,7 +270,11 @@ const ModalEditPegawai = ({
 									id="tanggal_masuk"
 									name="tanggal_masuk"
 									type="date"
-									value={data.tanggal_masuk ? data.tanggal_masuk.toISOString().split('T')[0] : ''}
+									value={
+										data.tanggal_masuk
+											? data.tanggal_masuk.toISOString().split("T")[0]
+											: ""
+									}
 									onChange={handleChange}
 									required
 								/>
@@ -236,7 +287,11 @@ const ModalEditPegawai = ({
 									id="tanggal_lahir"
 									name="tanggal_lahir"
 									type="date"
-									value={data.tanggal_lahir ? data.tanggal_lahir.toISOString().split('T')[0] : ''}
+									value={
+										data.tanggal_lahir
+											? data.tanggal_lahir.toISOString().split("T")[0]
+											: ""
+									}
 									onChange={handleChange}
 									required
 								/>

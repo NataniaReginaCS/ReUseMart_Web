@@ -62,6 +62,18 @@ const Header = () => {
     // Roles that should NOT see nav options or search
     const isPrivileged = role === 'Admin' || role === 'Organisasi' || role === 'CS' || role === 'Gudang' || role === 'Owner' || role === 'Penitip';
 
+    if (role === null) {
+        return (
+            <header>
+                <div className="w-screen bg-[#1F510F] text-white flex items-center h-20 px-8">
+                    <div className="flex items-center w-24 h-24">
+                        <img src={logo} alt="Logo" />
+                    </div>
+                </div>
+            </header>
+        );
+    }
+
     return (
         <header>
             <div className="w-screen bg-[#1F510F] text-white flex  items-center h-20 px-8">
@@ -69,6 +81,8 @@ const Header = () => {
                 <div className="flex items-center w-24 h-24">
                     <img src={logo} alt="Logo" />
                 </div>
+
+            
 
                 {!isPrivileged && (
                     <>

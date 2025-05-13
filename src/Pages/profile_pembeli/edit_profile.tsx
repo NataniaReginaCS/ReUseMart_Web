@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import ModalEditAlamat from "./ModalAlamat/ModalEditAlamat";
 import ModalDeleteAlamat from "./ModalAlamat/ModalDeleteAlamat";
 import { SetUtama } from "../../api/ApiAlamat";
+import { Link } from "react-router-dom";
 
 type Alamat = {
 	id_alamat: number;
@@ -40,8 +41,9 @@ const Edit_profile = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [dataPerPage, setDataPerPage] = useState(10);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [loadingSetUtamaId, setLoadingSetUtamaId] = useState<number | null>(null);
-
+	const [loadingSetUtamaId, setLoadingSetUtamaId] = useState<number | null>(
+		null
+	);
 
 	const [showModal, setShowModal] = useState(false);
 	const [selectedAlamat, setSelectedAlamat] = useState<Alamat | null>(null);
@@ -95,13 +97,19 @@ const Edit_profile = () => {
 			.then((response) => {
 				toast.success(response.message);
 				fetchAlamat();
+				setFormData({
+					nama_jalan: "",
+					nama_kota: "",
+					nama_alamat: "",
+					kode_pos: 0,
+				});
 			})
 			.catch((error: any) => {
 				toast.success(error.message);
 				console.error("Error adding address:", error);
 			})
 			.finally(() => {
-				setIsLoading(false);
+				setIsLoadingAddAddress(false);
 			});
 	};
 
@@ -122,6 +130,7 @@ const Edit_profile = () => {
 	useEffect(() => {
 		fetchAlamat();
 	}, []);
+
 
 	const filteredData = data.filter(
 		(alamat) =>
@@ -169,12 +178,12 @@ const Edit_profile = () => {
 										clip-rule="evenodd"
 									></path>
 								</svg>
-								<a
-									href="/marketplace"
+								<Link
+									to="/profile"
 									className="ml-1 text-sm font-medium text-gray-500 md:ml-2"
 								>
 									Account
-								</a>
+								</Link>
 							</div>
 						</li>
 						<li>
@@ -283,6 +292,7 @@ const Edit_profile = () => {
 										name="nama_alamat"
 										className="border-1 border-gray-300 rounded-lg p-2 w-1/2 pr-10"
 										onChange={handleChange}
+										value={formData.nama_alamat}
 									/>
 									<div className="flex flex-row gap-2 justify-between max-w-3/4">
 										<div>
@@ -297,6 +307,7 @@ const Edit_profile = () => {
 												className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
 												placeholder=""
 												onChange={handleChange}
+												value={formData.nama_kota}
 											/>
 										</div>
 
@@ -312,6 +323,7 @@ const Edit_profile = () => {
 												className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
 												placeholder=""
 												onChange={handleChange}
+												value={formData.nama_jalan}
 											/>
 										</div>
 
@@ -327,6 +339,7 @@ const Edit_profile = () => {
 												className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
 												placeholder=""
 												onChange={handleChange}
+												value={formData.kode_pos}
 											/>
 										</div>
 									</div>
@@ -429,7 +442,6 @@ const Edit_profile = () => {
 														} bg-green-500 text-white rounded-3xl w-30 flex cursor-pointer text-center items-center justify-center gap-1 p-1`}
 														onClick={() => SetAlamatUtama(alamat.id_alamat)}
 													>
-														
 														{loadingSetUtamaId === alamat.id_alamat ? (
 															<SyncLoader color="#ffffff" size={8} />
 														) : (

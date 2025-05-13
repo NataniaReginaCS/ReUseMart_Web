@@ -24,7 +24,6 @@ const ProtectedRoutes = ({ allowedRoles, children }: ProtectedRoutesProps) => {
 						Authorization: `Bearer ${token}`,
 					},
 				});
-				console.log(response);
 				setRole(response.data.role);
 			} catch (error: any) {
 				console.error("Error fetching role:", error);

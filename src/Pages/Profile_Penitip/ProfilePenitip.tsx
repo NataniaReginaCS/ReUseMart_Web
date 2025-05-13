@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
-import SidebarNav from "../../Components2/SideBarNav";
+import SidebarNavPenitip from "../../Components2/SideBarNavPenitip";
 
 import {
 	faHouse,
@@ -108,7 +108,7 @@ const ProfilePenitip = () => {
 				</ol>
 			</div>
 			<div className="flex flex-row">
-				<SidebarNav />
+				<SidebarNavPenitip />
 
 				<div className="flex flex-col flex-1 w-full p-4 mt-5 ms-10">
 					<div>
@@ -212,13 +212,13 @@ const ProfilePenitip = () => {
 										</span>
 									</div>
 
-									<label htmlFor="new-password">
+									<label htmlFor="confirm-new-password">
 										<strong>New Password</strong>
 									</label>
 									<div className="relative">
 										<input
 											type={showConfirmPassword ? "text" : "password"}
-											id="new-password"
+											id="confirm-new-password"
 											className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
 											placeholder="8+ characters"
 										/>

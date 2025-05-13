@@ -71,7 +71,7 @@ const ModalEditOrganisasi = ({
 		formData.append("email", data.email);
 		formData.append("password", data.password);
 		if (data.foto instanceof File) {
-			formData.append("foto", data.foto);
+			formData.append("foto", data.foto);	
 		}
 
 		UpdateOrganisasi(formData, idOrganisasi)
@@ -79,7 +79,6 @@ const ModalEditOrganisasi = ({
 				setIsPending(false);
 				toast.success(response.message);
 				onSuccessEdit();
-
 				handleClose();
 			})
 			.catch((err) => {
