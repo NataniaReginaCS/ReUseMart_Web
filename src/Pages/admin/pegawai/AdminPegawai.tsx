@@ -9,7 +9,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import Header from "../../../Components2/Header";
 import SideBarNavAdmin from "../../../Components2/SideBarNavAdmin";
-import { FetchPegawai } from "../../../api/ApiAdmin";
+import { FetchPegawai, FetchRole } from "../../../api/ApiAdmin";
 import ModalAddPegawai from "./ModalAddPegawai";
 
 interface Pegawai {
@@ -24,9 +24,15 @@ interface Pegawai {
     wallet: number;
 }
 
+type Role = {
+    id_role: number;
+    nama_role: string;
+}
+
 const AdminPegawai = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<Pegawai[]>([]);
+    const [role, setRole] = useState<Role[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [dataPerPage, setDataPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
@@ -34,6 +40,19 @@ const AdminPegawai = () => {
     const [selectedPegawai, setSelectedPegawai] = useState<Pegawai | null>(null);
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [showModalAdd, setShowModalAdd] = useState(false);
+
+    const fetchRole = () => {
+        setIsLoading(true);
+        FetchRole()
+            .then((response) => {
+                setRole(response.data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    };
 
     const fetchPegawai = () => {
         setIsLoading(true);
@@ -50,8 +69,13 @@ const AdminPegawai = () => {
 
     useEffect(() => {
         fetchPegawai();
+        fetchRole();
     }, []);
 
+    const getNamaRole = (id_role: number) => {
+        const roleData = role.find((r) => r.id_role === id_role);
+        return roleData ? roleData.nama_role : "";
+    };
 
     const handleEditClick = (data: Pegawai) => {
         setSelectedPegawai(data);
@@ -66,7 +90,12 @@ const AdminPegawai = () => {
     const filteredData = data.filter(
         (org) =>
             org.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            org.email.toLowerCase().includes(searchTerm.toLowerCase()) 
+            org.email.toLowerCase().includes(searchTerm.toLowerCase())  || 
+            org.tanggal_masuk.toString().includes(searchTerm.toLowerCase()) ||
+            org.tanggal_lahir.toString().includes(searchTerm.toLowerCase()) ||
+            (org.wallet !== null && org.wallet !== undefined ? org.wallet.toString() : "").includes(searchTerm.toLowerCase()) ||
+            org.id_pegawai.toString().includes(searchTerm.toLowerCase()) ||
+            getNamaRole(org.id_role).toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const indexOfLastData = currentPage * dataPerPage;
@@ -169,7 +198,7 @@ const AdminPegawai = () => {
                                                     <p className="font-normal">{org.id_pegawai}</p>
                                                 </td>
                                                 <td className={classes}>
-                                                    <p className="font-normal">{org.id_role}</p>
+                                                    <p className="font-normal">{getNamaRole(org.id_role)}</p>
                                                 </td>
                                                 <td className={classes}>
                                                     <p className="font-normal">{org.nama}</p>

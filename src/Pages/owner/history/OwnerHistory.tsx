@@ -99,21 +99,25 @@ const OwnerHistory = () => {
         return brng ? brng.nama : "Unknown";
     };
 
-    const donatedRequests = detailDonasiData.map((item) => item.id_request);
-    const donatedOrganisasi = requestData
-        .filter((req) => donatedRequests.includes(req.id_request))
-        .filter((org) => {
-            return (
-                getNamaOrganisasi(org.id_organisasi).toLowerCase().includes(searchTerm.toLowerCase()) ||
-                org.tanggal_request.toString().includes(searchTerm.toLowerCase()) ||
-                org.deskripsi.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        });
+    const filteredData = requestData.filter((request) => {
+        const orgName = getNamaOrganisasi(request.id_organisasi).toLowerCase();
+        const date = String(getDateDonasi(request.id_request));
+        const desc = request.deskripsi.toLowerCase();
+        const rec = getNamaPenerima(request.id_request).toLowerCase();
+        const barangName = relasiBarang(request.id_request).toLowerCase();
+        return (
+            orgName.includes(searchTerm.toLowerCase()) ||
+            date.includes(searchTerm.toLowerCase()) ||
+            desc.includes(searchTerm.toLowerCase()) ||
+            rec.includes(searchTerm.toLowerCase()) ||
+            barangName.includes(searchTerm.toLowerCase())
+        );
+    });
 
     const indexOfLastData = currentPage * dataPerPage;
     const indexOfFirstData = indexOfLastData - dataPerPage;
-    const currentData = donatedOrganisasi.slice(indexOfFirstData, indexOfLastData);
-    const totalPages = Math.ceil(donatedOrganisasi.length / dataPerPage);
+    const currentData = filteredData.slice(indexOfFirstData, indexOfLastData);
+    const totalPages = Math.ceil(filteredData.length / dataPerPage);
     
     const handlePageChange = (newPage: number) => {
         if (newPage >= 1 && newPage <= totalPages) {
@@ -171,9 +175,7 @@ const OwnerHistory = () => {
                                         <tr key={index} className="border-b">
                                             <td className="p-4">{getNamaOrganisasi(org.id_organisasi)}</td>
                                             <td className="p-4">
-                                                {getDateDonasi(org.id_request)
-                                                    ? new Date(getDateDonasi(org.id_request) as Date).toLocaleDateString()
-                                                    : "-"}
+                                                {String(getDateDonasi(org.id_request))}
                                             </td>
                                             <td className="p-4 text-left">
                                                 {getNamaPenerima(org.id_request)}
@@ -217,7 +219,7 @@ const OwnerHistory = () => {
 
 							{/* Info */}
 							<div className="text-sm text-gray-700">
-								{`${indexOfFirstData + 1}-${Math.min(indexOfLastData, donatedOrganisasi.length)} of ${donatedOrganisasi.length}`}
+								{`${indexOfFirstData + 1}-${Math.min(indexOfLastData, filteredData.length)} of ${filteredData.length}`}
 							</div>
 
 							{/* Navigation arrows */}
