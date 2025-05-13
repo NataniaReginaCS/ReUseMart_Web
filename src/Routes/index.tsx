@@ -13,7 +13,8 @@ import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
-import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
+import AdminPenitip from "../Pages/cs/Penitip/CSPenitip";
+
 import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
 
 import Login from "../Pages/auth/login";
@@ -36,6 +37,8 @@ import Diskusi from "../Pages/Cs/Diskusi/Diskusi";
 
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
+import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
+import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
 import OwnerHistory from "../Pages/owner/history/OwnerHistory";
 
@@ -65,6 +68,10 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
+	path: "/cs",
+		element: (
+			<ProtectedRoutes allowedRoles={["CS"]}>
+				<Outlet />
 		path: "/owner",
 		element: (
 			<ProtectedRoutes allowedRoles={["Owner"]}>
@@ -73,6 +80,14 @@ const router = createBrowserRouter([
 		),
 		children: [
 			{
+path: "penitip",
+				element: <CSPenitip />,
+			},
+
+		],
+	},
+
+=======
 				path: "donasi",
 				element: <OwnerDonasi />,
 			},
@@ -124,7 +139,9 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/penitip",
+
 		element: (
+
 			<ProtectedRoutes allowedRoles={["Penitip"]}>
 				<MainLayout />
 			</ProtectedRoutes>
@@ -204,6 +221,10 @@ const router = createBrowserRouter([
 			{
 				path: "/order",
 				element: <Order />,
+			},
+			{
+				path: "/order-details/:id",
+				element: <OrderDetails />,
 			},
 			{
 				path: "/edit_profile",

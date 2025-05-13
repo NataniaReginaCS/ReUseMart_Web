@@ -38,6 +38,7 @@ type Diskusi = {
 };
 
 const Item = () => {
+   
 	const navigate = useNavigate();
 	const location = useLocation();
 	const barang = location.state?.barang || null;

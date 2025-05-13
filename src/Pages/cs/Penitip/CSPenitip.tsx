@@ -14,7 +14,7 @@ import ModalAddPenitip from "./ModalAddPenitip";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import Header from "../../../Components2/Header";
-import SideBarNavAdmin from "../../../Components2/SideBarNavAdmin";
+import SidebarNavCS from "../../../Components2/SideBarNavCS";
 type Penitip = {
     id_penitip: number;
     nama: string;
@@ -29,7 +29,7 @@ type Penitip = {
     poin: number;
 };
 
-const AdminPenitip = () => {
+const CSPenitip = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<Penitip[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -100,7 +100,7 @@ const AdminPenitip = () => {
             <Header />
             <div className="flex max-lg:flex-wrap p-5 gap-5 lg:flex-nowrap lg:p-20 lg:gap-10 ">
 
-                <SideBarNavAdmin></SideBarNavAdmin>
+                <SidebarNavCS></SidebarNavCS>
 
                 {isLoading ? (
                     <div className="justify-center items-center text-center">
@@ -115,7 +115,7 @@ const AdminPenitip = () => {
                             </p>
                             <button
                                 className="font-medium bg-[#1ee04b] rounded-lg text-white w-30 cursor-pointer flex text-center items-center justify-center gap-1 p-1"
-                                onClick={() => setShowModalAdd(true)} 
+                                onClick={() => setShowModalAdd(true)}
                             >
                                 Add Penitip
                             </button>
@@ -279,4 +279,4 @@ const AdminPenitip = () => {
     );
 };
 
-export default AdminPenitip;
+export default CSPenitip;

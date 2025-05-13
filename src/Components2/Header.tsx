@@ -60,7 +60,7 @@ const Header = () => {
 
 
     // Roles that should NOT see nav options or search
-    const isPrivileged = role === 'Admin' || role === 'Organisasi';
+    const isPrivileged = role === 'Admin' || role === 'Organisasi' || role === 'CS' || role === 'Gudang' || role === 'Owner' || role === 'Penitip';
 
     return (
         <header>
@@ -145,7 +145,15 @@ const Header = () => {
                                 >
                                     <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
                                 </a>
-                            )} {role === 'Pembeli' && (
+                            )}
+                            {role === 'CS' && (
+                                <a
+                                    href="/cs/penitip"
+                                    className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
+                                >
+                                    <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
+                                </a>
+                            )}{role === 'Pembeli' && (
                                 <>
                                     <a href="/cart" className="bg-gray-500 py-2 px-4 rounded-md">
                                         Cart
