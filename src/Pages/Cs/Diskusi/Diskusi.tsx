@@ -14,12 +14,12 @@ import ModalDetailDiskusi from "./ModalDetailDiskusi";
 
 
 type Diskusi = {
-    id_barang : number;
-    id_diskusi : number;
+	id_barang: number;
+	id_diskusi: number;
 	pesan: string;
 	nama_pembeli: string;
 	tanggal_diskusi: string;
-	foto_pembeli : string;
+	foto_pembeli: string;
 
 };
 
@@ -30,16 +30,16 @@ const Diskusi = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [dataPerPage, setDataPerPage] = useState(10);
 	const [showModal, setShowModal] = useState(false);
-    const [tempIdBarang, setTempIdBarang] = useState(0);
+	const [tempIdBarang, setTempIdBarang] = useState(0);
 
 
 
-    const fetchDiskusiCS = () => {
+	const fetchDiskusiCS = () => {
 		setIsLoading(true);
 		FetchDiskusiCS()
 			.then((response) => {
 				setData(response.diskusi);
-                console.log(response)
+				console.log(response)
 				setIsLoading(false);
 			})
 			.catch((err) => {
@@ -53,7 +53,7 @@ const Diskusi = () => {
 		fetchDiskusiCS();
 	}, []);
 
-    const handleClick=  (idBarang: number) =>{
+	const handleClick = (idBarang: number) => {
 		setShowModal(true);
 		setTempIdBarang(idBarang);
 
@@ -99,9 +99,9 @@ const Diskusi = () => {
 							<p>
 								<strong>Discussion</strong>
 							</p>
-							
+
 						</div>
-                    
+
 						<div className="overflow-x-auto">
 							<table className="w-full min-w-max table-auto text-left">
 								<thead className="bg-[#2A3042] text-white text-center">
@@ -125,13 +125,13 @@ const Diskusi = () => {
 											? "p-4"
 											: "p-4 border-b border-blue-gray-50";
 										return (
-									<tr key={diskusi.id_diskusi}>
+											<tr key={diskusi.id_diskusi}>
 												<td className={classes}>
-                                                    <img
-                                                    className="rounded-[50px] w-12 h-12 bg-gray-500 justify-self-center"
-                                                    src={diskusi.foto_pembeli}
-                                                    alt=""
-                                                />
+													<img
+														className="rounded-[50px] w-12 h-12 bg-gray-500 justify-self-center"
+														src={diskusi.foto_pembeli}
+														alt=""
+													/>
 												</td>
 												<td className={classes}>
 													<p className="font-normal">{diskusi.nama_pembeli}</p>
@@ -141,13 +141,13 @@ const Diskusi = () => {
 												</td>
 												<td className={classes}>
 													<p className="font-normal">{new Date(diskusi.tanggal_diskusi).toLocaleString("id-ID", {
-											weekday: "long",
-											year: "numeric",
-											month: "long",
-											day: "numeric",
-											hour: "2-digit",
-											minute: "2-digit",
-										})}</p>
+														weekday: "long",
+														year: "numeric",
+														month: "long",
+														day: "numeric",
+														hour: "2-digit",
+														minute: "2-digit",
+													})}</p>
 												</td>
 												<td className={classes}>
 													<div className="flex flex-row justify-evenly gap-2">
@@ -217,14 +217,14 @@ const Diskusi = () => {
 					</div>
 				)}
 			</div>
-            {showModal &&  (
-					<ModalDetailDiskusi
-						show={showModal}
-						idBarang={tempIdBarang}
-						onClose={() => setShowModal(false)}
-					
-					/>
-				)}
+			{showModal && (
+				<ModalDetailDiskusi
+					show={showModal}
+					idBarang={tempIdBarang}
+					onClose={() => setShowModal(false)}
+
+				/>
+			)}
 		</>
 
 	);

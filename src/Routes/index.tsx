@@ -13,7 +13,6 @@ import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
-import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
 import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
 
 import Login from "../Pages/auth/login";
@@ -32,12 +31,13 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
 
 //CS
-import Diskusi from "../Pages/Cs/Diskusi/Diskusi";
-
+import Diskusi from "../Pages/cs/Diskusi/Diskusi";
+import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
 import OwnerHistory from "../Pages/owner/history/OwnerHistory";
+import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
 
 const router = createBrowserRouter([
 	{
@@ -93,6 +93,10 @@ const router = createBrowserRouter([
 			{
 				path: "diskusi",
 				element: <Diskusi />
+			},
+			{
+				path: "penitip",
+				element: <CSPenitip />
 			}
 		]
 	},
@@ -107,10 +111,6 @@ const router = createBrowserRouter([
 			{
 				path: "organisasi",
 				element: <AdminOrganisasi />,
-			},
-			{
-				path: "penitip",
-				element: <AdminPenitip />,
 			},
 			{
 				path: "pegawai",
