@@ -13,8 +13,6 @@ import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
-import AdminPenitip from "../Pages/cs/Penitip/CSPenitip";
-
 import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
 
 import Login from "../Pages/auth/login";
@@ -33,14 +31,13 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
 
 //CS
-import Diskusi from "../Pages/Cs/Diskusi/Diskusi";
-
+import Diskusi from "../Pages/cs/Diskusi/Diskusi";
+import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
-import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
-import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
 import OwnerHistory from "../Pages/owner/history/OwnerHistory";
+import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
 
 const router = createBrowserRouter([
 	{
@@ -68,10 +65,6 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
-	path: "/cs",
-		element: (
-			<ProtectedRoutes allowedRoles={["CS"]}>
-				<Outlet />
 		path: "/owner",
 		element: (
 			<ProtectedRoutes allowedRoles={["Owner"]}>
@@ -80,7 +73,7 @@ const router = createBrowserRouter([
 		),
 		children: [
 			{
-path: "penitip",
+				path: "penitip",
 				element: <CSPenitip />,
 			},
 
@@ -104,10 +97,14 @@ path: "penitip",
 				<Outlet />
 			</ProtectedRoutes>
 		),
-		children:[
+		children: [
 			{
-				path:"diskusi",
-				element:<Diskusi/>
+				path: "diskusi",
+				element: <Diskusi />
+			},
+			{
+				path: "penitip",
+				element: <CSPenitip />
 			}
 		]
 	},
@@ -124,10 +121,6 @@ path: "penitip",
 				element: <AdminOrganisasi />,
 			},
 			{
-				path: "penitip",
-				element: <AdminPenitip />,
-			},
-			{
 				path: "pegawai",
 				element: <AdminPegawai />,
 			},
@@ -139,9 +132,7 @@ path: "penitip",
 	},
 	{
 		path: "/penitip",
-
 		element: (
-
 			<ProtectedRoutes allowedRoles={["Penitip"]}>
 				<MainLayout />
 			</ProtectedRoutes>
