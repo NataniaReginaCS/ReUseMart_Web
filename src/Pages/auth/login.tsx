@@ -23,7 +23,7 @@ const Login = () => {
 		const data = {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
-		}
+		}		
 
 		LoginApi(data)
 			.then((response) => {
@@ -37,13 +37,14 @@ const Login = () => {
 				} else if (response.role === "Organisasi") {
 					navigate("/profile-organisasi");
 				} else if (response.role === "CS") {
-					navigate("/cs/penitip");
+navigate("/cs/penitip");
+
 				} else if (response.role === "Admin") {
 					navigate("/admin/organisasi");
 				} else if (response.role === "Gudang") {
 
 				} else if (response.role === "Owner") {
-
+					navigate("/owner/donasi");
 				} else if (response.role === "Penitip") {
 					navigate("/");
 				}

@@ -107,7 +107,26 @@ const ModalEditPegawai = ({
 			.catch((err) => {
 				console.log(err);
 				setIsPending(false);
-				toast.error("Email already exists");
+                const currentDate = new Date();
+                const c = currentDate.toISOString().split('T')[0];
+                if (data.id_role === 0) {
+                    toast.error("Role is required");
+                    return false;
+                } else if (data.nama === "") {
+					toast.error("Name is required");
+					return false;
+				} else if (data.password.length < 8) {
+                    toast.error("Password is required and must be at least 8 characters long");
+                    return false;
+                } else if (data.tanggal_lahir.toISOString().split('T')[0] > c || data.tanggal_lahir.toISOString().split('T')[0] == c) {
+					toast.error("Born date is required and must be in the past");
+					return false;
+				} else if (data.tanggal_masuk.toISOString().split('T')[0] < data.tanggal_lahir.toISOString().split('T')[0]) {
+					toast.error("Born date must be less than hire date");	
+					return false; 
+				} else {
+                    toast.error(err.message);
+                }
 			});
 	};
 
@@ -247,7 +266,7 @@ const ModalEditPegawai = ({
 							</div>
 
 							<div className="w-full rounded-2xl bg-[#1F510F] p-2 text-center text-white cursor-pointer">
-								<button type="submit" className="w-full cursor-pointer" onClick={cekInput}>
+								<button type="submit" className="w-full cursor-pointer">
 									{isPending ? (
 										<SyncLoader color="#F5CB58" size={10} />
 									) : (
