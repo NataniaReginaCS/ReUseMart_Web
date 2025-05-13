@@ -72,15 +72,8 @@ const router = createBrowserRouter([
 			</ProtectedRoutes>
 		),
 		children: [
+
 			{
-				path: "penitip",
-				element: <CSPenitip />,
-			},
-
-		],
-	},
-
-=======
 				path: "donasi",
 				element: <OwnerDonasi />,
 			},
@@ -88,7 +81,10 @@ const router = createBrowserRouter([
 				path: "history",
 				element: <OwnerHistory />,
 			}
+
 		],
+
+
 	},
 	{
 		path: "/CS",
