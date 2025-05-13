@@ -73,6 +73,14 @@ const router = createBrowserRouter([
 		),
 		children: [
 			{
+				path: "penitip",
+				element: <CSPenitip />,
+			},
+
+		],
+	},
+
+=======
 				path: "donasi",
 				element: <OwnerDonasi />,
 			},

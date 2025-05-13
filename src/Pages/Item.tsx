@@ -267,8 +267,8 @@ const Item = () => {
                 </div>
                 <Button
                     className={`rounded-md mt-4 mb-4 ${!token
-                            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                            : "bg-[#000000] hover:bg-[#F0F0F0] hover:text-black text-white border-1 border-black"
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-[#000000] hover:bg-[#F0F0F0] hover:text-black text-white border-1 border-black"
                         }`}
                     onClick={() => {
                         if (token) {
