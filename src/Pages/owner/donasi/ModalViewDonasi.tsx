@@ -35,6 +35,7 @@ interface ModalViewDonasiProps {
         id_barang: number;
         tanggal_donasi: Date;
         nama_penerima: string;
+		reward_sosial: number;
 	};
 	onClose: () => void;
 	id_detaildonasi: number;
@@ -93,6 +94,18 @@ const ModalViewDonasi = ({
 							</h3>
 							<div>
 								<div className="mb-2 block">
+									<Label htmlFor="alamat">Donation ID</Label>
+								</div>
+								<p className="text-gray-500">{data.id_detaildonasi}</p>	
+							</div>
+							<div>
+								<div className="mb-2 block">
+									<Label htmlFor="alamat">Request ID</Label>
+								</div>
+								<p className="text-gray-500">{data.id_request}</p>
+							</div>
+							<div>
+								<div className="mb-2 block">
 									<Label htmlFor="nama">Donation Date</Label>
                                     <p className="text-gray-500">
                                         {new Date(data.tanggal_donasi).toLocaleDateString("id-ID", {
@@ -115,7 +128,18 @@ const ModalViewDonasi = ({
                                 </div>
                                 <p className="text-gray-500">{getNamaBarang(data.id_barang)}</p>
                             </div>
-						
+                            <div>
+                                <div className="mb-2 block">
+                                    <Label htmlFor="alamat">Item ID</Label>
+                                </div>
+                                <p className="text-gray-500">{data.id_barang}</p>
+                            </div>
+							<div>
+								<div className="mb-2 block">
+									<Label htmlFor="alamat">Social Reward</Label>
+								</div>
+								<p className="text-gray-500">{data.reward_sosial}</p>
+							</div>
 						</div>
 					
 				</ModalBody>

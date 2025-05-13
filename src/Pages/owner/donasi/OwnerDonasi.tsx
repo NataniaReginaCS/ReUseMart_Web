@@ -19,6 +19,7 @@ type DetailDonasi = {
 	id_barang: number;
 	tanggal_donasi: Date; 
 	nama_penerima: string;
+	reward_sosial: number;
 };
 
 type RequestDonasi = {
@@ -238,6 +239,7 @@ const OwnerDonasi = () => {
 																id_barang: detail ? detail.id_barang : org.id_barang, 
 																tanggal_donasi: detail ? new Date(detail.tanggal_donasi) : new Date(),
 																nama_penerima: detail ? detail.nama_penerima : "",
+																reward_sosial: detail ? detail.reward_sosial : 0,
 															});
 															setShowModal(true);
 														}}
@@ -256,6 +258,7 @@ const OwnerDonasi = () => {
 																id_barang: detail ? detail.id_barang : org.id_barang, 
 																tanggal_donasi: detail ? new Date(detail.tanggal_donasi) : new Date(),
 																nama_penerima: detail ? detail.nama_penerima : "",
+																reward_sosial: detail ? detail.reward_sosial : 0,
 															});
 															setShowModalView(true);
 														}}>
@@ -273,6 +276,7 @@ const OwnerDonasi = () => {
 																	id_barang: 0,
 																	tanggal_donasi: new Date(),
 																	nama_penerima: "",
+																	reward_sosial: 0,
 																});
 																setShowModalAdd(true);
 															}}
