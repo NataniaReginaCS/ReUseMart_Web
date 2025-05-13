@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "../api/apiAuth";
 import { toast } from "react-toastify";
 
-const SidebarNavOrg = () => {
+const SidebarNavCS = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const handleLogout = () => {
@@ -22,9 +22,8 @@ const SidebarNavOrg = () => {
             });
     };
     const navItems = [
-        { label: "Profile", icon: <MdDashboard />, path: "/profile-organisasi" },
-        { label: "Donation", icon: <FaArrowsRotate />, path: "/order-organisasi" },
-        { label: "Request Donation", icon: <HiOutlineShoppingBag />, path: "/request-donasi" },
+        { label: "Profile", icon: <MdDashboard />, path: "/cs/penitip" },
+
     ];
 
     return (
@@ -61,4 +60,4 @@ const SidebarNavOrg = () => {
     );
 };
 
-export default SidebarNavOrg;
+export default SidebarNavCS;

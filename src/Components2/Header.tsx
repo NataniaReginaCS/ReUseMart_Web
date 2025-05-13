@@ -30,7 +30,7 @@ const Header = () => {
         }
         FetchSearchBarang(query)
             .then(() => {
-                setIsLoading(false);    
+                setIsLoading(false);
                 setSearchTerm("");
                 navigate(`/shop?search=${encodeURIComponent(query)}`)
             })
@@ -39,7 +39,7 @@ const Header = () => {
                 setIsLoading(false);
             });
     };
-        
+
     useEffect(() => {
         const fetchRole = async () => {
             try {
@@ -54,13 +54,13 @@ const Header = () => {
                 console.error("Error fetching role:", error);
             }
         };
-    
-        fetchRole(); 
-    }, []); 
-    
+
+        fetchRole();
+    }, []);
+
 
     // Roles that should NOT see nav options or search
-    const isPrivileged = role === 'Admin' || role === 'Organisasi';
+    const isPrivileged = role === 'Admin' || role === 'Organisasi' || role === 'CS' || role === 'Gudang' || role === 'Owner' || role === 'Penitip';
 
     return (
         <header>
@@ -80,8 +80,8 @@ const Header = () => {
                                 Home
                             </a>
                             <button
-                            onClick={handleShopClick}
-                            className='hover:bg-white hover:text-black h-[80px] w-[150px] max-w-[100px] justify-center flex items-center'
+                                onClick={handleShopClick}
+                                className='hover:bg-white hover:text-black h-[80px] w-[150px] max-w-[100px] justify-center flex items-center'
                             >
                                 Shop
                             </button>
@@ -104,11 +104,11 @@ const Header = () => {
                                     type="text"
                                     className="w-full h-full rounded-l-sm px-4 focus:outline-none"
                                     placeholder="Search..."
-                                    value={searchTerm} 
-                                    onChange={(e) => setSearchTerm(e.target.value)} 
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
                                     onKeyPress={(e) => {
-                                        if (e.key === "Enter") {   
-                                            searchBarang(searchTerm); 
+                                        if (e.key === "Enter") {
+                                            searchBarang(searchTerm);
                                         }
                                     }}
                                 />
@@ -145,7 +145,15 @@ const Header = () => {
                                 >
                                     <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
                                 </a>
-                            )} {role === 'Pembeli' && (
+                            )}
+                            {role === 'CS' && (
+                                <a
+                                    href="/cs/penitip"
+                                    className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
+                                >
+                                    <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
+                                </a>
+                            )}{role === 'Pembeli' && (
                                 <>
                                     <a href="/cart" className="bg-gray-500 py-2 px-4 rounded-md">
                                         Cart

@@ -184,4 +184,18 @@ const ResetPassword = async (id: number) => {
         throw error.response.data;
     }
 }
-export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip, AddPegawai, FetchPegawai, UpdatePegawai, DeletePegawai, ResetPassword };
+
+const FetchRole = async () => {
+    try {
+        const response = await useAxios.get("/fetchRoles", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response.data;
+    }
+};
+export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip, AddPegawai, FetchPegawai, UpdatePegawai, DeletePegawai, ResetPassword, FetchRole };

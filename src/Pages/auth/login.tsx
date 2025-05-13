@@ -23,28 +23,28 @@ const Login = () => {
 		const data = {
 			email: emailRef.current?.value,
 			password: passwordRef.current?.value,
-		}		
+		}
 
 		LoginApi(data)
 			.then((response) => {
-				console.log(response);
+
 				sessionStorage.setItem("token", response.token);
-				
+
 				toast.success("Login successful!");
-				
+
 				if (response.role === "Pembeli") {
 					navigate("/");
 				} else if (response.role === "Organisasi") {
-					navigate("/");
+					navigate("/profile-organisasi");
 				} else if (response.role === "CS") {
-					navigate("/CS/diskusi");
+					navigate("/CS/penitip");
 				} else if (response.role === "Admin") {
 					navigate("/admin/organisasi");
 				} else if (response.role === "Gudang") {
 
 				} else if (response.role === "Owner") {
-
-				} else if(response.role === "Penitip"){
+					navigate("/owner/donasi");
+				} else if (response.role === "Penitip") {
 					navigate("/");
 				}
 			})

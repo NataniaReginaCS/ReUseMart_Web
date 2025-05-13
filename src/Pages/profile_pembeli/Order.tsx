@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDashboard } from "react-icons/md";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import Frieren from "../../assets/images/Frieren.jpg";
+
+import { fetchOrderHistory } from "../../api/ApiTransaksi";
 import SidebarNav from "../../Components2/SideBarNav";
 import {
     Carousel,
@@ -19,39 +21,81 @@ import {
     faHouse,
     faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-
-const data = [
-    { orderid: '1234567890', orderdate: '2023-10-01', orderstatus: 'Pending', ordertotal: '$100.00', orderlink: 'https://example.com/order/1234567890' },
-    { orderid: '1234567890', orderdate: '2023-10-01', orderstatus: 'Pending', ordertotal: '$100.00', orderlink: 'https://example.com/order/1234567890' },
-    { orderid: '1234567890', orderdate: '2023-10-01', orderstatus: 'Pending', ordertotal: '$100.00', orderlink: 'https://example.com/order/1234567890' },
-    { orderid: '1234567890', orderdate: '2023-10-01', orderstatus: 'Pending', ordertotal: '$100.00', orderlink: 'https://example.com/order/1234567890' },
-    { orderid: '1234567890', orderdate: '2023-10-01', orderstatus: 'Pending', ordertotal: '$100.00', orderlink: 'https://example.com/order/1234567890' },
-    { orderid: '1234567890', orderdate: '2023-10-01', orderstatus: 'Pending', ordertotal: '$100.00', orderlink: 'https://example.com/order/1234567890' },
-
-]
+import { useNavigate } from "react-router-dom";
+type Pembelian = {
+    id_pembelian: number;
+    id_barang: number;
+    id_pembeli: number;
+    tanggal_lunas: string;
+    total: number;
+    status_pengiriman: string;
+}
 const Order = () => {
     const [showCurrentPassword, setCurrentPassword] = useState(false);
     const [showNewPassword, setNewPassword] = useState(false);
     const [showConfirmPassword, setConfirmPassword] = useState(false);
+    const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0)
-    const total = data.length
+    const [orderData, setOrderData] = useState<any[]>([]);
+    const [data, setData] = useState<Pembelian[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [startDate, setStartDate] = useState<string>("");
+    const [endDate, setEndDate] = useState<string>("");
+    const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
+        const result: T[][] = [];
+        for (let i = 0; i < array.length; i += chunkSize) {
+            result.push(array.slice(i, i + chunkSize));
+        }
+        return result;
+    };
+    const filteredData = data.filter((item) => {
+        const orderDate = new Date(item.tanggal_lunas);
+        const searchLower = searchTerm.toLowerCase();
 
-    const handlePrev = () => {
-        setCurrentIndex((prev) => (prev > 0 ? prev - 1 : total - 1))
-    }
+        const matchesSearch =
+            item.id_pembelian.toString().includes(searchLower) ||
+            item.status_pengiriman.toLowerCase().includes(searchLower);
 
-    const handleNext = () => {
-        setCurrentIndex((prev) => (prev < total - 1 ? prev + 1 : 0))
-    }
-    const toggleCurrentPasswordVisibility = () => {
-        setCurrentPassword((prev) => !prev);
+        const isAfterStart = startDate ? orderDate >= new Date(startDate) : true;
+        const isBeforeEnd = endDate ? orderDate <= new Date(endDate) : true;
+
+        return matchesSearch && isAfterStart && isBeforeEnd;
+    });
+
+    const chunkedData = chunkArray(filteredData, itemsPerPage);
+
+
+    const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+    const paginatedData = filteredData.slice(
+        currentPage * itemsPerPage,
+        currentPage * itemsPerPage + itemsPerPage
+    );
+
+
+
+
+    const fetchHistory = async () => {
+        setIsLoading(true);
+        fetchOrderHistory()
+            .then((data) => {
+
+                console.log(data);
+                setData(data.data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
     };
-    const toggleNewPasswordVisibility = () => {
-        setNewPassword((prev) => !prev);
-    };
-    const toggleConfirmPasswordVisibility = () => {
-        setConfirmPassword((prev) => !prev);
-    };
+
+    useEffect(() => {
+        fetchHistory();
+    }, []);
+
     return (
         <div className="h-full px-10 py-5">
             <div className="mt-5 max-sm:mt-0">
@@ -114,28 +158,87 @@ const Order = () => {
                 <SidebarNav></SidebarNav>
                 <div className="flex flex-col w-full min-h-[500px] mt-5 border-1 border-gray-300 rounded-lg">
                     <p className="text-2xl font-bold ml-8 mt-5">Order History</p>
+
+                    <div className="flex gap-4 items-center mb-4 px-6 mt-5">
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+                        />
+                        <p className="text-sm text-gray-500 font-semibold">
+                            Start Date:
+                        </p>
+                        <input
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                        />
+                        <p className="text-sm text-gray-500 font-semibold">
+                            End Date:
+                        </p>
+                        <input
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                        />
+                        <select
+                            value={itemsPerPage}
+                            onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                        >
+                            <option value={5}>5 / page</option>
+                            <option value={10}>10 / page</option>
+                        </select>
+                    </div>
+
+
+
                     <Carousel>
                         <CarouselContent>
-                            <CarouselItem><table className="w-full  mt-5 mb-5">
-                                <tr className="flex justify-center items-center py-6 bg-[#F2F2F2]">
-                                    <td className="w-full flex justify-center items-center">ORDER ID</td>
-                                    <td className="w-full flex justify-center items-center">ORDER ID</td>
-                                    <td className="w-full flex justify-center items-center">ORDER ID</td>
-                                    <td className="w-full flex justify-center items-center">ORDER ID</td>
-                                    <td className="w-full flex justify-center items-center">ORDER ID</td>
-                                </tr>
-                                {data.map((item, index) => (
-                                    <tr key={index} className="flex justify-center items-center py-6 ">
-                                        <td className="w-full flex justify-center items-center">{item.orderid}</td>
-                                        <td className="w-full flex justify-center items-center">{item.orderdate}</td>
-                                        <td className="w-full flex justify-center items-center">{item.ordertotal}</td>
-                                        <td className="w-full flex justify-center items-center">{item.orderstatus}</td>
-                                        <td className="w-full flex justify-center items-center"><a href={item.orderlink} className="text-[#00B207]">View Details</a></td>
-                                    </tr>))}
-                            </table></CarouselItem>
-                            <CarouselItem>...</CarouselItem>
-                            <CarouselItem>...</CarouselItem>
+                            {chunkedData.map((chunk, index) => (
+                                <CarouselItem key={index}>
+                                    <table className="w-full mt-5 mb-5 table-auto">
+                                        <thead>
+                                            <tr className="bg-[#F2F2F2]">
+                                                <th className="px-4 py-3 text-center">ORDER ID</th>
+                                                <th className="px-4 py-3 text-center">DATE</th>
+                                                <th className="px-4 py-3 text-center">TOTAL</th>
+                                                <th className="px-4 py-3 text-center">STATUS</th>
+                                                <th className="px-4 py-3 text-center">ACTIONS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {chunk.map((item, rowIndex) => (
+                                                <tr key={rowIndex} className="border-b">
+                                                    <td className="px-4 py-3 text-center">{item.id_pembelian}</td>
+                                                    <td className="px-4 py-3 text-center">
+                                                        {item?.tanggal_lunas ? new Date(item.tanggal_lunas).toLocaleDateString('en-US', {
+                                                            year: 'numeric',
+                                                            month: 'long',
+                                                            day: 'numeric'
+                                                        }) : ""}
+                                                    </td>
+                                                    <td className="px-4 py-3 text-center">Rp {item.total}</td>
+                                                    <td className="px-4 py-3 text-center">{item.status_pengiriman}</td>
+                                                    <td
+                                                        className="px-4 py-3 text-center text-[#00B207] hover:underline cursor-pointer"
+                                                        onClick={() => navigate(`/order-details/${item.id_pembelian}`)}
+                                                    >
+                                                        View Details
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </CarouselItem>
+                            ))}
                         </CarouselContent>
+
+
                         <div className="flex justify-center gap-4 mt-4">
                             <CarouselPrevious className="static relative" />
                             <CarouselNext className="static relative" />
@@ -152,3 +255,4 @@ const Order = () => {
 };
 
 export default Order;
+

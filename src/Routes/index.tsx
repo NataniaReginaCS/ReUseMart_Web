@@ -13,7 +13,6 @@ import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
 import Order from "../Pages/profile_pembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
-import AdminPenitip from "../Pages/admin/Penitip/AdminPenitip";
 import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
 
 import Login from "../Pages/auth/login";
@@ -32,10 +31,13 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
 
 //CS
-import Diskusi from "../Pages/Cs/Diskusi/Diskusi";
-
+import Diskusi from "../Pages/cs/Diskusi/Diskusi";
+import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
 import Cart from "../Pages/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
+import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
+import OwnerHistory from "../Pages/owner/history/OwnerHistory";
+import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
 
 const router = createBrowserRouter([
 	{
@@ -63,16 +65,42 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
+		path: "/owner",
+		element: (
+			<ProtectedRoutes allowedRoles={["Owner"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		),
+		children: [
+
+			{
+				path: "donasi",
+				element: <OwnerDonasi />,
+			},
+			{
+				path: "history",
+				element: <OwnerHistory />,
+			}
+
+		],
+
+
+	},
+	{
 		path: "/CS",
 		element: (
 			<ProtectedRoutes allowedRoles={["CS"]}>
 				<Outlet />
 			</ProtectedRoutes>
 		),
-		children:[
+		children: [
 			{
-				path:"diskusi",
-				element:<Diskusi/>
+				path: "diskusi",
+				element: <Diskusi />
+			},
+			{
+				path: "penitip",
+				element: <CSPenitip />
 			}
 		]
 	},
@@ -87,10 +115,6 @@ const router = createBrowserRouter([
 			{
 				path: "organisasi",
 				element: <AdminOrganisasi />,
-			},
-			{
-				path: "penitip",
-				element: <AdminPenitip />,
 			},
 			{
 				path: "pegawai",
@@ -131,6 +155,27 @@ const router = createBrowserRouter([
 	},
 	{
 		element: (
+			<ProtectedRoutes allowedRoles={["Organisasi"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		), children: [
+
+			{
+				path: "/profile-organisasi",
+				element: <ProfileOrganisasi />,
+			},
+			{
+				path: "/order-organisasi",
+				element: <OrderOrganisasi />,
+			},
+			{
+				path: "/request-donasi",
+				element: <RequestDonasi />,
+			},
+		]
+	},
+	{
+		element: (
 			<ProtectedRoutes allowedRoles={["Pembeli"]}>
 				<MainLayout />
 			</ProtectedRoutes>
@@ -165,6 +210,10 @@ const router = createBrowserRouter([
 				element: <Order />,
 			},
 			{
+				path: "/order-details/:id",
+				element: <OrderDetails />,
+			},
+			{
 				path: "/edit_profile",
 				element: <EditProfile />,
 			},
@@ -172,18 +221,7 @@ const router = createBrowserRouter([
 				path: "/cart",
 				element: <Cart />,
 			},
-			{
-				path: "/profile-organisasi",
-				element: <ProfileOrganisasi />,
-			},
-			{
-				path: "/order-organisasi",
-				element: <OrderOrganisasi />,
-			},
-			{
-				path: "/request-donasi",
-				element: <RequestDonasi />,
-			},
+
 		],
 	},
 ]);
