@@ -170,20 +170,18 @@ const AddPegawai = async (data: FormData) => {
     }
 };
 
-const FetchRole = async () => {
-    try {
-        const response = await useAxios.get("/fetchRoles", {
-            headers: {
+const ResetPassword = async (id: number) => {
+    try{
+        const response = await useAxios.post(`/resetPassword/${id}` , {},{
+            headers:{
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`,
-            },
-        });
+            }
+        })
         return response.data;
-    } catch (error: any) {
+
+    }catch( error: any){
         throw error.response.data;
     }
-};
-
-                
-
-export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip, AddPegawai, FetchPegawai, UpdatePegawai, DeletePegawai, FetchRole };
+}
+export { FetchOrganisasi, UpdateOrganisasi, DeleteOrganisasi, FetchPenitip, DeletePenitip, AddPegawai, FetchPegawai, UpdatePegawai, DeletePegawai, ResetPassword };
