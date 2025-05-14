@@ -53,41 +53,19 @@ const Item = () => {
         }
         setIsLoading(true);
 
-        AddDiskusi(pesan, id_barang)
-            .then(() => {
-                setIsLoading(false);
-                toast.success("Comment added successfully");
-                fetchDiskusi(id_barang);
-                setPesan("");
-            })
-            .catch((err) => {
-                console.log(err);
-                setIsLoading(false);
-            });
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setPesan(event.target.value);
     };
 
-    const fetchDiskusi = (id_barang: number) => {
-        setIsLoading(true);
-        FetchDiskusi(id_barang)
-            .then((response) => {
-                setDiskusi(response.diskusi);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                setIsLoading(false);
-            });
-    };
 
     const fetchBarangById = (id_barang: number) => {
         setIsLoading(true);
         FetchBarangById(id_barang)
             .then((response) => {
                 const barang = response.data;
+                setData([barang]);
                 setIsLoading(false);
                 navigate("/item", { state: { barang } });
             })
@@ -135,7 +113,6 @@ const Item = () => {
 
     useEffect(() => {
         fetchRelatedProducts(barang.id_kategori);
-        fetchDiskusi(barang.id_barang);
         setToken(getToken());
     }, []);
 
@@ -174,70 +151,8 @@ const Item = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col w-full mt-16 items-center">
-                <p className="text-2xl md:text-3xl font-semibold text-black mb-6">Related Products</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {data.map((item, index) => (
-                        <div
-                            key={index}
-                            onClick={() => fetchBarangById(item.id_barang)}
-                            className="w-full sm:w-48 h-72 bg-white p-4 shadow-md rounded-lg border flex flex-col hover:scale-105 transition-transform cursor-pointer"
-                        >
-                            <img src={item.foto} alt={item.nama} className="h-[60%] w-full object-contain" />
-                            <p className="mt-2 text-xs text-gray-400">{item.berat}</p>
-                            <p className="mt-2 text-sm break-words whitespace-normal">{item.nama}</p>
-                            <p className="font-bold text-green-900 text-md">Rp {item.harga}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
-            <div className="flex flex-col w-full mt-12 border border-gray-300 p-4 rounded-lg">
-                <p className="text-xl font-semibold text-black">Add Discussion</p>
-                <hr className="my-2 border-t w-full border-gray-300" />
-                <div className="grid w-full gap-1.5">
-                    <Label htmlFor="message">Your message</Label>
-                    <Textarea id="message" className="h-20" placeholder="Type your comment here." onChange={handleChange} value={pesan} />
-                </div>
-                <Button
-                    className={`rounded-md mt-4 mb-4 ${!token ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-black hover:bg-gray-100 hover:text-black text-white border border-black"}`}
-                    onClick={() => {
-                        if (token) addDiskusi(barang.id_barang);
-                        else toast.error("Please login to add a comment");
-                    }}
-                    disabled={!token}
-                >
-                    Add Comment
-                </Button>
-                <hr className="my-2 border-t w-full border-gray-300" />
-                <div className="flex flex-col gap-8 mt-4 ml-0 sm:ml-8">
-                    {diskusi.map((data, index) => (
-                        <div className="flex gap-4 items-center" key={index}>
-                            <img className="rounded-full w-12 h-12 bg-gray-500" src={data.foto} alt="" />
-                            <div className="flex flex-col w-full">
-                                <p className="font-bold text-black">
-                                    {data.nama}
-                                    <span className="ml-4 text-xs text-gray-500 font-normal">
-                                        {data.role === "CS" && (
-                                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-sm">
-                                                Customer Service
-                                            </span>
-                                        )} {new Date(data.tanggal).toLocaleString("id-ID", {
-                                            weekday: "long",
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                        })}
-                                    </span>
-                                </p>
-                                <p className="break-words whitespace-normal">{data.pesan}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            
         </div>
     );
 };

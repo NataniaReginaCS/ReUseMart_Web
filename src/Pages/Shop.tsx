@@ -6,6 +6,8 @@ import { Label } from "../components/ui/label"
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group"
 import { Button } from '../components/ui/button';
 import { FetchBarang, FetchBarangById, FetchBarangByKategori, FetchBarangIsGaransi, FetchBarangIsNotGaransi, FetchSearchBarang } from '../api/ApiBarang';
+import { toast } from 'react-toastify';
+import ModalItem from './ModalItem';
 
 
 type Barang = {
@@ -33,12 +35,18 @@ const Shop = () => {
     const [allData, setAllData] = useState([]);
     const [selectedKategori, setSelectedKategori] = useState<string | null>(null);
     const [selectedWarranty, setSelectedWarranty] = useState<boolean | null>(null);
+    
+        const [selectedPegawai, setSelectedPegawai] = useState<Barang | null>(null);
     const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
 
     const [searchTerm, setSearchTerm] = useState<string>("")
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<Barang[]>([]);
     const navigate = useNavigate();
+    
+	const [showModal, setShowModal] = useState(false);
+
+    
 
     const [kategori, setKategori] = useState<string | null>(null);
     const namaKategori = (id_kategori: string) => {
@@ -85,9 +93,15 @@ const Shop = () => {
         try {
             const response = await FetchSearchBarang(query);
             setData(response.data);
+            if(response.data.length === 0) {
+                toast.error("No items found");
+            } else {
+                toast.success("Search successful");
+            }
             setSearchTerm("");
         } catch (err) {
             console.error(err);
+            toast.error("Search failed");
         } finally {
             setIsLoading(false);
         }
@@ -143,7 +157,8 @@ const Shop = () => {
             .then((response) => {
                 const barang = response.data;
                 setIsLoading(false);
-                navigate('/item', { state: { barang } });
+                setShowModal(true);
+//                navigate('/item', { state: { barang } });
             })
             .catch((err) => {
                 console.log(err);
@@ -183,6 +198,11 @@ const Shop = () => {
                 setIsLoading(false);
             });
     }
+
+    const handleViewClick = (data: Barang) => {
+        setSelectedPegawai(data);
+        setShowModal(true);
+    };
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -328,7 +348,7 @@ const Shop = () => {
                             {data.map((item: any, index: React.Key) => (
                                 <div
                                     key={index}
-                                    onClick={() => fetchBarangById(item.id_barang)}
+                                    onClick={() => handleViewClick(item)}
                                     className="w-64 h-72 bg-white p-4 shadow-md rounded-lg border flex flex-col items-start hover:scale-105 transition-transform"
                                 >                                        
                                     <img src={item.foto} alt={item.name || item.nama} className="h-[60%] w-full object-contain" />
@@ -352,6 +372,15 @@ const Shop = () => {
                         </div>
                     </div>
                 </div>
+                {showModal && (
+                    <ModalItem
+                        show={showModal}
+                        dataPegawai={selectedPegawai}
+                        idBarang={selectedPegawai?.id_barang}
+                        onClose={() => setShowModal(false)}
+                        onSuccessEdit={fetchBarang}
+                    />
+                )}
         </div>
     );                    
 };
