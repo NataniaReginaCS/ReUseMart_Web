@@ -2,6 +2,7 @@ import { Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { deleteRequestDonasi } from "../../api/ApiOrganisasi";
 import { toast } from "react-toastify";
+import RequestDonasi from "./RequestDonasi";
 
 interface ModalDeleteRequestDonasiProps {
     onClose: () => void;
@@ -21,12 +22,17 @@ const ModalDeleteRequestDonasi = ({
     const handleSubmit = (event: any) => {
         event.preventDefault();
         deleteRequestDonasi(idRequest)
+
             .then((res) => {
+                console.log("Deleting request with ID:", idRequest);
+
                 toast.success("Request deleted successfully!");
                 onSuccessDelete();
                 handleClose();
             })
             .catch((err) => {
+                console.log("Deleting request with ID:", idRequest);
+
                 toast.error("Failed to delete request.");
                 console.error(err);
             });

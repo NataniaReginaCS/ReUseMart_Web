@@ -77,11 +77,9 @@ export async function UpdatePenitip(data: FormData, id: number) {
         return response.data;
     } catch (error: any) {
         console.error("UpdatePenitip error:", error);
-        // return custom error message
-        throw new Error(
-            error.response?.data?.message || "Something went wrong"
-        );
+        throw error;
     }
+
 }
 
 
@@ -171,16 +169,16 @@ const AddPegawai = async (data: FormData) => {
 };
 
 const ResetPassword = async (id: number) => {
-    try{
-        const response = await useAxios.post(`/resetPassword/${id}` , {},{
-            headers:{
+    try {
+        const response = await useAxios.post(`/resetPassword/${id}`, {}, {
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`,
             }
         })
         return response.data;
 
-    }catch( error: any){
+    } catch (error: any) {
         throw error.response.data;
     }
 }

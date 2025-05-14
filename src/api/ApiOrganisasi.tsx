@@ -83,6 +83,7 @@ export const deleteRequestDonasi = async (id: number) => {
         const response = await useAxios.delete(`/request_donasi/${id}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
+                "Content-Type": "application/json",
             },
         });
         return response.data;

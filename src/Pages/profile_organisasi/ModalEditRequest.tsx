@@ -14,7 +14,7 @@ import RequestDonasi from "./RequestDonasi";
 
 type ModalEditRequestDonasiProps = {
     show: boolean;
-    dataOrganisasi: RequestDonasi; // Ensure this line exists and matches the prop
+    dataOrganisasi: RequestDonasi;
     idRequest: number;
     onClose: () => void;
     onSuccessEdit: () => void;

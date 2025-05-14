@@ -17,7 +17,6 @@ import { Button } from "../../components/ui/button";
 import { FetchOrganisasi } from "../../api/ApiAdmin";
 import { SyncLoader } from "react-spinners";
 import ModalDeleteRequestDonasi from "./ModalDeleteRequest";
-import ModalEditOrganisasi from "../admin/Organisasi/ModalEditOrganisasi";
 import { addRequestDonasi, fetchRequestDonasi } from "../../api/ApiOrganisasi";
 import { showRequestDonasiById } from "../../api/ApiOrganisasi";
 import ModalEditRequest from "./ModalEditRequest";
@@ -41,7 +40,7 @@ const RequestDonasi = () => {
     const [dataPerPage, setDataPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [selectedOrganisasi, setSelectedOrganisasi] = useState<RequestDonasi | null>(null);
+    const [selectedRequest, setselectedRequest] = useState<RequestDonasi | null>(null);
     const [showModalDelete, setShowModalDelete] = useState(false);
 
     const fetchRequestDonasiById = async () => {
@@ -62,24 +61,24 @@ const RequestDonasi = () => {
     }, []);
 
     const handleEditClick = (data: RequestDonasi) => {
-        setSelectedOrganisasi(data);
+        setselectedRequest(data);
         setShowModal(true);
     };
 
     const handleDeleteClick = (data: RequestDonasi) => {
-        setSelectedOrganisasi(data);
+        setselectedRequest(data);
         setShowModalDelete(true);
     };
 
     const handleAddRequest = async () => {
         if (!newDeskripsi.trim()) {
-            alert("Please enter a description.");
+            toast.error("Description cannot be empty.");
             return;
         }
 
         const payload = {
             deskripsi: newDeskripsi,
-            tanggal_request: new Date().toISOString().split("T")[0], 
+            tanggal_request: new Date().toISOString().split("T")[0],
             status_terpenuhi: false,
         };
 
@@ -88,10 +87,10 @@ const RequestDonasi = () => {
             await addRequestDonasi(payload);
             setNewDeskripsi("");
             toast.success("Request added successfully!");
-            await fetchRequestDonasiById(); 
+            await fetchRequestDonasiById();
         } catch (error) {
             console.error("Add request error:", error);
-            alert("Failed to add donation request.");
+            toast.error("Failed to add request.");
         } finally {
             setIsLoading(false);
         }
@@ -329,20 +328,20 @@ const RequestDonasi = () => {
                             </div>
                         </div>
                     )}
-                    {showModal && selectedOrganisasi && (
+                    {showModal && selectedRequest && (
                         <ModalEditRequest
                             show={showModal}
-                            dataOrganisasi={selectedOrganisasi}
-                            idRequest={selectedOrganisasi.id_organisasi}
+                            dataOrganisasi={selectedRequest}
+                            idRequest={selectedRequest.id_organisasi}
                             onClose={() => setShowModal(false)}
                             onSuccessEdit={fetchRequestDonasiById}
                         />
                     )}
 
-                    {showModalDelete && selectedOrganisasi && (
+                    {showModalDelete && selectedRequest && (
                         <ModalDeleteRequestDonasi
                             show={showModalDelete}
-                            idRequest={selectedOrganisasi.id_organisasi}
+                            idRequest={selectedRequest.id_request}
                             onClose={() => setShowModalDelete(false)}
                             onSuccessDelete={fetchRequestDonasiById}
                         />
