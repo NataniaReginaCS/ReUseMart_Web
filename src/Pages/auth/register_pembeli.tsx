@@ -68,7 +68,7 @@ const Register_Pembeli = () => {
 	}
 
 	return (
-		<div className="flex flex-col md:flex-row w-full h-full min-h-screen">
+		<div className="flex flex-col md:flex-row w-full h-full">
 			<div className="hidden md:flex flex-col w-full md:w-1/2 h-auto bg-white">
 				<img src={RegisterImage} alt="Login" className="w-full h-full" />
 			</div>

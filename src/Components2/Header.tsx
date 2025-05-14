@@ -12,6 +12,7 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [role, setRole] = useState<string | null>(null);
+    const [isRoleLoading, setIsRoleLoading] = useState(true);
 
     const handleShopClick = () => {
         if (location.pathname === "/shop") {
@@ -62,23 +63,11 @@ const Header = () => {
     // Roles that should NOT see nav options or search
     const isPrivileged = role === 'Admin' || role === 'Organisasi' || role === 'CS' || role === 'Gudang' || role === 'Owner' || role === 'Penitip';
 
-    if (role === null) {
-        return (
-            <header>
-                <div className="w-screen bg-[#1F510F] text-white flex items-center h-20 px-8">
-                    <div className="flex items-center w-24 h-24">
-                        <img src={logo} alt="Logo" />
-                    </div>
-                </div>
-            </header>
-        );
-    }
-
     return (
-        <header>
-            <div className="w-screen bg-[#1F510F] text-white flex  items-center h-20 px-8">
+        <header className='sticky w-full top-0 z-50'>
+            <div className="bg-[#1F510F] text-white flex  items-center h-20 px-8">
                 {/* Logo (always visible) */}
-                <div className="flex items-center w-24 h-24">
+                <div className="flex items-center w-24 h-24 cursor-pointer" onClick={() => navigate("/")}>
                     <img src={logo} alt="Logo" />
                 </div>
 
@@ -113,7 +102,7 @@ const Header = () => {
                             </a>
                         </div>
                         <div className="flex items-center max-w-md w-full ml-50">
-                            <div className="w-2/3 bg-white text-black rounded-l">
+                            <div className="w-2/3 bg-white text-black rounded-l p-1">
                                 <input
                                     type="text"
                                     className="w-full h-full rounded-l-sm px-4 focus:outline-none"
@@ -127,7 +116,7 @@ const Header = () => {
                                     }}
                                 />
                             </div>
-                            <button className=' bg-[#F5CB58] font-semibold items-center flex rounded-r-sm px-4'
+                            <button className=' bg-[#F5CB58] font-semibold items-center flex rounded-r-sm px-4 p-1 hover:bg-[#31442c] text-white'
                                 onClick={() => searchBarang(searchTerm)}
                             >
                                 Search
@@ -155,6 +144,14 @@ const Header = () => {
                             {role === 'Organisasi' && (
                                 <a
                                     href="/profile-organisasi"
+                                    className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
+                                >
+                                    <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
+                                </a>
+                            )}
+                            {role === 'Owner' && (
+                                <a
+                                    href="/owner/donasi"
                                     className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
                                 >
                                     <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />

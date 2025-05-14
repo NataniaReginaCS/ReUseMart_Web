@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Calendar } from "../components/ui/calendar"
 import homeimage from '../assets/images/HomeImage.png';
 import item1 from '../assets/images/item1.png';
 import suit from '../assets/images/suits.jpg';
@@ -8,61 +7,44 @@ import jordan from '../assets/images/jordan.jpg';
 import fridge from '../assets/images/fridge.jpg';
 import couch from '../assets/images/couch.jpg';
 import shoppingcart from '../assets/images/shoppingcart.png';
-import { Button } from "../components/ui/button"
+import { Button } from "../components/ui/button";
+import rere from '../assets/images/rere_5.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faTruckFast, faHeadset, faBagShopping, faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { FetchBarang, FetchBarangByKategori, FetchKategori } from '../api/ApiBarang';
+import clothing from '../assets/images/clothing.png';
+import furnishing from '../assets/images/furnishing.png';
+import book from '../assets/images/book.png';
+import hobby from '../assets/images/hobby.png';
+import baby from '../assets/images/baby.png';
+import otomotif from '../assets/images/otomotif.png';
+import garden from '../assets/images/garden.png';
+import office from '../assets/images/office.png';
+import kosmetik from '../assets/images/kosmetik.png';
 
 const categories = [
     { name: "Electronics & Gadgets", image: item1, link: "/shop", id: "0" },
-    { name: "Clothing & Accessories", image: item1, link: "/shop", id: "1" },
-    { name: "Home Furnishings", image: item1, link: "/shop", id: "2" },
-    { name: "Books & School", image: item1, link: "/shop", id: "3" },
-    { name: "Hobbies & Collectibles", image: item1, link: "/shop", id: "4" },
-    { name: "Baby & Kids ", image: item1, link: "/shop", id: "5" },
-    { name: "Automotive", image: item1, link: "/shop", id: "6" },
-    { name: "Garden & Outdoor ", image: item1, link: "/shop", id: "7" },
-    { name: "Office & Industrial ", image: item1, link: "/shop", id: "8" },
-    { name: "Cosmetics & Skincare", image: item1, link: "/shop", id: "9" },
+    { name: "Clothing & Accessories", image: clothing, link: "/shop", id: "1" },
+    { name: "Home Furnishings", image: furnishing, link: "/shop", id: "2" },
+    { name: "Books & School", image: book, link: "/shop", id: "3" },
+    { name: "Hobbies & Collectibles", image: hobby, link: "/shop", id: "4" },
+    { name: "Baby & Kids ", image: baby, link: "/shop", id: "5" },
+    { name: "Automotive", image: otomotif, link: "/shop", id: "6" },
+    { name: "Garden & Outdoor ", image: garden, link: "/shop", id: "7" },
+    { name: "Office & Industrial ", image: office, link: "/shop", id: "8" },
+    { name: "Cosmetics & Skincare", image: kosmetik, link: "/shop", id: "9" },
 ];
 
 const team = [
-    { name: "Natania Regina", role: "CEO & Founder", sosmed: "@asu", image: item1, },
+    { name: "Natania Regina Clarabella Serafina", role: "CEO & Founder", sosmed: "@nataniareginaa", image: rere, },
     { name: "Kalvin Lawinata", role: "CEO & Founder", sosmed: "@asu", image: item1, },
     { name: "Nathanael Esmond", role: "CEO & Founder", sosmed: "@asu", image: item1, },
-    { name: "Jeff Bezos", role: "CEO & Founder", sosmed: "@asu", image: item1, },
+    { name: "Raka Pratama", role: "CEO & Founder", sosmed: "@rakapratama", image: item1, },
 ]
-
-type Barang = {
-    id_barang: number;
-    id_penitipan: number;
-    id_kategori: string;
-    id_hunter: string;
-    nama: string;
-    deskripsi: string;
-    foto: string;
-    berat: number;
-    isGaransi: boolean;
-    akhir_garansi: string;
-    status_perpanjangan: string;
-    harga: number;
-    tanggal_akhir: string;
-    batas_ambil: string;
-    status_barang: string;
-    tanggal_ambil: string;
-};
-
-type Kategori = {
-    id_kategori: string;
-    nama: string;
-}
 
 const Home = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState<Barang[]>([]);
-    const [kategori, setKategori] = useState<Kategori[]>([]);
 
     const fetchBarangByKategori = (id_kategori: string) => {
         setIsLoading(true);
@@ -74,8 +56,6 @@ const Home = () => {
 
     useEffect(() => {
     }, []);
-
-    const [date, setDate] = React.useState<Date | undefined>(new Date())
 
     return (
         <div className='flex flex-col h-full bg-white ' >
@@ -140,36 +120,36 @@ const Home = () => {
             </div>
             <div className='flex items-center flex-col h-full max-h-[1000px] bg-white'>
                 <p className="mt-32 text-3xl font-semibold text-black mb-6">You Might Like</p>
-                <div className='flex items-center justify-center w-full h-full gap-6 '>
+                <div className='flex justify-center w-full h-full gap-6 '>
                     <div
                         style={{
                             backgroundImage: `url(${fridge})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                         }}
-                        className='relative w-full max-w-[700px] h-[600px] rounded-md shadow-2xl flex flex-col items-end justify-between'
+                        className='relative w-full max-w-[600px] h-[500px] rounded-md shadow-2xl flex flex-col items-end justify-between'
                     >
                         <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
                         <Button className="relative z-10 text-black hover:text-white text-2xl bg-white rounded-[50px] h-12 w-12 flex items-center justify-center p-2 m-4">
                             <FontAwesomeIcon icon={faCartShopping} />
                         </Button>
                         <div className="relative z-10 text-white p-4 self-start">
-                            <Button className='bg-white text-black hover:text-white w-64 h-12 rounded-3xl font-bold text-lg'>Samsung Fridge</Button>
+                            <Button className='bg-white text-black hover:text-white w-64 h-12 rounded-3xl font-bold text-lg' onClick={() => fetchBarangByKategori("2")}>Home Furnishings</Button>
                         </div>
                     </div>
                     <div className='w-full max-w-[650px] h-[600px]  rounded-md justify-center'>
-                        <div className='flex flex-col justify-between h-full'>
+                        <div className='flex flex-col space-y-5'>
                             <div className='flex w-full h-full gap-4 justify-center'>
                                 <div style={{
                                     backgroundImage: `url(${couch})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
-                                }} className='relative w-full h-[340px] bg-white rounded-md shadow-2xl'>
+                                }} className='relative w-full h-[240px] bg-white rounded-md shadow-2xl'>
                                     <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
                                     <div className="absolute bottom-4 left-4 z-10 text-white">
-                                        <Button className='bg-white text-black hover:text-white flex flex-col items-center justify-center w-46 h-12 rounded-lg gap-0'>
-                                            <p className='text-lg font-bold'>Ikea Sofa</p>
-                                            <p className='text-xs'>Rp 10.000.000-</p></Button>
+                                        <Button className='bg-white text-black hover:text-white flex flex-col items-center justify-center w-46 h-12 rounded-3xl font-bold text-lg gap-0' onClick={() => fetchBarangByKategori("2")}>
+                                            Furnishings
+                                        </Button>
                                     </div>
                                     <div className="absolute top-0 right-0 z-10 text-white">
                                         <Button className="relative z-10 text-black hover:text-white text-2xl bg-white rounded-[50px] h-12 w-12 flex items-center justify-center p-2 m-4">
@@ -181,10 +161,10 @@ const Home = () => {
                                     backgroundImage: `url(${suit})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
-                                }} className='relative w-full h-[340px] bg-white rounded-md shadow-2xl'>
+                                }} className='relative w-full h-[240px] bg-white rounded-md shadow-2xl'>
                                     <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
                                     <div className="absolute bottom-4 left-4 z-10 text-white">
-                                        <Button className='bg-white text-black hover:text-white w-42 h-12 rounded-3xl font-bold text-lg'>Fashion</Button>
+                                        <Button className='bg-white text-black hover:text-white w-42 h-12 rounded-3xl font-bold text-lg' onClick={() => fetchBarangByKategori("1")}>Clothing</Button>
                                     </div>
                                     <div className="absolute top-0 right-0 z-10 text-white">
                                         <Button className="relative z-10 text-black hover:text-white text-2xl bg-white rounded-[50px] h-12 w-12 flex items-center justify-center p-2 m-4">
@@ -199,10 +179,10 @@ const Home = () => {
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                 }}
-                                className='relative w-full h-[340px] bg-white rounded-md shadow-2xl'>
+                                className='relative w-full h-[240px] bg-white rounded-md shadow-2xl'>
                                 <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
                                 <div className="absolute bottom-4 left-4 z-10 text-white">
-                                    <Button className='bg-white text-black hover:text-white w-42 h-12 rounded-3xl font-bold text-lg'>Nike Jordan</Button>
+                                    <Button className='bg-white text-black hover:text-white w-42 h-12 rounded-3xl font-bold text-lg' onClick={() => fetchBarangByKategori("1")}>Accessories</Button>
                                 </div>
                                 <div className="absolute top-0 right-0 z-10 text-white">
                                     <Button className="relative z-10 text-black hover:text-white text-2xl bg-white rounded-[50px] h-12 w-12 flex items-center justify-center p-2 m-4">
@@ -216,7 +196,7 @@ const Home = () => {
 
                 </div>
             </div>
-            <div className='flex items-center justify-center h-full max-h-[600px] bg-white mt-42 '>
+            <div className='flex items-center justify-center h-full max-h-[600px] bg-white mt-10 '>
                 <div className="w-[500px] bg-white  ">
                     <p className="break-words whitespace-normal text-6xl font-bold mb-2">
                         100% Trusted Preloved Goods.</p>
@@ -241,12 +221,11 @@ const Home = () => {
                                 key={index}
                                 className="w-52 h-72 bg-white  shadow-md border flex flex-col items-start "
                             >
-                                <img src={team.image} alt={team.name} className="bg-black h-[60%] w-full object-contain" />
+                                <img src={team.image} alt={team.name} className="bg-white h-[60%] w-full object-cover" />
                                 <div className='mt-2 mx-4'>
                                     <p className=" font-semibold text-lg">{team.name}</p>
                                     <p className='font-light text-gray-400 text-s'>{team.role}</p>
                                     <p className='font-light text-gray-400 text-s'>{team.sosmed}</p>
-
                                 </div>
                             </div>
                         ))}
