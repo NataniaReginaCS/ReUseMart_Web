@@ -157,8 +157,7 @@ const OwnerDonasi = () => {
 
 	return (
 		<>
-			<div className="flex max-lg:flex-wrap p-5 gap-5 lg:flex-nowrap lg:p-20 lg:gap-10 ">
-
+			<div className="flex max-lg:flex-wrap p-5 gap-5 lg:flex-nowrap lg:p-20 w-[90%]">
 				<SidebarNavOwner></SidebarNavOwner>
 
 				{isLoading ? (
@@ -191,7 +190,7 @@ const OwnerDonasi = () => {
 						</div>
 
 						<div className="overflow-x-auto">
-							<table className="w-full min-w-max table-auto text-left">
+							<table className="w-10 min-w-max table-auto text-left">
 								<thead className="bg-[#2A3042] text-white text-center">
 									<tr>
 										{TABLE_HEAD.map((head) => (
@@ -211,25 +210,25 @@ const OwnerDonasi = () => {
 										const isLast = index === currentData.length;
 										const classes = isLast
 											? "p-4"
-											: "p-4 border-b border-blue-gray-50";
+											: "p-4 border-b border-blue-gray-50 ";
 										return (
 											<tr key={org.id_request}>
 												<td className={classes}>
-													<p className="font-normal">{getNamaOrganisasi(org.id_organisasi)}</p>
+													<p className="font-normal text-sm">{getNamaOrganisasi(org.id_organisasi)}</p>
 												</td>
 												<td className={classes}>
-													<p className="font-normal">{org.tanggal_request}</p>
+													<p className="font-normal text-sm">{org.tanggal_request}</p>
 												</td>
 												<td className={classes} >
-													<p className="font-normal text-left">{org.deskripsi}</p>
+													<p className="font-normal text-left flex-wrap text-sm">{org.deskripsi}</p>
 												</td>
 												<td className={classes} >
-													<p className="font-normal">{getyesOrNo(org.status_terpenuhi)}</p>
+													<p className="font-normal text-sm ">{getyesOrNo(org.status_terpenuhi)}</p>
 												</td>
 												<td className={classes}>
 													<div className="flex flex-row justify-evenly gap-2">
 														<button
-														className="font-medium bg-[#F3B200] rounded-3xl text-white w-30 cursor-pointer flex text-center items-center justify-center gap-1 p-1"
+														className="font-medium bg-[#F3B200] rounded-3xl text-white w-20  cursor-pointer flex text-center items-center justify-center gap-1 p-1"
 														onClick={() => {
 															const detail = data.find((item) => item.id_request === org.id_request);
 													
@@ -245,10 +244,10 @@ const OwnerDonasi = () => {
 															setShowModal(true);
 														}}
 														>
-														<Edit size={20} /> Edit
+														<Edit size={15}/> <p className="text-sm">Edit</p>
 														</button>
 
-														<button className="font-medium bg-blue-500 text-white rounded-3xl w-30 flex cursor-pointer text-center items-center justify-center gap-1 p-1"
+														<button className="font-medium bg-blue-500 text-white rounded-3xl w-20 flex cursor-pointer text-center items-center justify-center gap-1 p-1"
 														onClick={() => {
 															const detail = data.find((item) => item.id_request === org.id_request);
 													
@@ -263,7 +262,7 @@ const OwnerDonasi = () => {
 															});
 															setShowModalView(true);
 														}}>
-														<FaEye size={20} /> View
+														<FaEye size={15} /> <p className="text-sm">View</p>
 														</button>
 
 														{!org.status_terpenuhi && (
@@ -282,8 +281,8 @@ const OwnerDonasi = () => {
 																setShowModalAdd(true);
 															}}
 														>
-														<IoAdd size={20} />
-															Add
+														<IoAdd size={15} />
+														<p className="text-sm">Add</p>
 														</button>
 														)}
 													</div>

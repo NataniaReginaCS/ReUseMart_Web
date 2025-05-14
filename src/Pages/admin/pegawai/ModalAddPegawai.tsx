@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { HiEye, HiEyeOff } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { SyncLoader } from "react-spinners";
 import { Label, Modal, ModalBody, ModalHeader, TextInput } from "flowbite-react";
@@ -22,7 +23,7 @@ const ModalAddPegawai = ({ onClose, show, onSuccessAdd }: ModalAddPegawaiProps) 
     });
 
     const [isPending, setIsPending] = useState(false);
-
+    const [showPassword, setShowPassword] = useState(false);
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setData({ ...data, [name]: value });
@@ -139,14 +140,23 @@ const ModalAddPegawai = ({ onClose, show, onSuccessAdd }: ModalAddPegawaiProps) 
                         </div>
                         <div>
                             <Label htmlFor="password">Password</Label>
-                            <TextInput
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={data.password}
-                                onChange={handleChange}
-                                required
-                            />
+                                <div className="relative">
+                                    <TextInput
+                                        id="password"
+                                        name="password"
+                                        type={showPassword ? "text" : "password"}
+                                        onChange={handleChange}
+                                        className="pr-10"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword((prev) => !prev)}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+                                        tabIndex={-1}
+                                    >
+                                        {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+                                    </button>
+                                </div>
                         </div>
                         <div>
                             <Label htmlFor="tanggal_masuk">Hire Date</Label>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { HiEye, HiEyeOff } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { SyncLoader } from "react-spinners";
 import {
@@ -38,12 +38,14 @@ const ModalEditPegawai = ({
 }: ModalEditPegawaiProps) => {
 	const [data, setData] = useState({
 		...dataPegawai,
+		password: "",
 		wallet: dataPegawai.wallet ?? 0,
 		tanggal_masuk: new Date(dataPegawai.tanggal_masuk),
 		tanggal_lahir: new Date(dataPegawai.tanggal_lahir),
 	});
 	useState(dataPegawai);
 	const [isPending, setIsPending] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClose = () => {
 		onClose();
@@ -252,16 +254,27 @@ const ModalEditPegawai = ({
 							</div>
 
 							<div>
-								<div className="mb-2 block">
-									<Label htmlFor="password">Edit password</Label>
-								</div>
-								<TextInput
-									id="password"
-									name="password"
-									type="password"
-									onChange={handleChange}
-								/>
-							</div>
+                                <div className="mb-2 block">
+                                    <Label htmlFor="password">Edit password</Label>
+                                </div>
+                                <div className="relative">
+                                    <TextInput
+                                        id="password"
+                                        name="password"
+                                        type={showPassword ? "text" : "password"}
+                                        onChange={handleChange}
+                                        className="pr-10"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword((prev) => !prev)}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+                                        tabIndex={-1}
+                                    >
+                                        {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+                                    </button>
+                                </div>
+                            </div>
 							<div>
 								<div className="mb-2 block">
 									<Label htmlFor="tanggal_masuk">Edit hire_date</Label>
