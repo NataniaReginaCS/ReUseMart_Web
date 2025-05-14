@@ -45,20 +45,31 @@ const ModalAddPenitip = ({ onClose, show, onSuccessAdd }: ModalAddPenitipProps) 
         formData.append("telepon", data.telepon);
         formData.append("no_ktp", data.no_ktp);
         formData.append("password", data.password);
-        formData.append("foto_ktp", data.foto_ktp!); // Make sure the foto_ktp is not null
+        formData.append("foto_ktp", data.foto_ktp!);
 
         AddPenitip(formData)
             .then((response) => {
+                console.log("no_ktp before sending:", data.no_ktp);
+
                 setIsPending(false);
                 toast.success(response.message);
                 onSuccessAdd();
                 onClose();
             })
             .catch((err) => {
-                console.log(err);
                 setIsPending(false);
-                toast.error("Error: " + err.message);
+                if (err.response && err.response.status === 422) {
+                    const validationErrors = err.response.data.errors;
+                    for (const key in validationErrors) {
+                        if (validationErrors.hasOwnProperty(key)) {
+                            toast.error(validationErrors[key][0]);
+                        }
+                    }
+                } else {
+                    toast.error("Error: " + err.message);
+                }
             });
+
     };
 
     return (

@@ -77,6 +77,7 @@ const ModalEditPenitip = ({
 
         formData.append("foto_ktp", data.foto_ktp);
 
+
         UpdatePenitip(formData, idPenitip)
             .then((response) => {
                 setIsPending(false);
@@ -88,8 +89,25 @@ const ModalEditPenitip = ({
             .catch((err) => {
                 console.log(err);
                 setIsPending(false);
-                toast.dark(err.message);
+
+                if (err.response && err.response.status === 422) {
+                    const errors = err.response.data.errors;
+
+                    if (errors) {
+                        Object.keys(errors).forEach((field) => {
+                            errors[field].forEach((msg: string) => {
+                                toast.error(msg);
+                            });
+                        });
+                    } else {
+                        toast.error("Validation failed. Please check your input.");
+                    }
+                } else {
+                    toast.error(err.response?.data?.message || "Something went wrong.");
+                }
             });
+
+
     };
 
     return (
