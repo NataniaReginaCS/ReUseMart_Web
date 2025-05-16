@@ -124,14 +124,24 @@ const Item = () => {
         setIsLoading(true);
         FetchRelatedProducts(id_kategori)
             .then((response) => {
-                setData(response.data);
+                if (response.data && typeof response.data === "object" && !Array.isArray(response.data)) {
+                    setData(Object.values(response.data));
+                } else if (Array.isArray(response.data)) {
+                    setData(response.data);
+                } else {
+                    setData([]);
+                    console.warn("Expected array but got:", response.data);
+                }
                 setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err);
                 setIsLoading(false);
+                setData([]);
             });
     };
+    
+    
 
     useEffect(() => {
         fetchRelatedProducts(barang.id_kategori);
@@ -177,7 +187,8 @@ const Item = () => {
             <div className="flex flex-col w-full mt-16 items-center">
                 <p className="text-2xl md:text-3xl font-semibold text-black mb-6">Related Products</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {data.map((item, index) => (
+                    {Array.isArray(data) && data.length > 0 ? (
+                        data.map((item, index) => (
                         <div
                             key={index}
                             onClick={() => fetchBarangById(item.id_barang)}
@@ -188,8 +199,11 @@ const Item = () => {
                             <p className="mt-2 text-sm break-words whitespace-normal">{item.nama}</p>
                             <p className="font-bold text-green-900 text-md">Rp {item.harga}</p>
                         </div>
-                    ))}
-                </div>
+                        ))
+                    ) : (
+                        <p>No related products found.</p>
+                    )}
+                    </div>
             </div>
 
             <div className="flex flex-col w-full mt-12 border border-gray-300 p-4 rounded-lg">
