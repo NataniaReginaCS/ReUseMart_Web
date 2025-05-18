@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import { fetchPembeli } from "../../api/ApiPembeli";
-import { getAlamatUtama } from "../../api/ApiPembeli";
-import SidebarNav from "../../Components2/SideBarNav";
+import { fetchPembeli } from "../../../api/ApiPembeli";
+import { getAlamatUtama } from "../../../api/ApiPembeli";
+import SidebarNav from "../../../Components2/SideBarNav";
 import {
 	faHouse,
 } from "@fortawesome/free-solid-svg-icons";

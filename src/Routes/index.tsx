@@ -7,10 +7,10 @@ import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
 import Item from "../Pages/Item";
 import About from "../Pages/About";
-import Profile from "../Pages/profile_pembeli/profile";
-import EditProfile from "../Pages/profile_pembeli/edit_profile";
+import Profile from "../Pages/Pembeli/ProfilePembeli/profile";
+import EditProfile from "../Pages/Pembeli/ProfilePembeli/edit_profile";
 import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
-import Order from "../Pages/profile_pembeli/Order";
+import Order from "../Pages/Pembeli/ProfilePembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
 import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
@@ -31,13 +31,18 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
 
 //CS
-import Diskusi from "../Pages/cs/Diskusi/DiskusiHome";
-import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
-import Cart from "../Pages/Cart";
+
+import Cart from "../Pages/Pembeli/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
 import OwnerHistory from "../Pages/owner/history/OwnerHistory";
-import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
+import OrderDetails from "../Pages/Pembeli/ProfilePembeli/OrderDetails";
+import Diskusi from "../Pages/Cs/Diskusi/DiskusiHome"
+import CSPenitip from "../Pages/Cs/Penitip/CSPenitip";
+
+
+//Pembeli
+import Checkout from "../Pages/Pembeli/Checkout";
 
 const router = createBrowserRouter([
 	{
@@ -221,6 +226,10 @@ const router = createBrowserRouter([
 				path: "/cart",
 				element: <Cart />,
 			},
+			{
+				path: "/checkout/:nomor_nota",
+				element: <Checkout />,
+			}
 
 		],
 	},
