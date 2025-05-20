@@ -32,7 +32,10 @@ const ProtectedRoutes = ({ allowedRoles, children }: ProtectedRoutesProps) => {
 				setLoading(false);
 			}
 		};
+<<<<<<< Updated upstream
 		fetchRole();
+=======
+>>>>>>> Stashed changes
 		if(token){
 			fetchRole();
 		}else{

@@ -29,6 +29,18 @@ const GetOngoingPembelian = async (nomor_nota : string) => {
             }
         })
 
+<<<<<<< Updated upstream
+=======
+const GetOngoingPembelian = async (nomor_nota : string) => {
+    try{
+        const response = await useAxios.get(`/getOngoingPembelian/${nomor_nota}`, {
+            headers:{
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+
+>>>>>>> Stashed changes
         return response.data;
     }catch (error:any){
         console.error("Error fetching ongoing orders:", error.message);

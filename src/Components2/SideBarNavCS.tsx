@@ -2,6 +2,7 @@ import { MdDashboard } from "react-icons/md";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { MdOutlineDomainVerification } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "../api/apiAuth";
 import { toast } from "react-toastify";
@@ -25,6 +26,7 @@ const SidebarNavCS = () => {
     const navItems = [
         { label: "Profile", icon: <MdDashboard />, path: "/cs/penitip" },
         { label: "Discussion", icon: <GoCommentDiscussion />, path: "/cs/diskusi" },
+        { label: "Payment Verification", icon: <MdOutlineDomainVerification />, path: "/cs/payment-verification" },
 
     ];
 
