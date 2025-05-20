@@ -1,32 +1,28 @@
 import React from "react";
 import { FileInput, Button } from "flowbite-react";
-import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { GetOngoingPembelian } from "../../api/ApiTransaksiPembelian";
+import { toast } from "react-toastify";
+import { AddBuktiPembayaran } from "../../api/ApiTransaksiPembelian";
 
-function Timer({ secondsLeft }: { secondsLeft: number }) {
-	const [seconds, setSeconds] = React.useState(secondsLeft);
+type Pembelian = {
+	id_pembelian: number;
+	id_pembeli: number;
+	id_alamat: number;
+	total: number;
+	nomor_nota: string;
+	tanggal_laku: Date;
+};
 
-	React.useEffect(() => {
-		if (seconds <= 0) return;
-		const interval = setInterval(() => {
-			setSeconds((s) => s - 1);
-		}, 1000);
-		return () => clearInterval(interval);
-	}, [seconds]);
 
-	const minutes = Math.floor(seconds / 60);
-	const sec = seconds % 60;
-
-	return (
-		<span className="font-mono text-red-600">
-			{minutes.toString().padStart(2, "0")}:{sec.toString().padStart(2, "0")}
-		</span>
-	);
-}
-
-function UploadBuktiPembayaran() {
-	const [file, setFile] = React.useState<File | null>(null);
-	const [preview, setPreview] = React.useState<string | null>(null);
+const Checkout = () => {
+	const navigate = useNavigate();
+	const { nomor_nota } = useParams();
+	const [pembelian, setPembelian] = useState<Pembelian>();
+	const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
+	const [file, setFile] = useState<File | null>(null);
+	const [preview, setPreview] = useState<string | null>(null);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selected = e.target.files?.[0];
@@ -40,57 +36,73 @@ function UploadBuktiPembayaran() {
 		}
 	};
 
-	return (
-		<div>
-			<label className="block font-semibold mb-2">
-				Upload Bukti Pembayaran
-			</label>
-			{/* <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="mb-2"
-            /> */}
-			<FileInput
-				id="file"
-				name="foto"
-				accept="image/*"
-				onChange={handleFileChange}
-			/>
-			{preview && (
-				<div className="mt-2">
-					<span className="block mb-1">Preview:</span>
-					<img
-						src={preview}
-						alt="Preview Bukti Pembayaran"
-						className="w-full max-h-64 object-contain border rounded"
-					/>
-				</div>
-			)}
-		</div>
-	);
-}
+	useEffect(() => {
+		const fetchTransaksiPembelian = async () => {
+			try {
+				const response = await GetOngoingPembelian(nomor_nota as string);
+				setPembelian(response.pembelian);
 
-const Checkout = () => {
-	const { nomor_nota } = useParams();
-	const location = useLocation();
-	const pembelian = location.state?.pembelian;
+				// Hitung waktu sisa pembayaran (15 menit dari tanggal_laku)
+				const tanggalLaku = new Date(response.pembelian.tanggal_laku);
+				const now = new Date();
+				const targetTime = new Date(tanggalLaku.getTime() + 15 * 60 * 1000);
+				const diffSeconds = Math.max(
+					0,
+					Math.floor((targetTime.getTime() - now.getTime()) / 1000)
+				);
+				setSecondsLeft(diffSeconds);
+			} catch (error) {
+				console.error("Error fetching ongoing orders:", error);
+				toast.error("Gagal mendapatkan data pembelian");
+				navigate("/");
+			}
+		};
+		fetchTransaksiPembelian();
+	}, [nomor_nota, navigate]);
 
-	if (!pembelian) {
-		return <p>Data pembelian tidak ditemukan.</p>;
+	useEffect(() => {
+		if (secondsLeft === null) return;
+		if (secondsLeft <= 0) {
+			toast.error("Waktu pembayaran telah habis.");
+			navigate("/");
+			return;
+		}
+		const interval = setInterval(() => {
+			setSecondsLeft((prev) => (prev !== null ? prev - 1 : null));
+		}, 1000);
+		return () => clearInterval(interval);
+	}, [secondsLeft, navigate]);
+
+	if (!pembelian || secondsLeft === null) {
+		return (
+			<div className="h-screen flex items-center justify-center">
+				<p>Memuat data pembelian...</p>
+			</div>
+		);
 	}
 
-	const tanggalLaku = new Date(pembelian.tanggal_laku);
-	const now = new Date();
+	const submitFotoPembayaran = async () => {
+		if (!file) {
+			toast.error("Silakan pilih file untuk diunggah.");
+			return;
+		}
 
-	// Hitung waktu target = tanggal_laku + 15 menit (900.000 ms)
-	const targetTime = new Date(tanggalLaku.getTime() + 15 * 60 * 1000);
+		const formData = new FormData();
+		formData.append("bukti_pembayaran", file);
+		formData.append("nomor_nota", pembelian.nomor_nota);
 
-	// Hitung sisa detik (jika sudah lewat, 0)
-	const diffSeconds = Math.max(
-		0,
-		Math.floor((targetTime.getTime() - now.getTime()) / 1000)
-	);
+		try {
+			const response = await AddBuktiPembayaran(formData, pembelian.nomor_nota);
+			toast.success(response.message);
+			navigate("/");
+		} catch (error: any) {
+			toast.error("Gagal mengunggah bukti pembayaran.");
+			console.error("Error uploading payment proof:", error);
+		}
+	};
+
+	const minutes = Math.floor(secondsLeft / 60);
+	const seconds = secondsLeft % 60;
 
 	return (
 		<div className="h-screen items-center justify-center flex w-full">
@@ -98,7 +110,10 @@ const Checkout = () => {
 				{/* Timer */}
 				<div className="flex items-center justify-between mb-4">
 					<span className="text-lg font-semibold">Sisa Waktu Pembayaran:</span>
-					<Timer secondsLeft={diffSeconds} />
+					<span className="font-mono text-red-600">
+						{minutes.toString().padStart(2, "0")}:
+						{seconds.toString().padStart(2, "0")}
+					</span>
 				</div>
 
 				{/* Bank Info */}
@@ -131,9 +146,34 @@ const Checkout = () => {
 					</div>
 				</div>
 
-				<UploadBuktiPembayaran />
+				<div>
+					<label className="block font-semibold mb-2">
+						Upload Bukti Pembayaran
+					</label>
+					<FileInput
+						id="file"
+						name="foto"
+						accept="image/*"
+						onChange={handleFileChange}
+					/>
+					{preview && (
+						<div className="mt-2">
+							<span className="block mb-1">Preview:</span>
+							<img
+								src={preview}
+								alt="Preview Bukti Pembayaran"
+								className="w-full max-h-64 object-contain border rounded"
+							/>
+						</div>
+					)}
+				</div>
 
-				<Button className="justify-self-center mt-6">Confirm Payment</Button>
+				<Button
+					className="justify-self-center mt-6"
+					onClick={submitFotoPembayaran}
+				>
+					Confirm Payment
+				</Button>
 			</div>
 		</div>
 	);

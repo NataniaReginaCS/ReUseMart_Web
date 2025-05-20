@@ -20,5 +20,52 @@ const CreatePembelian = async (data: {
         throw error;
     }
 };
+const GetOngoingPembelian = async (nomor_nota : string) => {
+    try{
+        const response = await useAxios.get(`/getOngoingPembelian/${nomor_nota}`, {
+            headers:{
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
 
-export { CreatePembelian };
+        return response.data;
+    }catch (error:any){
+        console.error("Error fetching ongoing orders:", error.message);
+        throw error;
+    }
+}
+
+const AddBuktiPembayaran = async (data : FormData, nomor_nota : string) =>{
+    try{
+        const response = await useAxios.post(`/addBuktiPembayaran/${nomor_nota}`, data, {  
+            headers:{
+                "Accept": "multipart/form-data",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+        return response.data;
+    }catch (error:any){
+        console.error("Error adding payment proof:", error.message);
+        throw error;
+    }
+}
+
+const GetUnverifiedPayment = async () =>{
+    try{
+        const response = await useAxios.get("/getUnverifiedPayment", {
+            headers:{
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+
+        return response.data;
+
+    }catch (error:any){
+        console.error("Error fetching unverified payments:", error.message);
+        throw error;
+    }
+}
+
+export { CreatePembelian, GetOngoingPembelian, AddBuktiPembayaran, GetUnverifiedPayment };
