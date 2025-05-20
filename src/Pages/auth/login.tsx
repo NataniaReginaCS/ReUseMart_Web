@@ -38,7 +38,7 @@ const Login = () => {
 				} else if (response.role === 'Admin') {
 					navigate('/admin/organisasi');
 				} else if (response.role === 'Gudang') {
-					// navigate or logic here
+					navigate('/gudang/penitipan');
 				} else if (response.role === 'Owner') {
 					navigate('/owner/donasi');
 				} else if (response.role === 'Penitip') {

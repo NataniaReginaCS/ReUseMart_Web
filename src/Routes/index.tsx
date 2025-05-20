@@ -40,6 +40,9 @@ import OrderDetails from "../Pages/Pembeli/ProfilePembeli/OrderDetails";
 import Diskusi from "../Pages/Cs/Diskusi/DiskusiHome"
 import CSPenitip from "../Pages/Cs/Penitip/CSPenitip";
 
+//Gudang
+import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
+
 
 //Pembeli
 import Checkout from "../Pages/Pembeli/Checkout";
@@ -128,6 +131,20 @@ const router = createBrowserRouter([
 			{
 				path: "reset-password-pegawai",
 				element: <ResetPasswordPegawai />,
+			}
+		],
+	},
+	{
+		path: "/gudang",
+		element: (
+			<ProtectedRoutes allowedRoles={["Gudang"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		),
+		children: [
+			{
+				path: "penitipan",
+				element: <GudangPenitipan />,
 			}
 		],
 	},

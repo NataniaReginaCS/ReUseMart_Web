@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
 import { Label } from "@radix-ui/react-label";
-import { FetchBarangById, FetchRelatedProducts } from "../api/ApiBarang";
+import { FetchBarangById, FetchRelatedProducts, getPenitip } from "../api/ApiBarang";
 import { FetchDiskusi, AddDiskusi } from "../api/ApiDiskusi";
 import { getToken } from "../api/ApiPembeli";
 import { toast } from "react-toastify";
@@ -47,7 +47,8 @@ const Item = () => {
 	const [diskusi, setDiskusi] = useState<Diskusi[]>([]);
 	const [token, setToken] = useState<string | null>(null);
 	const [pesan, setPesan] = useState<string>("");
-    
+    const [penitip, setPenitip] = useState<{ [id_barang: number]: string }>({});
+	const [rating, setRating] = useState<{ [id_barang: number]: string }>({});
 
 	const addDiskusi = (id_barang: number) => {
 		if (!pesan) {
@@ -139,6 +140,32 @@ const Item = () => {
 		return "Cosmetics & Personal Care";
 	};
 
+    useEffect(() => {
+        data.forEach((item) => {
+            if (!penitip[item.id_barang]) {
+                getPenitip(item.id_barang).then((res) => {
+                    setPenitip((prev) => ({
+                        ...prev,
+                        [item.id_barang]: res.data?.nama || "Penitip"
+                    }));
+                });
+            }
+        });
+    }, [data]);
+
+    useEffect(() => {
+        data.forEach((item) => {
+            if (!rating[item.id_barang]) {
+                getPenitip(item.id_barang).then((res) => {
+                    setRating((prev) => ({
+                        ...prev,
+                        [item.id_barang]: res.data?.total_rating || "Rating"
+                    }));
+                });
+            }
+        });
+    }, [data]);
+
 	const fetchRelatedProducts = (id_kategori: string) => {
 		setIsLoading(true);
 		FetchRelatedProducts(id_kategori)
@@ -202,6 +229,37 @@ const Item = () => {
 					<p className="text-xl md:text-2xl font-bold text-green-600 mt-2">
 						Rp {barang.harga}
 					</p>
+					<div className="flex items-center gap-2 mt-2 text-xs font-light text-gray-400">
+						<p>
+							{rating[barang.id_barang] ? (
+								<span>
+									{Array.from({ length: 5 }).map((_, i) => {
+										const rate = Number(rating[barang.id_barang]);
+										let starColor = "#E0E0E0";
+										let starChar = "★";
+										if (rate >= i + 1) {
+											starColor = "#FFD700";
+										} else if (rate > i && rate < i + 1) {
+											starColor = "#FFD700";
+											starChar = "⯪";
+										}
+										return (
+											<span key={i} style={{ color: starColor, fontSize: "1rem" }}>
+												{starChar}
+											</span>
+										);
+									})}
+									<span className="ml-1 text-[1rem] text-gray-500">
+										({rating[barang.id_barang]})
+									</span>
+								</span>
+							) : (
+								"Rating"
+							)}
+						</p>
+						<span>•</span>
+						<p className="text-[1rem]">{penitip[barang.id_barang] || "Memuat..."}</p>
+					</div>
 					<hr className="my-2 border-t w-full border-gray-300" />
 					<p className="text-md font-semibold">Description :</p>
 					<p className="text-sm text-gray-500 break-words whitespace-normal">

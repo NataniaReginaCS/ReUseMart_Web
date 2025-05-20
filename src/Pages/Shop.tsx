@@ -5,7 +5,7 @@ import { faSearch, faHouse, faChevronRight } from '@fortawesome/free-solid-svg-i
 import { Label } from "../components/ui/label"
 import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group"
 import { Button } from '../components/ui/button';
-import { FetchBarang, FetchBarangById, FetchBarangByKategori, FetchBarangIsGaransi, FetchBarangIsNotGaransi, FetchSearchBarang } from '../api/ApiBarang';
+import { FetchBarang, FetchBarangById, FetchBarangByKategori, FetchBarangIsGaransi, FetchBarangIsNotGaransi, FetchSearchBarang, getPenitip } from '../api/ApiBarang';
 
 
 type Barang = {
@@ -27,8 +27,6 @@ type Barang = {
     tanggal_ambil: string;
 };
 
-
-
 const Shop = () => {
     const [allData, setAllData] = useState([]);
     const [selectedKategori, setSelectedKategori] = useState<string | null>(null);
@@ -39,8 +37,8 @@ const Shop = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<Barang[]>([]);
     const navigate = useNavigate();
-
-    const [kategori, setKategori] = useState<string | null>(null);
+    const [penitip, setPenitip] = useState<{ [id_barang: number]: string }>({});
+    const [rating, setRating] = useState<{ [id_barang: number]: string }>({});
     const namaKategori = (id_kategori: string) => {
             if (parseInt(id_kategori) >= 0 && parseInt(id_kategori) < 11) {
                 return "Electronic & Gadget";
@@ -150,8 +148,7 @@ const Shop = () => {
                 setIsLoading(false);
             });
     };
-
-
+    
     const fetchBarang = () => {
         
 		setIsLoading(true);
@@ -183,6 +180,33 @@ const Shop = () => {
                 setIsLoading(false);
             });
     }
+    
+    useEffect(() => {
+        data.forEach((item) => {
+            if (!penitip[item.id_barang]) {
+                getPenitip(item.id_barang).then((res) => {
+                    setPenitip((prev) => ({
+                        ...prev,
+                        [item.id_barang]: res.data?.nama || "Penitip"
+                    }));
+                });
+            }
+        });
+    }, [data]);
+
+    useEffect(() => {
+        data.forEach((item) => {
+            if (!rating[item.id_barang]) {
+                getPenitip(item.id_barang).then((res) => {
+                    setRating((prev) => ({
+                        ...prev,
+                        [item.id_barang]: res.data?.total_rating || "Rating"
+                    }));
+                });
+            }
+        });
+    }, [data]);
+    
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -341,6 +365,37 @@ const Shop = () => {
                                     <p className='font-bold text-green-900 text-md'>
                                         Rp {item.harga}
                                     </p>
+                                    <div className='flex flex-row gap-2'>
+                                        <p className='mt-2 font-light text-gray-400 text-xs'>
+                                            {rating[item.id_barang]
+                                                ? (
+                                                    <span>
+                                                        {Array.from({ length: 5 }).map((_, i) => {
+                                                            const rate = Number(rating[item.id_barang]);
+                                                            let starColor = '#E0E0E0';
+                                                            let starChar = '★';
+                                                            if (rate >= i + 1) {
+                                                                starColor = '#FFD700'; 
+                                                            } else if (rate > i && rate < i + 1) {
+                                                                starColor = '#FFD700'; 
+                                                                starChar = '⯪'; 
+                                                            }
+                                                            return (
+                                                                <span key={i} style={{ color: starColor }}>
+                                                                    {starChar}
+                                                                </span>
+                                                            );
+                                                        })}
+                                                        <span className="ml-1 text-xs text-gray-500">({rating[item.id_barang]})</span>
+                                                    </span>
+                                                )
+                                                : "Rating"}
+                                        </p>
+                                        <p className='mt-2 font-light text-gray-400 text-xs'>•</p>
+                                        <p className='mt-2 font-light text-gray-400 text-xs'>
+                                            {penitip[item.id_barang] || "Memuat..."}
+                                        </p>
+                                    </div>
                                 </div>
                             ))}
                             </div>
