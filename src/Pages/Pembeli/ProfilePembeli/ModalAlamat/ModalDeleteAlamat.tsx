@@ -1,6 +1,6 @@
 import { Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { DeleteAlamat } from "../../../api/ApiAlamat";
+import { DeleteAlamat } from "../../../../api/ApiAlamat";
 import { toast } from "react-toastify";
 
 interface ModalDeleteAlamatProps {

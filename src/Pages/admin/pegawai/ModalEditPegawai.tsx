@@ -163,7 +163,7 @@ const ModalEditPegawai = ({
 
 	return (
 		<>
-			<Modal show={show} dismissible size="md" popup onClose={handleClose}>
+			<Modal show={show} dismissible size="md" popup onClose={handleClose} >
 				<ModalHeader />
 				<ModalBody>
 					<form action="submit" onSubmit={(e) => submitData(e, idPegawai)}>

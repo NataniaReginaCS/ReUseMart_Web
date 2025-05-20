@@ -149,6 +149,14 @@ const Header = () => {
                                     <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
                                 </a>
                             )}
+                            {role === 'Gudang' && (
+                                <a
+                                    href="/gudang/penitipan"
+                                    className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
+                                >
+                                    <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
+                                </a>
+                            )}
                             {role === 'Owner' && (
                                 <a
                                     href="/owner/donasi"

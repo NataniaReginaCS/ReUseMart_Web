@@ -11,8 +11,8 @@ import {
 	FileInput,
 } from "flowbite-react";
 
-import { UpdateOrganisasi } from "../../../api/ApiAdmin";
-import { UpdateAlamat } from "../../../api/ApiAlamat";
+import { UpdateOrganisasi } from "../../../../api/ApiAdmin";
+import { UpdateAlamat } from "../../../../api/ApiAlamat";
 
 interface ModalEditAlamatProps {
 	dataAlamat: {
@@ -133,7 +133,7 @@ const ModalEditAlamat = ({
 
 							<div
 								className="w-full rounded-2xl bg-[#B33739] p-2 text-center text-white cursor-pointer"
-								onClick={handleClose}
+								onClick={handleClose}	
 							>
 								<button className="w-full cursor-pointer">
 									{" "}

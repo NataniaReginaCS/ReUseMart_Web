@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import Frieren from "../../assets/images/Frieren.jpg";
+import Frieren from "../../../assets/images/Frieren.jpg";
 import { useNavigate } from "react-router-dom";
-import { FetchAlamat } from "../../api/ApiAlamat";
-import { AddAlamat } from "../../api/ApiAlamat";
+import { FetchAlamat } from "../../../api/ApiAlamat";
+import { AddAlamat } from "../../../api/ApiAlamat";
 import { faSearch, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { MdChevronLeft, MdChevronRight, MdDelete } from "react-icons/md";
@@ -12,7 +12,7 @@ import { SyncLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import ModalEditAlamat from "./ModalAlamat/ModalEditAlamat";
 import ModalDeleteAlamat from "./ModalAlamat/ModalDeleteAlamat";
-import { SetUtama } from "../../api/ApiAlamat";
+import { SetUtama } from "../../../api/ApiAlamat";
 import { Link } from "react-router-dom";
 
 type Alamat = {
