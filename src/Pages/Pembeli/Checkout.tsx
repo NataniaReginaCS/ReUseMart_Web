@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FileInput, Button } from "flowbite-react";
-<<<<<<< Updated upstream
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-=======
->>>>>>> Stashed changes
 import { GetOngoingPembelian } from "../../api/ApiTransaksiPembelian";
 import { toast } from "react-toastify";
 import { AddBuktiPembayaran } from "../../api/ApiTransaksiPembelian";
@@ -19,10 +14,6 @@ type Pembelian = {
 	tanggal_laku: Date;
 };
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 const Checkout = () => {
 	const navigate = useNavigate();
 	const { nomor_nota } = useParams();
@@ -67,10 +58,7 @@ const Checkout = () => {
 		fetchTransaksiPembelian();
 	}, [nomor_nota, navigate]);
 
-<<<<<<< Updated upstream
-=======
 	// Countdown logic + redirect saat waktu habis
->>>>>>> Stashed changes
 	useEffect(() => {
 		if (secondsLeft === null) return;
 		if (secondsLeft <= 0) {
@@ -84,10 +72,7 @@ const Checkout = () => {
 		return () => clearInterval(interval);
 	}, [secondsLeft, navigate]);
 
-<<<<<<< Updated upstream
-=======
 	// Menunggu data transaksi
->>>>>>> Stashed changes
 	if (!pembelian || secondsLeft === null) {
 		return (
 			<div className="h-screen flex items-center justify-center">
@@ -96,18 +81,6 @@ const Checkout = () => {
 		);
 	}
 
-<<<<<<< Updated upstream
-	const submitFotoPembayaran = async () => {
-		if (!file) {
-			toast.error("Silakan pilih file untuk diunggah.");
-			return;
-		}
-
-		const formData = new FormData();
-		formData.append("bukti_pembayaran", file);
-		formData.append("nomor_nota", pembelian.nomor_nota);
-
-=======
 	const minutes = Math.floor(secondsLeft / 60);
 	const seconds = secondsLeft % 60;
 
@@ -121,27 +94,15 @@ const Checkout = () => {
 		formData.append("bukti_pembayaran", file);
 		formData.append("nomor_nota", pembelian.nomor_nota);
 
->>>>>>> Stashed changes
 		try {
 			const response = await AddBuktiPembayaran(formData, pembelian.nomor_nota);
 			toast.success(response.message);
 			navigate("/");
-<<<<<<< Updated upstream
-		} catch (error: any) {
-			toast.error("Gagal mengunggah bukti pembayaran.");
-			console.error("Error uploading payment proof:", error);
-		}
-	};
-
-	const minutes = Math.floor(secondsLeft / 60);
-	const seconds = secondsLeft % 60;
-=======
 		} catch (error : any) {
 			toast.error("Gagal mengunggah bukti pembayaran.");
 			console.error("Error uploading payment proof:", error );
 		}
 	}
->>>>>>> Stashed changes
 
 	return (
 		<div className="h-screen items-center justify-center flex w-full">
@@ -185,10 +146,7 @@ const Checkout = () => {
 					</div>
 				</div>
 
-<<<<<<< Updated upstream
-=======
 				{/* Upload Bukti */}
->>>>>>> Stashed changes
 				<div>
 					<label className="block font-semibold mb-2">
 						Upload Bukti Pembayaran
@@ -211,16 +169,7 @@ const Checkout = () => {
 					)}
 				</div>
 
-<<<<<<< Updated upstream
-				<Button
-					className="justify-self-center mt-6"
-					onClick={submitFotoPembayaran}
-				>
-					Confirm Payment
-				</Button>
-=======
 				<Button className="justify-self-center mt-6" onClick={submitFotoPembayaran}>Confirm Payment</Button>
->>>>>>> Stashed changes
 			</div>
 		</div>
 	);
