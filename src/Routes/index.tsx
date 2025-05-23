@@ -75,6 +75,10 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
+		path: "/item",
+		element: <Item />,
+	},
+	{
 		path: "/owner",
 		element: (
 			<ProtectedRoutes allowedRoles={["Owner"]}>
@@ -213,10 +217,7 @@ const router = createBrowserRouter([
 				path: "/shop",
 				element: <Shop />,
 			},
-			{
-				path: "/item",
-				element: <Item />,
-			},
+			
 			{
 				path: "/about",
 				element: <About />,
