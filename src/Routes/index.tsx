@@ -31,6 +31,8 @@ import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
 
 //CS
+import PaymentVerification from "../Pages/Cs/Verifikasi_Pembayaran/VerifikasiPembayaran";
+
 
 import Cart from "../Pages/Pembeli/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -109,6 +111,10 @@ const router = createBrowserRouter([
 			{
 				path: "penitip",
 				element: <CSPenitip />
+			},
+			{
+				path : "payment-verification",
+				element : <PaymentVerification />
 			}
 		]
 	},

@@ -74,6 +74,7 @@ const Cart = () => {
 	const [selectedBarang, setSelectedBarang] = useState<Keranjang | null>(null);
 	const [inputPoin, setInputPoin] = useState<string>("0");
 	const [poinUsed, setPoinUsed] = useState(0);
+	const [poinLeft, setPoinLeft] = useState(0);
 
 	const [subtotal, setSubtotal] = useState(0);
 	const [deliveryFee, setDeliveryFee] = useState(0);
@@ -114,6 +115,7 @@ const Cart = () => {
 		}
 
 		setPoinUsed(Number(inputPoin));
+		setPoinLeft(pembeli.poin - Number(inputPoin));
 		toast.success("Poin berhasil digunakan.");
 	};
 
@@ -153,7 +155,7 @@ const Cart = () => {
 		const totalBeforeDiscount = newSubtotal + fee;
 
 		const maxPoinUsed = Math.min(poinUsed, pembeli?.poin ?? 0);
-		const diskonPoin = maxPoinUsed * 10000;
+		const diskonPoin = maxPoinUsed * 100;
 
 		let totalAfterPoin = totalBeforeDiscount - diskonPoin;
 
@@ -172,10 +174,18 @@ const Cart = () => {
 		fetchBarang();
 		fetchAlamatUtama();
 		fetchProfile();
+		setPoinLeft(pembeli?.poin || 0);
+
 		return () => {
 			abortControllerRef.current?.abort();
 		};
 	}, []);
+
+	useEffect(() => {
+		if (pembeli) {
+			setPoinLeft(pembeli.poin);
+		}
+	}, [pembeli]);
 
 	const handleShowModal = () => {
 		setShowModal(true);
@@ -204,7 +214,9 @@ const Cart = () => {
 			const result = await CreatePembelian(data);
 			console.log(result);
 			toast.success("Checkout berhasil!");
-			navigate(`/checkout/${result.pembelian.nomor_nota}`, { state: { pembelian: result.pembelian } });
+			navigate(`/checkout/${result.pembelian.nomor_nota}`, {
+				state: { pembelian: result.pembelian },
+			});
 		} catch (error: any) {
 			const message =
 				error.response?.data?.message || "Terjadi kesalahan saat checkout.";
@@ -354,6 +366,10 @@ const Cart = () => {
 						<div className="flex items-center justify-between gap-4">
 							<p className="font-semibold text-gray-400 text-xl">Poin Use</p>
 							<p className="font-semibold text-gray-400 text-xl">{poinUsed}</p>
+						</div>
+						<div className="flex items-center justify-between gap-4">
+							<p className="font-semibold text-gray-400 text-xl">Poin Left</p>
+							<p className="font-semibold text-gray-400 text-xl">{poinLeft}</p>
 						</div>
 
 						<form onSubmit={handleUsePoin} className="flex mt-4">
