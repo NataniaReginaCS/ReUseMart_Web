@@ -29,6 +29,7 @@ import RequestDonasi from "../Pages/profile_organisasi/RequestDonasi";
 //Penitip
 import ProfilePenitip from "../Pages/Profile_Penitip/ProfilePenitip";
 import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPenitip";
+import Titipan from "../Pages/Profile_Penitip/Titipan";
 
 //CS
 import Diskusi from "../Pages/cs/Diskusi/DiskusiHome";
@@ -38,6 +39,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
 import OwnerHistory from "../Pages/owner/history/OwnerHistory";
 import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
+import ManageTransaksi from "../Pages/profile_pegawai/ManageTransaksi";
 
 const router = createBrowserRouter([
 	{
@@ -105,6 +107,20 @@ const router = createBrowserRouter([
 		]
 	},
 	{
+		path: "/gudang"
+		, element: (
+			<ProtectedRoutes allowedRoles={["Gudang"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		),
+		children: [
+			{
+				path: "manage",
+				element: <ManageTransaksi />,
+			},
+		]
+	},
+	{
 		path: "/admin",
 		element: (
 			<ProtectedRoutes allowedRoles={["Admin"]}>
@@ -142,6 +158,11 @@ const router = createBrowserRouter([
 				path: "history-transaksi",
 				element: <HistoryTransaksiPenitip />,
 			},
+			{
+				path: "titipan",
+				element: < Titipan />,
+			},
+
 		],
 	},
 	{

@@ -86,6 +86,7 @@ const RequestDonasi = () => {
             setIsLoading(true);
             await addRequestDonasi(payload);
             setNewDeskripsi("");
+
             toast.success("Request added successfully!");
             await fetchRequestDonasiById();
         } catch (error) {
@@ -99,7 +100,8 @@ const RequestDonasi = () => {
 
     const filteredData = data.filter(
         (req) =>
-            req.deskripsi.toLowerCase().includes(searchTerm.toLowerCase())
+            req.deskripsi.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            req.id_request.toString().includes(searchTerm.toLowerCase())
     );
 
     const indexOfLastData = currentPage * dataPerPage;
@@ -194,6 +196,7 @@ const RequestDonasi = () => {
                         onClick={handleAddRequest}
                         className="max-w-[200px] mt-4 bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white border-1 border-black rounded-md h-10"
                     >
+
                         <strong>Add Request</strong>
                     </Button>
 
@@ -243,9 +246,10 @@ const RequestDonasi = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="text-center">
-                                        {data.map((req: any, index) => {
+                                        {currentData.map((req: any, index) => {
 
                                             return (
+
                                                 <tr key={req.id_request}>
                                                     <td className="p-4 border-b border-blue-gray-50 w-[100px]">
                                                         <p className="font-normal">{req.id_request}</p>
@@ -359,3 +363,7 @@ export default RequestDonasi;
 function then(arg0: (data: any) => void) {
     throw new Error("Function not implemented.");
 }
+function setIsPending(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}
+
