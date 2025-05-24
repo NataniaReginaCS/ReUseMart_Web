@@ -51,6 +51,12 @@ interface AlamatUtama {
 	kode_pos: string;
 }
 
+interface Rating {
+	id_barang: number;
+	id_pembeli: number;
+	rating_diberikan: number;
+}
+
 const OrderDetails = () => {
 	const [profile, setProfile] = useState<Pembeli | null>(null);
 	const [alamatUtama, setAlamatUtama] = useState<AlamatUtama | null>(null);
@@ -69,13 +75,17 @@ const OrderDetails = () => {
 	const id2 = parseInt(id || "0");
 
 	useEffect(() => {
+		if (!profile?.id_pembeli) return; 
 		barang.forEach((item) => {
 			if (!rating[item.id_barang]) {
 				getRating(item.id_barang)
-					.then((res) => {
+					.then((response) => {
+						const userRating = response.data?.find(
+							(r: Rating) => r.id_pembeli === profile.id_pembeli
+						);
 						setRating((prev) => ({
 							...prev,
-							[item.id_barang]: res.data?.total_rating || 0,
+							[item.id_barang]: userRating ? userRating.rating_diberikan : 0,
 						}));
 					})
 					.catch((error) => {
@@ -83,7 +93,7 @@ const OrderDetails = () => {
 					});
 			}
 		});
-	}, [barang, rating]);
+	}, [barang, profile]);
 
 	const fetchHistory = async () => {
 		setIsLoading(true);
@@ -387,7 +397,7 @@ const OrderDetails = () => {
 							{Array.from({ length: 5 }).map((_, i) => (
 								<button
 									key={i}
-									className={`p-2 rounded-full transition-colors ${tempRating >= i + 1 ? "bg-yellow-500" : "bg-gray-300 hover:bg-gray-400"
+									className={`p-2 rounded-full transition-colors ${tempRating >= i + 1 ? "bg-yellow-200" : "bg-gray-300 hover:bg-gray-400"
 										}`}
 									onClick={() => setTempRating(i + 1)}
 								>

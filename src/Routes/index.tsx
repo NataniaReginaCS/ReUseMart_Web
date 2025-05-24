@@ -75,10 +75,6 @@ const router = createBrowserRouter([
 		element: <ResetPassword />,
 	},
 	{
-		path: "/item",
-		element: <Item />,
-	},
-	{
 		path: "/owner",
 		element: (
 			<ProtectedRoutes allowedRoles={["Owner"]}>
