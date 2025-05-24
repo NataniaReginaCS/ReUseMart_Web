@@ -1,8 +1,12 @@
 import { MdDashboard } from "react-icons/md";
+import { FaArrowsRotate } from "react-icons/fa6";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "../api/apiAuth";
 import { toast } from "react-toastify";
+
 
 const SidebarNavGudang = () => {
     const location = useLocation();
@@ -20,6 +24,8 @@ const SidebarNavGudang = () => {
             });
     };
     const navItems = [
+        { label: "Manage Transaction", icon: <MdDashboard />, path: "/gudang/manage" },
+
         { label: "Penitipan", icon: <MdDashboard />, path: "/gudang/penitipan" },
 
     ];
@@ -58,4 +64,4 @@ const SidebarNavGudang = () => {
     );
 };
 
-export default SidebarNavGudang;
+export default SideBarNavGudang;

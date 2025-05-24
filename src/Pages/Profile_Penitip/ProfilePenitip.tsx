@@ -17,15 +17,15 @@ const ProfilePenitip = () => {
 	const navigate = useNavigate();
 	const [profile, setProfile] = useState<any>();
 	const [showCurrentPassword, setCurrentPassword] = useState(false);
-	
+
 	const [showNewPassword, setNewPassword] = useState(false);
 	const [showConfirmPassword, setConfirmPassword] = useState(false);
 
-    
-	
+
+
 	const fetchPenitip = () => {
 		FetchPenitipByLogin()
-			.then((response) => {  
+			.then((response) => {
 				setProfile(response.penitip);
 			})
 			.catch((error) => {
@@ -33,11 +33,11 @@ const ProfilePenitip = () => {
 			});
 	};
 
-	
+
 
 	useEffect(() => {
 		fetchPenitip();
-		
+
 	}, []);
 
 	const toggleCurrentPasswordVisibility = () => {
@@ -159,7 +159,7 @@ const ProfilePenitip = () => {
 							<p>
 								<strong>{profile?.poin}</strong>
 							</p>
-							
+
 						</div>
 					</div>
 					<div className="flex flex-row gap-x-10">
@@ -240,7 +240,7 @@ const ProfilePenitip = () => {
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>

@@ -24,6 +24,8 @@ const SidebarNavPenitip = () => {
 	const navItems = [
 		{ label: "Profile", icon: <MdDashboard />, path: "/penitip/profile" },
 		{ label: "History Transaction", icon: <FaArrowsRotate />, path: "/penitip/history-transaksi" },
+		{ label: "Items", icon: <FaArrowsRotate />, path: "/penitip/Titipan" },
+
 	];
 
 	return (
@@ -39,8 +41,8 @@ const SidebarNavPenitip = () => {
 							key={index}
 							onClick={() => navigate(item.path)}
 							className={`flex items-center gap-2 p-4 cursor-pointer transition-colors ${isActive
-									? "bg-[#E6E6E6] border-l-4 border-green-700 text-black"
-									: "text-gray-500 hover:bg-[#E6E6E6]"
+								? "bg-[#E6E6E6] border-l-4 border-green-700 text-black"
+								: "text-gray-500 hover:bg-[#E6E6E6]"
 								}`}
 						>
 							{item.icon}

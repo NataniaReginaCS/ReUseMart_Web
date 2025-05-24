@@ -38,11 +38,11 @@ const Login = () => {
 				} else if (response.role === 'Admin') {
 					navigate('/admin/organisasi');
 				} else if (response.role === 'Gudang') {
-					navigate('/gudang/penitipan');
+					navigate('/gudang/manage');
 				} else if (response.role === 'Owner') {
 					navigate('/owner/donasi');
 				} else if (response.role === 'Penitip') {
-					navigate('/');
+					navigate('/penitip/profile');
 				}
 			})
 			.catch((error) => {

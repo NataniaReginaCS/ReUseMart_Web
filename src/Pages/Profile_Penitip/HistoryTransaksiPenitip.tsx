@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 import SidebarNavPenitip from "../../Components2/SideBarNavPenitip";
@@ -28,8 +28,8 @@ const HistoryTransaksiPenitip = () => {
 		try {
 			FetchHistoryTransaksi()
 				.then((response) => {
-					toast.success(response.message);
 					setDataHistory(response.data);
+					console.log(response.data);
 				})
 				.catch((error: any) => {
 					toast.error("Gagal mengambil data history");
@@ -43,7 +43,7 @@ const HistoryTransaksiPenitip = () => {
 		fetchHistoryTransaksi();
 	}, []);
 
-	const handleClick=  (idBarang: number) =>{
+	const handleClick = (idBarang: number) => {
 		setShowModal(true);
 		setTempIdBarang(idBarang);
 
@@ -176,14 +176,14 @@ const HistoryTransaksiPenitip = () => {
 					</Carousel>
 				</div>
 			</div>
-			{showModal &&  (
-					<ModalDetailHistory
-						show={showModal}
-						idBarang={tempIdBarang}
-						onClose={() => setShowModal(false)}
-					
-					/>
-				)}
+			{showModal && (
+				<ModalDetailHistory
+					show={showModal}
+					idBarang={tempIdBarang}
+					onClose={() => setShowModal(false)}
+
+				/>
+			)}
 		</div>
 
 	);

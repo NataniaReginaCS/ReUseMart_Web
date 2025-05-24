@@ -61,7 +61,7 @@ const Header = () => {
 
 
     // Roles that should NOT see nav options or search
-    const isPrivileged = role === 'Admin' || role === 'Organisasi' || role === 'CS' || role === 'Gudang' || role === 'Owner' || role === 'Penitip';
+    const isPrivileged = role === 'Admin' || role === 'Organisasi' || role === 'CS' || role === 'Gudang' || role === 'Owner'
 
     return (
         <header className='sticky w-full top-0 z-50'>
@@ -71,7 +71,7 @@ const Header = () => {
                     <img src={logo} alt="Logo" />
                 </div>
 
-            
+
 
                 {!isPrivileged && (
                     <>
@@ -180,6 +180,32 @@ const Header = () => {
 
                                     <a
                                         href="/profile"
+                                        className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
+                                    >
+                                        <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
+                                    </a>
+                                </>
+                            )}{role === 'Penitip' && (
+                                <>
+                                    <a href="/cart" className="bg-gray-500 py-2 px-4 rounded-md">
+                                        Cart
+                                    </a>
+
+                                    <a
+                                        href="/penitip/profile"
+                                        className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
+                                    >
+                                        <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
+                                    </a>
+                                </>
+                            )}{role === 'Gudang' && (
+                                <>
+                                    <a href="/cart" className="bg-gray-500 py-2 px-4 rounded-md">
+                                        Cart
+                                    </a>
+
+                                    <a
+                                        href="/gudang/manage"
                                         className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
                                     >
                                         <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
