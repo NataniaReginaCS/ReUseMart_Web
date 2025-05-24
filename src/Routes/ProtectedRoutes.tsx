@@ -11,7 +11,7 @@ type ProtectedRoutesProps = {
 const ProtectedRoutes = ({ allowedRoles, children }: ProtectedRoutesProps) => {
 	const navigate = useNavigate();
 	const token = sessionStorage.getItem("token");
-	const [role, setRole] = useState();
+	const [role, setRole] = useState<string>();
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -32,7 +32,11 @@ const ProtectedRoutes = ({ allowedRoles, children }: ProtectedRoutesProps) => {
 				setLoading(false);
 			}
 		};
-		fetchRole();
+		if(token){
+			fetchRole();
+		}else{
+			setRole("Guest");
+		}
 	}, []);
 
 	useEffect(() => {

@@ -135,6 +135,20 @@ export const fetchBarangByPenitip2 = async (id_penitip: number) => {
     }
 }
 
+const getPenitip = async (id_barang: number) => {
+    try {
+        const response = await useAxios.get(`/getPenitip/${id_barang}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.data;
+    } catch (error : any) {
+        throw error.response.data  ;
+    }
+}
+
 
 
 export { FetchBarang, FetchKategori, FetchBarangByKategori, FetchBarangById, FetchRelatedProducts, FetchSearchBarang, FetchBarangIsGaransi, FetchBarangIsNotGaransi, fetchBarangByPenitip };
+

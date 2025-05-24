@@ -7,10 +7,10 @@ import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
 import Item from "../Pages/Item";
 import About from "../Pages/About";
-import Profile from "../Pages/profile_pembeli/profile";
-import EditProfile from "../Pages/profile_pembeli/edit_profile";
+import Profile from "../Pages/Pembeli/ProfilePembeli/profile";
+import EditProfile from "../Pages/Pembeli/ProfilePembeli/edit_profile";
 import AdminOrganisasi from "../Pages/admin/Organisasi/AdminOrganisasi";
-import Order from "../Pages/profile_pembeli/Order";
+import Order from "../Pages/Pembeli/ProfilePembeli/Order";
 
 import AdminPegawai from "../Pages/admin/pegawai/AdminPegawai";
 import ResetPasswordPegawai from "../Pages/admin/pegawai/ResetPasswordPegawai";
@@ -32,14 +32,24 @@ import HistoryTransaksiPenitip from "../Pages/Profile_Penitip/HistoryTransaksiPe
 import Titipan from "../Pages/Profile_Penitip/Titipan";
 
 //CS
-import Diskusi from "../Pages/cs/Diskusi/DiskusiHome";
-import CSPenitip from "../Pages/cs/Penitip/CSPenitip";
-import Cart from "../Pages/Cart";
+import PaymentVerification from "../Pages/Cs/Verifikasi_Pembayaran/VerifikasiPembayaran";
+
+
+import Cart from "../Pages/Pembeli/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
 import OwnerHistory from "../Pages/owner/history/OwnerHistory";
 import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
 import ManageTransaksi from "../Pages/profile_pegawai/ManageTransaksi";
+import Diskusi from "../Pages/Cs/Diskusi/DiskusiHome"
+import CSPenitip from "../Pages/Cs/Penitip/CSPenitip";
+
+//Gudang
+import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
+
+
+//Pembeli
+import Checkout from "../Pages/Pembeli/Checkout";
 
 const router = createBrowserRouter([
 	{
@@ -103,6 +113,10 @@ const router = createBrowserRouter([
 			{
 				path: "penitip",
 				element: <CSPenitip />
+			},
+			{
+				path : "payment-verification",
+				element : <PaymentVerification />
 			}
 		]
 	},
@@ -143,6 +157,20 @@ const router = createBrowserRouter([
 		],
 	},
 	{
+		path: "/gudang",
+		element: (
+			<ProtectedRoutes allowedRoles={["Gudang"]}>
+				<MainLayout />
+			</ProtectedRoutes>
+		),
+		children: [
+			{
+				path: "penitipan",
+				element: <GudangPenitipan />,
+			}
+		],
+	},
+	{
 		path: "/penitip",
 		element: (
 			<ProtectedRoutes allowedRoles={["Penitip"]}>
@@ -171,6 +199,18 @@ const router = createBrowserRouter([
 			{
 				path: "/",
 				element: <Home />,
+			},
+			{
+				path: "/shop",
+				element: <Shop />,
+			},
+			{
+				path: "/about",
+				element: <About />,
+			},
+			{
+				path: "/item",
+				element: <Item />,
 			},
 		],
 	},
@@ -206,10 +246,7 @@ const router = createBrowserRouter([
 				path: "/shop",
 				element: <Shop />,
 			},
-			{
-				path: "/item",
-				element: <Item />,
-			},
+			
 			{
 				path: "/about",
 				element: <About />,
@@ -242,6 +279,10 @@ const router = createBrowserRouter([
 				path: "/cart",
 				element: <Cart />,
 			},
+			{
+				path: "/checkout/:nomor_nota",
+				element: <Checkout />,
+			}
 
 		],
 	},

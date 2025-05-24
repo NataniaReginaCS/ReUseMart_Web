@@ -21,6 +21,9 @@ import otomotif from '../assets/images/otomotif.png';
 import garden from '../assets/images/garden.png';
 import office from '../assets/images/office.png';
 import kosmetik from '../assets/images/kosmetik.png';
+import { requestNotificationPermission } from '../hooks/usePushNotification';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const categories = [
     { name: "Electronics & Gadgets", image: item1, link: "/shop", id: "0" },
@@ -55,7 +58,40 @@ const Home = () => {
 
 
     useEffect(() => {
-    }, []);
+        const getToken = async () => {
+            const token = await requestNotificationPermission();
+            if (token) {
+            console.log("Token yang akan dikirim:", token);
+            try {
+                const authToken = sessionStorage.getItem("token") || null;
+                if (!authToken) {
+                    throw new Error("No auth token found. Please login.");
+                }
+    
+                const response = await axios.post(
+                    "http://localhost:8000/api/save-token",
+                    { fcm_token: token },
+                    {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${authToken}`, 
+                    },
+                    withCredentials: true,
+                    }
+                );
+                console.log("Token tersimpan:", response.data);
+                console.log("sanctum:", authToken);
+                toast.success("Token berhasil disimpan!");
+            } catch (error) {
+                console.error("Error mengirim token ke backend:", error);
+                toast.error("Gagal mengirim token ke backend.");
+            }
+            } else {
+                toast.error("Token tidak ditemukan.");
+            }
+            };
+            getToken();
+        }, []);
 
     return (
         <div className='flex flex-col h-full bg-white ' >

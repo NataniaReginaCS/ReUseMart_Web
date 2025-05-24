@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import AppRouter from "./Routes"; // This is a component, not a router object
+import AppRouter from "./Routes"; 
 import './index.css';
 import "react-toastify/dist/ReactToastify.css";
 

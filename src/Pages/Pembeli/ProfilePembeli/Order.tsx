@@ -1,25 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { RiLogoutBoxRLine } from "react-icons/ri";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import Frieren from "../../assets/images/Frieren.jpg";
 
-import { fetchOrderHistory } from "../../api/ApiTransaksi";
-import SidebarNav from "../../Components2/SideBarNav";
+
+import { fetchOrderHistory } from "../../../api/ApiTransaksi";
+import SidebarNav from "../../../Components2/SideBarNav";
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
-} from "../../components/ui/carousel"
+} from "../../../components/ui/carousel"
 import {
-    faSearch,
+
     faHouse,
-    faChevronRight,
+
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 type Pembelian = {

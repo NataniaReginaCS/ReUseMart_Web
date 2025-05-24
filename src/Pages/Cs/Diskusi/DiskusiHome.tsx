@@ -149,7 +149,7 @@ const Diskusi = () => {
 												<td className={classes}>
 													<div className="flex flex-row justify-evenly gap-2">
 														<button
-															className="font-medium  bg-[#36bd85] rounded-3xl text-white w-30  cursor-pointer flex text-center items-center justify-center gap-1 p-1 "
+															className="font-medium  bg-cyan-500 rounded-3xl text-white w-30  cursor-pointer flex text-center items-center justify-center gap-1 p-1 "
 															onClick={() => handleClick(diskusi.id_barang)}
 														>
 															<IoPersonCircleOutline size={20} /> View
