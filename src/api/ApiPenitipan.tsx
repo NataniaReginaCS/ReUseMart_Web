@@ -47,7 +47,7 @@ export const FetchPenitipanById = async (id: number) => {
 
 export const FetchPenitipanByBarang = async (id: number) => {
     try {
-        const response = await useAxios.get(`/showBarang/${id}`, {
+        const response = await useAxios.get(`/showBarangPenitipan/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`,
@@ -61,7 +61,7 @@ export const FetchPenitipanByBarang = async (id: number) => {
 
 export const FetchPenitipanByPenitip = async (id: number) => {
     try {
-        const response = await useAxios.get(`/showPenitip/${id}`, {
+        const response = await useAxios.get(`/showPenitipPenitipan/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`,
@@ -75,7 +75,7 @@ export const FetchPenitipanByPenitip = async (id: number) => {
 
 export const FetchPenitipanByPegawai = async (id: number) => {
     try {
-        const response = await useAxios.get(`/showPegawai/${id}`, {
+        const response = await useAxios.get(`/showPegawaiPenitipan/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`,
