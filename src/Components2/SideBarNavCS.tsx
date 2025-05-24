@@ -15,7 +15,6 @@ const SidebarNavCS = () => {
         Logout()
             .then((response) => {
                 sessionStorage.removeItem("token");
-
                 toast.success("Logout successful!");
                 navigate("/");
             })

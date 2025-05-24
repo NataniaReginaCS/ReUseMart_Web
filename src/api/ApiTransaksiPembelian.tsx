@@ -65,9 +65,44 @@ const GetUnverifiedPayment = async () =>{
         return response.data;
 
     }catch (error:any){
-        console.error("Error fetching unverified payments:", error.message);
+        console.log("Error fetching unverified payments:", error.message);
         throw error;
     }
 }
 
-export { CreatePembelian, GetOngoingPembelian, AddBuktiPembayaran, GetUnverifiedPayment };
+
+const VerifyPayment = async (nomor_nota : string) =>{
+    try{
+        const response = await useAxios.post(`/verifyPayment/${nomor_nota}`, {}, {
+            headers:{
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+
+        return response.data;
+
+    }catch (error:any){
+        console.log("Error fetching unverified payments:", error.message);
+        throw error;
+    }
+}
+
+const DeclinePayment = async (nomor_nota : string) =>{
+    try{
+        const response = await useAxios.post(`/declinePayment/${nomor_nota}`, {}, {
+            headers:{
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+
+        return response.data;
+
+    }catch (error:any){
+        console.log("Error fetching unverified payments:", error.message);
+        throw error;
+    }
+}
+
+export { CreatePembelian, GetOngoingPembelian, AddBuktiPembayaran, GetUnverifiedPayment, VerifyPayment, DeclinePayment };
