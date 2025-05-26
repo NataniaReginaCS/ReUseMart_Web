@@ -62,23 +62,18 @@ const Order = () => {
 
     const chunkedData = chunkArray(filteredData, itemsPerPage);
 
-
     const pageCount = Math.ceil(filteredData.length / itemsPerPage);
     const paginatedData = filteredData.slice(
         currentPage * itemsPerPage,
         currentPage * itemsPerPage + itemsPerPage
     );
 
-
-
-
     const fetchHistory = async () => {
         setIsLoading(true);
         fetchOrderHistory()
             .then((data) => {
-
                 console.log(data);
-                setData(data.data);
+                setData(data.data.map((item: { pembelian: any; }) => item.pembelian));
                 setIsLoading(false);
             })
             .catch((err) => {

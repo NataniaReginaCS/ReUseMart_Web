@@ -64,4 +64,4 @@ const SidebarNavGudang = () => {
     );
 };
 
-export default SideBarNavGudang;
+export default SidebarNavGudang;

@@ -39,7 +39,7 @@ import Cart from "../Pages/Pembeli/Cart";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OwnerDonasi from "../Pages/owner/donasi/OwnerDonasi";
 import OwnerHistory from "../Pages/owner/history/OwnerHistory";
-import OrderDetails from "../Pages/profile_pembeli/OrderDetails";
+import OrderDetails from "../Pages/Pembeli/ProfilePembeli/OrderDetails";
 import ManageTransaksi from "../Pages/profile_pegawai/ManageTransaksi";
 import Diskusi from "../Pages/Cs/Diskusi/DiskusiHome"
 import CSPenitip from "../Pages/Cs/Penitip/CSPenitip";
@@ -52,9 +52,30 @@ import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
 import Checkout from "../Pages/Pembeli/Checkout";
 
 const router = createBrowserRouter([
-	{
+	{	
 		path: "/unauthorized",
 		element: <Unauthorized />,
+	},
+	{
+		element: <MainLayout />,
+		children: [
+			{
+				path: "/",
+				element: <Home />,
+			},
+			{
+				path: "/shop",
+				element: <Shop />,
+			},
+			{
+				path: "/about",
+				element: <About />,
+			},
+			{
+				path: "/item",
+				element: <Item />,
+			},
+		],
 	},
 	{
 		path: "/login",
@@ -95,8 +116,6 @@ const router = createBrowserRouter([
 			}
 
 		],
-
-
 	},
 	{
 		path: "/CS",
@@ -118,20 +137,6 @@ const router = createBrowserRouter([
 				path : "payment-verification",
 				element : <PaymentVerification />
 			}
-		]
-	},
-	{
-		path: "/gudang"
-		, element: (
-			<ProtectedRoutes allowedRoles={["Gudang"]}>
-				<MainLayout />
-			</ProtectedRoutes>
-		),
-		children: [
-			{
-				path: "manage",
-				element: <ManageTransaksi />,
-			},
 		]
 	},
 	{
@@ -167,7 +172,11 @@ const router = createBrowserRouter([
 			{
 				path: "penitipan",
 				element: <GudangPenitipan />,
-			}
+			},
+			{
+				path: "manage",
+				element: <ManageTransaksi />,
+			},
 		],
 	},
 	{
@@ -191,27 +200,6 @@ const router = createBrowserRouter([
 				element: < Titipan />,
 			},
 
-		],
-	},
-	{
-		element: <MainLayout />,
-		children: [
-			{
-				path: "/",
-				element: <Home />,
-			},
-			{
-				path: "/shop",
-				element: <Shop />,
-			},
-			{
-				path: "/about",
-				element: <About />,
-			},
-			{
-				path: "/item",
-				element: <Item />,
-			},
 		],
 	},
 	{
@@ -242,23 +230,23 @@ const router = createBrowserRouter([
 			</ProtectedRoutes>
 		),
 		children: [
-			{
-				path: "/shop",
-				element: <Shop />,
-			},
+			// {
+			// 	path: "/shop",
+			// 	element: <Shop />,
+			// },
 			
-			{
-				path: "/about",
-				element: <About />,
-			},
-			{
-				path: "/profile",
-				element: <Profile />,
-			},
-			{
-				path: "/edit_profile",
-				element: <EditProfile />,
-			},
+			// {
+			// 	path: "/about",
+			// 	element: <About />,
+			// },
+			// {
+			// 	path: "/profile",
+			// 	element: <Profile />,
+			// },
+			// {
+			// 	path: "/edit_profile",
+			// 	element: <EditProfile />,
+			// },
 			{
 				path: "/profile",
 				element: <Profile />,

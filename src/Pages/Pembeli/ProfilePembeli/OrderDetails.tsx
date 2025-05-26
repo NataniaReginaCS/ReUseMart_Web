@@ -340,7 +340,7 @@ const OrderDetails = () => {
 													Rp {item.barang?.harga?.toLocaleString("id-ID") || 0}
 												</td>
 												<td className="px-4 py-3">
-													{rating[item.id_barang] ? (
+													{rating[item.id_barang] != null ? (
 														<span>
 															{Array.from({ length: 5 }).map((_, i) => {
 																const rate = rating[item.id_barang];
@@ -359,7 +359,7 @@ const OrderDetails = () => {
 																);
 															})}
 														</span>
-													) : (
+													) : pembelian?.status_pengiriman === "selesai" ? (
 														<button
 															className="ml-2 px-2 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600"
 															onClick={() => {
@@ -370,6 +370,8 @@ const OrderDetails = () => {
 														>
 															Add Rating
 														</button>
+													): (
+														<span className="text-xs text-gray-400">Rating available after order is completed</span>
 													)}
 												</td>
 											</tr>
