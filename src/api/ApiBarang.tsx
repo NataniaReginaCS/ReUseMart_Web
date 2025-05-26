@@ -150,5 +150,5 @@ const getPenitip = async (id_barang: number) => {
 
 
 
-export { FetchBarang, FetchKategori, FetchBarangByKategori, FetchBarangById, FetchRelatedProducts, FetchSearchBarang, FetchBarangIsGaransi, FetchBarangIsNotGaransi, fetchBarangByPenitip };
+export { FetchBarang, FetchKategori, FetchBarangByKategori, FetchBarangById, FetchRelatedProducts, FetchSearchBarang, FetchBarangIsGaransi, FetchBarangIsNotGaransi, fetchBarangByPenitip, getPenitip };
 

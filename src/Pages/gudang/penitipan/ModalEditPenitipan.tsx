@@ -118,10 +118,6 @@ const ModalEditPenitipan = ({ dataPenitipan, onClose, show, onSuccessEdit }: Mod
         if (!data.berat || data.berat <= 0) newErrors.berat = "Berat harus lebih dari 0";
         if (!data.harga || data.harga <= 0) newErrors.harga = "Harga harus lebih dari 0";
         if (!data.status_barang) newErrors.status_barang = "Status barang wajib diisi";
-        if (data.isGaransi && (!data.akhir_garansi || isNaN(new Date(data.akhir_garansi).getTime())))
-            newErrors.akhir_garansi = "Tanggal akhir garansi tidak valid";
-        if (data.isGaransi && new Date(data.akhir_garansi) <= new Date())
-            newErrors.akhir_garansi = "Tanggal akhir garansi harus di masa depan";
         if (data.tanggal_ambil && isNaN(new Date(data.tanggal_ambil).getTime()))
             newErrors.tanggal_ambil = "Tanggal ambil tidak valid";
         return newErrors;
