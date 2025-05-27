@@ -50,6 +50,7 @@ import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
 
 //Pembeli
 import Checkout from "../Pages/Pembeli/Checkout";
+import CSMerchandise from "../Pages/Cs/Merchandise/CSMerhandise";
 
 const router = createBrowserRouter([
 	{	
@@ -136,6 +137,10 @@ const router = createBrowserRouter([
 			{
 				path : "payment-verification",
 				element : <PaymentVerification />
+			},
+			{
+				path : "merchandise-verification",
+				element : <CSMerchandise />
 			}
 		]
 	},

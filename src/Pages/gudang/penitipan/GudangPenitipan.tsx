@@ -14,7 +14,7 @@ import ModalViewPenitipan from "./ModalViewPenitipan";
 import { FetchKategori } from "../../../api/ApiBarang";
 import ModalAddPenitipan from "./ModalAddPenitipan";
 import EditPenitipan from "./EditPenitipan";
-import { jsPDF } from "jspdf"; 
+import { jsPDF } from "jspdf";
 
 type Pegawai = {
     id_organisasi: number;
@@ -218,16 +218,16 @@ const GudangPenitipan = () => {
                 alert("Penitipan data not found.");
                 return;
             }
-    
+
             const barangList = data.filter((item) => item.id_penitipan === id_penitipan);
             const penitipName = getNamaPenitip(penitipanData.id_penitip);
             const pegawaiName = getNamaPegawai(penitipanData.id_pegawai);
-    
+
             const doc = new jsPDF();
             const pageHeight = doc.internal.pageSize.getHeight();
             const bottomMargin = 20;
             const marginLeft = 20;
-    
+
             const now = new Date();
             const year = now.toLocaleString("default", { year: "2-digit" });
             const month = now.toLocaleString("default", { month: "2-digit" });
@@ -236,23 +236,23 @@ const GudangPenitipan = () => {
             const tanggalAkhir = barangList.length > 0 && barangList[0].tanggal_akhir
                 ? new Date(barangList[0].tanggal_akhir).toLocaleDateString("id-ID")
                 : "-";
-    
+
             doc.setFontSize(10);
             doc.setFont("helvetica", "bold");
             doc.text("ReUse Mart", marginLeft, 20);
-    
+
             doc.setFont("helvetica", "normal");
             doc.text("Jl. Green Eco Park No. 456 Yogyakarta", marginLeft, 27);
-    
+
             doc.text(`No Nota                         : ${notaNumber}`, marginLeft, 40);
             doc.text(`Tanggal penitipan          : ${tanggalMasuk}`, marginLeft, 47);
             doc.text(`Masa penitipan sampai  : ${tanggalAkhir}`, marginLeft, 54);
-    
+
             doc.setFont("helvetica", "bold");
             doc.text("Penitip :", marginLeft, 64);
             doc.setFont("helvetica", "normal");
             doc.text(`T${penitipanData.id_penitip}/ ${penitipName}`, marginLeft + 15, 64);
-    
+
             let y = 74;
             barangList.forEach((barang) => {
                 if (y + 20 > pageHeight - bottomMargin) {
@@ -263,7 +263,7 @@ const GudangPenitipan = () => {
                 doc.text(`${barang.nama}`, marginLeft, y);
                 doc.text(hargaFormatted, 100, y, { align: "right" });
                 y += 7;
-    
+
                 if (barang.isGaransi && barang.akhir_garansi) {
                     const akhirGaransi = new Date(barang.akhir_garansi);
                     const bulan = akhirGaransi.toLocaleString("id-ID", { month: "long" });
@@ -271,11 +271,11 @@ const GudangPenitipan = () => {
                     doc.text(`Garansi ON ${bulan} ${tahun}`, marginLeft, y);
                     y += 7;
                 }
-    
+
                 doc.text(`Berat barang: ${barang.berat} kg`, marginLeft, y);
                 y += 10;
             });
-    
+
             if (y + 20 > pageHeight - bottomMargin) {
                 doc.addPage();
                 y = 20;
@@ -283,14 +283,14 @@ const GudangPenitipan = () => {
             doc.text("Diterima dan QC oleh:", marginLeft + 8, y + 10);
             y += 40;
             doc.text(`P${penitipanData.id_pegawai} - ${pegawaiName}`, marginLeft + 8, y);
-    
-            const borderTop = 15; 
-            const borderBottom = y + 5; 
-            const borderLeft = marginLeft - 5; 
-            const borderRight = 105; 
+
+            const borderTop = 15;
+            const borderBottom = y + 5;
+            const borderLeft = marginLeft - 5;
+            const borderRight = 105;
             doc.setLineWidth(0.5);
             doc.rect(borderLeft, borderTop, borderRight - borderLeft, borderBottom - borderTop);
-    
+
             doc.save(`Nota_Penitipan_${id_penitipan}.pdf`);
         } catch (error) {
             console.error("Error generating PDF:", error);
@@ -586,31 +586,31 @@ const GudangPenitipan = () => {
                         requestData={
                             selectedPenitipan
                                 ? {
-                                      ...selectedPenitipan,
-                                      tanggal_masuk: (selectedPenitipan as any).tanggal_masuk ?? "",
-                                      id_penitip: (selectedPenitipan as any).id_penitip ?? 0,
-                                  }
+                                    ...selectedPenitipan,
+                                    tanggal_masuk: (selectedPenitipan as any).tanggal_masuk ?? "",
+                                    id_penitip: (selectedPenitipan as any).id_penitip ?? 0,
+                                }
                                 : {
-                                      id_barang: 0,
-                                      id_penitipan: 0,
-                                      id_kategori: "",
-                                      id_hunter: "",
-                                      nama: "",
-                                      deskripsi: "",
-                                      foto: null,
-                                      berat: 0,
-                                      isGaransi: false,
-                                      akhir_garansi: new Date(),
-                                      status_perpanjangan: false,
-                                      harga: 0,
-                                      tanggal_akhir: new Date(),
-                                      batas_ambil: new Date(),
-                                      status_barang: "",
-                                      tanggal_ambil: "",
-                                      id_pegawai: 0,
-                                      tanggal_masuk: "",
-                                      id_penitip: 0,
-                                  }
+                                    id_barang: 0,
+                                    id_penitipan: 0,
+                                    id_kategori: "",
+                                    id_hunter: "",
+                                    nama: "",
+                                    deskripsi: "",
+                                    foto: null,
+                                    berat: 0,
+                                    isGaransi: false,
+                                    akhir_garansi: new Date(),
+                                    status_perpanjangan: false,
+                                    harga: 0,
+                                    tanggal_akhir: new Date(),
+                                    batas_ambil: new Date(),
+                                    status_barang: "",
+                                    tanggal_ambil: "",
+                                    id_pegawai: 0,
+                                    tanggal_masuk: "",
+                                    id_penitip: 0,
+                                }
                         }
                         onSuccessAdd={() => {
                             fetchPenitipan();

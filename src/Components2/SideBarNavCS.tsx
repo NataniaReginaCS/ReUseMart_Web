@@ -1,5 +1,5 @@
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
+import { MdDashboard, } from "react-icons/md";
+import { FaRankingStar } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { MdOutlineDomainVerification } from "react-icons/md";
@@ -26,6 +26,7 @@ const SidebarNavCS = () => {
         { label: "Profile", icon: <MdDashboard />, path: "/cs/penitip" },
         { label: "Discussion", icon: <GoCommentDiscussion />, path: "/cs/diskusi" },
         { label: "Payment Verification", icon: <MdOutlineDomainVerification />, path: "/cs/payment-verification" },
+        { label: "Merchandise Verification", icon: <FaRankingStar />, path: "/cs/merchandise-verification" },
 
     ];
 
