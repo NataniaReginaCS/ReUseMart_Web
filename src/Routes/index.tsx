@@ -51,6 +51,7 @@ import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
 //Pembeli
 import Checkout from "../Pages/Pembeli/Checkout";
 import CSMerchandise from "../Pages/Cs/Merchandise/CSMerhandise";
+import OwnerLaporan from "../Pages/owner/laporan/OwnerLaporan";
 
 const router = createBrowserRouter([
 	{	
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
 			{
 				path: "history",
 				element: <OwnerHistory />,
+			},
+			{
+				path: "laporan",
+				element: <OwnerLaporan />,
 			}
 
 		],
