@@ -43,7 +43,7 @@ const Checkout = () => {
 				// Hitung waktu sisa pembayaran (15 menit dari tanggal_laku)
 				const tanggalLaku = new Date(response.pembelian.tanggal_laku);
 				const now = new Date();
-				const targetTime = new Date(tanggalLaku.getTime() + 15 * 60 * 1000);
+				const targetTime = new Date(tanggalLaku.getTime() + 1 * 60 * 1000);
 				const diffSeconds = Math.max(
 					0,
 					Math.floor((targetTime.getTime() - now.getTime()) / 1000)

@@ -165,7 +165,7 @@ const router = createBrowserRouter([
 		path: "/gudang",
 		element: (
 			<ProtectedRoutes allowedRoles={["Gudang"]}>
-				<MainLayout />
+				<Outlet />
 			</ProtectedRoutes>
 		),
 		children: [

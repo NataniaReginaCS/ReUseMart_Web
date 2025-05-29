@@ -205,9 +205,9 @@ const Cart = () => {
 
 		try {
 			const data = {
-				metode_pengiriman: delivery ? "diantar" : "ambil_sendiri",
+				metode_pengiriman: delivery ? "diantar" : "diambil",
 				id_alamat: delivery ? AlamatUtama?.id_alamat : undefined,
-				status_pengiriman: delivery ? "on progress" : "ambil_sendiri",
+				status_pengiriman: delivery ? "on progress" : "diambil",
 				poin_digunakan: poinUsed,
 			};
 
