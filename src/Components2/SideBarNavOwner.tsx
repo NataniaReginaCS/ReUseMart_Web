@@ -1,6 +1,6 @@
 import { MdDashboard } from "react-icons/md";
 import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi";
+import { HiDocumentReport } from "react-icons/hi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "../api/apiAuth";
@@ -13,6 +13,7 @@ const SidebarNavOwner = () => {
     const navItems = [
         { label: "Donation", icon: <MdDashboard />, path: "/owner/donasi" },
         { label: "History Donation", icon: <FaArrowsRotate />, path: "/owner/history" },
+        { label: "Laporan", icon: <HiDocumentReport />, path: "/owner/laporan" },
     ];
 
     const handleLogout = () => {
