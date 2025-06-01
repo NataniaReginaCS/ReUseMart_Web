@@ -84,3 +84,37 @@ export const updateTanggalPengiriman = async (id: number, data: any) => {
         throw error.response?.data || error;
     }
 };
+
+export const FetchDataNota = async (id_pembelian: number) => {
+    try {
+        const response = await useAxios.get(`/fetchDataNota/${id_pembelian}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+
+        return response.data;
+
+    } catch (error: any) {
+        throw error.response.data;
+    }
+};
+
+export const selesaiTransaksi = async (id_pembelian: number) => {
+    try {
+        const response = await useAxios.put(`/selesaiTransaksi/${id_pembelian}`, { method: "PUT" }, // send ID in body
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${getToken()}`,
+                },
+            }
+        );
+
+        return response.data;
+
+    } catch (error: any) {
+        throw error.response.data;
+    }
+};

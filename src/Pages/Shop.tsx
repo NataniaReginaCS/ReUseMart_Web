@@ -40,43 +40,43 @@ const Shop = () => {
     const [penitip, setPenitip] = useState<{ [id_barang: number]: string }>({});
     const [rating, setRating] = useState<{ [id_barang: number]: string }>({});
     const namaKategori = (id_kategori: string) => {
-            if (parseInt(id_kategori) >= 0 && parseInt(id_kategori) < 11) {
-                return "Electronic & Gadget";
-            }else if (parseInt(id_kategori) >= 11 && parseInt(id_kategori) < 21) {
-                return "Clothing & Accessories";
-            }else if (parseInt(id_kategori) >= 21 && parseInt(id_kategori) < 31) {
-                return "Home Furnishings";
-            }
-            else if (parseInt(id_kategori) >= 31 && parseInt(id_kategori) < 41) {
-                return "Books & School Supplies";
-            }
-            else if (parseInt(id_kategori) >= 41 && parseInt(id_kategori) < 51) {
-                return "Hobbies & Collectibles";
-            }
-            else if (parseInt(id_kategori) >= 51 && parseInt(id_kategori) < 61) {
-                return "Baby & Kids Equipment";
-            }   else if (parseInt(id_kategori) >= 61 && parseInt(id_kategori) < 71) {
-                return "Automotive";
-            } else if (parseInt(id_kategori) >= 71 && parseInt(id_kategori) < 81) {
-                return "Garden & Outdoor Supplies";
-            } else if (parseInt(id_kategori) >= 81 && parseInt(id_kategori) < 91) {
-                return "Office & Industrial Equipment";
-            } else if (parseInt(id_kategori) >= 91 && parseInt(id_kategori) < 101) {
-                return "Cosmetics & Personal Care";
-            }
+        if (parseInt(id_kategori) >= 0 && parseInt(id_kategori) < 11) {
+            return "Electronic & Gadget";
+        } else if (parseInt(id_kategori) >= 11 && parseInt(id_kategori) < 21) {
+            return "Clothing & Accessories";
+        } else if (parseInt(id_kategori) >= 21 && parseInt(id_kategori) < 31) {
+            return "Home Furnishings";
+        }
+        else if (parseInt(id_kategori) >= 31 && parseInt(id_kategori) < 41) {
+            return "Books & School Supplies";
+        }
+        else if (parseInt(id_kategori) >= 41 && parseInt(id_kategori) < 51) {
+            return "Hobbies & Collectibles";
+        }
+        else if (parseInt(id_kategori) >= 51 && parseInt(id_kategori) < 61) {
+            return "Baby & Kids Equipment";
+        } else if (parseInt(id_kategori) >= 61 && parseInt(id_kategori) < 71) {
+            return "Automotive";
+        } else if (parseInt(id_kategori) >= 71 && parseInt(id_kategori) < 81) {
+            return "Garden & Outdoor Supplies";
+        } else if (parseInt(id_kategori) >= 81 && parseInt(id_kategori) < 91) {
+            return "Office & Industrial Equipment";
+        } else if (parseInt(id_kategori) >= 91 && parseInt(id_kategori) < 101) {
+            return "Cosmetics & Personal Care";
+        }
     }
 
     const resetFilters = () => {
         setSelectedKategori(null);
         setSelectedWarranty(null);
         setSelectedPrice(null);
-        setWarranty(null); 
-        setSearchTerm(""); 
+        setWarranty(null);
+        setSearchTerm("");
     };
 
     const handleSearch = async (query: string) => {
         if (query.trim() === "") {
-            setData(allData); 
+            setData(allData);
             return;
         }
         setIsLoading(true);
@@ -148,22 +148,22 @@ const Shop = () => {
                 setIsLoading(false);
             });
     };
-    
+
     const fetchBarang = () => {
-        
-		setIsLoading(true);
-		FetchBarang()
-			.then((response) => {
-				setData(response.data);
-                setAllData(response.data); 
-				setIsLoading(false);
-                
-			})
-			.catch((err) => {
-				console.log(err);
-				setIsLoading(false);
-			});
-	};
+
+        setIsLoading(true);
+        FetchBarang()
+            .then((response) => {
+                setData(response.data);
+                setAllData(response.data);
+                setIsLoading(false);
+                console.log("Data fetched:", response.data);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    };
 
     const location = useLocation();
 
@@ -172,7 +172,7 @@ const Shop = () => {
         FetchBarangByKategori(id_kategori)
             .then((response) => {
                 setData(response.data);
-                setAllData(response.data); 
+                setAllData(response.data);
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -180,7 +180,7 @@ const Shop = () => {
                 setIsLoading(false);
             });
     }
-    
+
     useEffect(() => {
         data.forEach((item) => {
             if (!penitip[item.id_barang]) {
@@ -206,7 +206,7 @@ const Shop = () => {
             }
         });
     }, [data]);
-    
+
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -219,16 +219,16 @@ const Shop = () => {
         } else if (location.pathname == "/shop") {
             resetFilters();
             fetchBarang();
-        }  
+        }
 
         if (searchQuery) {
             setSearchTerm(searchQuery);
             handleSearch(searchQuery);
-        } 
+        }
 
     }, [location.state?.refresh, location.pathname, location.search, location.state]);
 
-    
+
     const [warranty, setWarranty] = useState<boolean | null>(null);
     return (
         <div className='flex flex-col h-full bg-white p-12'>
@@ -243,7 +243,7 @@ const Shop = () => {
                     <p className='self-center text-xl text-black font-bold mt-2 mb-4'>Filters</p>
                     <hr className="my-2 border-t  w-[95%] border-gray-300" />
                     <p className='self-start text-xl text-black font-bold'>Category</p>
-                    <RadioGroup className='mt-4 mb-4 font-bold' value={selectedKategori  ?? ""}  onValueChange={(value) => setSelectedKategori(value)}>
+                    <RadioGroup className='mt-4 mb-4 font-bold' value={selectedKategori ?? ""} onValueChange={(value) => setSelectedKategori(value)}>
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="0" id="option-one" />
                             <Label htmlFor="option-one">Electronic & Gadget</Label>
@@ -257,7 +257,7 @@ const Shop = () => {
                             <Label htmlFor="option-3">Home Furnishings</Label>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="3" id="option-4"  />
+                            <RadioGroupItem value="3" id="option-4" />
                             <Label htmlFor="option-4">Books & School Supplies</Label>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -265,7 +265,7 @@ const Shop = () => {
                             <Label htmlFor="option-5">Hobbies & Collectibles</Label>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="5" id="option-6"  />
+                            <RadioGroupItem value="5" id="option-6" />
                             <Label htmlFor="option-6">Baby & Kids Equipment</Label>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -281,7 +281,7 @@ const Shop = () => {
                             <Label htmlFor="option-9">Office & Industrial Equipment</Label>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="9" id="option-10"/>
+                            <RadioGroupItem value="9" id="option-10" />
                             <Label htmlFor="option-10">Cosmetics & Personal Care</Label>
                         </div>
                     </RadioGroup>
@@ -303,7 +303,7 @@ const Shop = () => {
                         </Button>
                     </div>
                     <p className='self-start text-xl text-black font-bold mt-2'>Harga</p>
-                    <RadioGroup className='mt-4 mb-4 font-bold' value={selectedPrice  ?? ""}  onValueChange={(value) => setSelectedPrice(value)}>
+                    <RadioGroup className='mt-4 mb-4 font-bold' value={selectedPrice ?? ""} onValueChange={(value) => setSelectedPrice(value)}>
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="price-1" id="option-price-1" />
                             <Label htmlFor="option-price-1">Hingga Rp 50.000</Label>
@@ -322,10 +322,10 @@ const Shop = () => {
                         </div>
                     </RadioGroup>
                     <hr className="my-2 border-t  w-[95%] border-gray-300" />
-                    <Button className='mt-4 rounded-lg bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white'  onClick={handleApplyFilter}>Apply</Button>
-                    <Button className='mt-4 rounded-lg bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white'  onClick={() => {
+                    <Button className='mt-4 rounded-lg bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white' onClick={handleApplyFilter}>Apply</Button>
+                    <Button className='mt-4 rounded-lg bg-[#1F510F] hover:bg-[#F0F0F0] hover:text-black text-white' onClick={() => {
                         resetFilters();
-                        fetchBarang(); 
+                        fetchBarang();
                     }} >Reset</Button>
                 </div>
                 <div className="flex flex-col w-4/5">
@@ -338,8 +338,8 @@ const Shop = () => {
                             type="text"
                             className="w-full h-10 bg-[#F0F0F0] rounded-4xl pl-10 pr-4 py-2 focus:outline-none"
                             placeholder="Search Products..."
-                            value={searchTerm} 
-                            onChange={(e) => setSearchTerm(e.target.value)} 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                     handleSearch(searchTerm);
@@ -354,7 +354,7 @@ const Shop = () => {
                                     key={index}
                                     onClick={() => fetchBarangById(item.id_barang)}
                                     className="w-64 h-72 bg-white p-4 shadow-md rounded-lg border flex flex-col items-start hover:scale-105 transition-transform"
-                                >                                        
+                                >
                                     <img src={item.foto} alt={item.name || item.nama} className="h-[60%] w-full object-contain" />
                                     <p className='mt-2 font-light text-gray-400 text-xs'>
                                         {namaKategori(item.id_kategori)}
@@ -375,10 +375,10 @@ const Shop = () => {
                                                             let starColor = '#E0E0E0';
                                                             let starChar = '★';
                                                             if (rate >= i + 1) {
-                                                                starColor = '#FFD700'; 
+                                                                starColor = '#FFD700';
                                                             } else if (rate > i && rate < i + 1) {
-                                                                starColor = '#FFD700'; 
-                                                                starChar = '⯪'; 
+                                                                starColor = '#FFD700';
+                                                                starChar = '⯪';
                                                             }
                                                             return (
                                                                 <span key={i} style={{ color: starColor }}>
@@ -398,16 +398,16 @@ const Shop = () => {
                                     </div>
                                 </div>
                             ))}
-                            </div>
-                            {data.length === 0 && (
-                                <div className="w-full h-72 flex items-center justify-center">
-                                    <p className="text-gray-500">No items found</p>
-                                </div>
-                            )}
                         </div>
+                        {data.length === 0 && (
+                            <div className="w-full h-72 flex items-center justify-center">
+                                <p className="text-gray-500">No items found</p>
+                            </div>
+                        )}
                     </div>
                 </div>
+            </div>
         </div>
-    );                    
+    );
 };
 export default Shop;

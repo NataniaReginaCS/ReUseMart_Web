@@ -86,8 +86,7 @@ const ModalAssignDate = ({ idPembelian, show, onClose }: any) => {
                             onChange={(e) => setTanggalPengiriman(e.target.value)}
                         />
                     </div>
-
-                    {dataPembelian?.metode_pengiriman === 'diantar' && (
+                    {dataPembelian?.metode_pengiriman?.toLowerCase() === 'diantar' && (
                         <div>
                             <label className="block font-semibold">Pegawai</label>
                             <select
@@ -103,7 +102,6 @@ const ModalAssignDate = ({ idPembelian, show, onClose }: any) => {
                                 ))}
                             </select>
                         </div>
-
                     )}
                 </div>
 
