@@ -107,7 +107,6 @@ export const FetchAllBarang = async () => {
     }
 }
 
-
 export const fetchLaporanBarangHabis = async () => {
     try {
         const response = await useAxios.get(`/laporanBarangHabis`, {
@@ -133,4 +132,4 @@ export const fetchLaporanBarangTerjual = async () => {
     } catch (error: any) {
         throw error.response?.data || error;
     }
-}
+
