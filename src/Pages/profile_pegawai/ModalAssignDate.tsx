@@ -3,6 +3,7 @@ import { FetchDataPegawai, FetcHDataPembelian, FetchTransaksiGudangById, updateT
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
 import { Button } from "../../components/ui/button";
 import { FetchBarangPenitipById } from "../../api/ApiPenitip";
+import { confirmAlert } from "react-confirm-alert";
 
 type Pembelian = {
     id_barang: number;
@@ -62,14 +63,37 @@ const ModalAssignDate = ({ idPembelian, show, onClose }: any) => {
         if (tanggalPengiriman) payload.tanggal_pengiriman = tanggalPengiriman;
         if (idPegawai) payload.id_pegawai = parseInt(idPegawai);
 
-        try {
-            const response = await updateTanggalPengiriman(idPembelian, payload);
-            alert("Berhasil update!");
-            onClose();
-        } catch (error: any) {
-            console.error("Gagal update:", error);
-            alert("Gagal update data.");
-        }
+
+        confirmAlert({
+            title: 'Konfirmasi',
+            message: 'Apakah Anda yakin ingin melakukan Assign Date?',
+            buttons: [
+                {
+                    label: 'Ya',
+                    onClick: async () => {
+                        try {
+                            const response = await updateTanggalPengiriman(idPembelian, payload);
+                            confirmAlert({
+                                title: 'Sukses',
+                                message: "Date Berahasil Diassign",
+                                buttons: [{ label: 'OK' }]
+                            });
+                        } catch (error: any) {
+                            confirmAlert({
+                                title: 'Gagal',
+                                message: error.message || "Gagal menyelesaikan transaksi",
+                                buttons: [{ label: 'OK' }]
+                            });
+                        }
+                    }
+                },
+                {
+                    label: 'Tidak',
+                    onClick: () => { /* Tidak melakukan apa-apa */ }
+                }
+            ]
+        });
+
     };
 
     return (

@@ -132,4 +132,4 @@ export const fetchLaporanBarangTerjual = async () => {
     } catch (error: any) {
         throw error.response?.data || error;
     }
-}
+

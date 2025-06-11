@@ -16,6 +16,8 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "../../components/ui/carousel"
+import { confirmAlert } from 'react-confirm-alert';
+
 import {
     faSearch,
     faHouse,
@@ -27,6 +29,7 @@ import SideBarNavGudang from "../../Components2/SideBarNavGudang";
 import { Button } from "../../components/ui/button";
 import ModalAssignDate from "./ModalAssignDate";
 import jsPDF from "jspdf";
+import SyncLoader from "react-spinners/SyncLoader";
 
 type Barang = {
     id_barang: number;
@@ -114,16 +117,20 @@ const ManageTransaksi = () => {
     };
     const filteredData = data.filter((item) => {
         const searchLower = searchTerm.toLowerCase();
+        const itemDate = new Date(item.tanggal_pengiriman);
 
         const matchesSearch =
             item.id_pembelian.toString().includes(searchLower) ||
             item.status_pengiriman.toLowerCase().includes(searchLower) ||
             item.metode_pengiriman.toLowerCase().includes(searchLower);
-        const itemDate = new Date(item.tanggal_akhir);
 
+        const matchesDateRange =
+            (!startDate || itemDate >= new Date(startDate)) &&
+            (!endDate || itemDate <= new Date(endDate));
 
-        return matchesSearch;
+        return matchesSearch && matchesDateRange;
     });
+
 
     const chunkedData = chunkArray(filteredData, itemsPerPage);
 
@@ -172,13 +179,36 @@ const ManageTransaksi = () => {
     }, []); 44
 
     const handleSelesai = async (id_pembelian: number) => {
-        try {
-            const response = await selesaiTransaksi(id_pembelian);
-            alert(response.message || "Trankasi selesai");
-            fetchBarangByPenitip();
-        } catch (error: any) {
-            alert(error.message || "Gagal menyelesaikan transaksi");
-        }
+        confirmAlert({
+            title: 'Konfirmasi',
+            message: 'Apakah Anda yakin ingin menyelesaikan transaksi ini?',
+            buttons: [
+                {
+                    label: 'Ya',
+                    onClick: async () => {
+                        try {
+                            const response = await selesaiTransaksi(id_pembelian);
+                            confirmAlert({
+                                title: 'Sukses',
+                                message: response.message || "Transaksi selesai",
+                                buttons: [{ label: 'OK' }]
+                            });
+                            fetchBarangByPenitip();
+                        } catch (error: any) {
+                            confirmAlert({
+                                title: 'Gagal',
+                                message: error.message || "Gagal menyelesaikan transaksi",
+                                buttons: [{ label: 'OK' }]
+                            });
+                        }
+                    }
+                },
+                {
+                    label: 'Tidak',
+                    onClick: () => { /* Tidak melakukan apa-apa */ }
+                }
+            ]
+        });
     };
     const handlePrintNota = async (id_pembelian: number) => {
         try {
@@ -188,6 +218,8 @@ const ManageTransaksi = () => {
             const items = Array.isArray(transaksiResponse.data)
                 ? transaksiResponse.data
                 : [transaksiResponse.data];
+
+            console.log("Nota:", nota);
 
             const doc = new jsPDF();
 
@@ -483,103 +515,123 @@ const ManageTransaksi = () => {
                         </select>
                     </div>
                     <Carousel>
-                        <CarouselContent>
-                            {chunkedData.map((chunk, index) => (
-                                <CarouselItem key={index}>
-                                    <div className="w-full overflow-x-auto">
-                                        <table className="w-full mt-5 mb-5 table-auto">
-                                            <thead>
-                                                <tr className="bg-[#F2F2F2]">
-                                                    <th className="px-4 py-3 text-center">ID PEMBELIAN</th>
-                                                    <th className="px-4 py-3 text-center">STATUS PENGIRIMAN</th>
-                                                    <th className="px-4 py-3 text-center">METODE PENGIRIMAN</th>
-                                                    <th className="px-4 py-3 text-center">TANGGAL PENGIRIMAN</th>
-                                                    <th className="px-4 py-3 text-center">DETAILS</th>
-                                                    <th className="px-4 py-3 text-center">ACTIONS</th>
+                        <CarouselContent className="flex flex-col items-center">
+                            {isLoading ? (
+                                <div>
+                                    <SyncLoader color="#F5CB58" size={10} className="mx-auto" />
+                                    <p className="text-center py-6">
+                                        Loading...
+                                    </p>
+                                </div>
+                            ) : chunkedData.length === 0 ? (
+                                <div>
+                                    <p className="text-center py-6">
+                                        No data available.
+                                    </p>
+                                </div>
+                            ) : (
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {chunk.map((item, rowIndex) => (
-                                                    <tr key={rowIndex} className="border-b">
-                                                        <td className="py-3 text-center break-words">{item.id_pembelian}</td>
-                                                        <td className="px-4 py-3 text-center">{item.status_pengiriman}</td>
-                                                        <td className="px-4 py-3 text-center">{item.metode_pengiriman}</td>
-                                                        {item.tanggal_pengiriman === null ? (
-                                                            <td className="px-4 py-3 text-center">Unassigned</td>
-                                                        ) : (
-                                                            <td className="px-4 py-3 text-center">{item.tanggal_pengiriman}</td>
-                                                        )}
-                                                        <td
-                                                            className="px-4 py-3 text-center text-[#00B207] hover:underline cursor-pointer"
-                                                            onClick={() => handleClick(item.id_pembelian)}
-                                                        >
-                                                            View Details
-                                                        </td>
-                                                        <td className="px-4 py-3 flex justify-center">
-                                                            <div className="flex gap-4">
+                                <>
+                                    {chunkedData.map((chunk, index) => (
+                                        <CarouselItem key={index}>
+                                            <div className="w-full overflow-x-auto">
+                                                <table className="w-full mt-5 mb-5 table-auto">
+                                                    <thead>
+                                                        <tr className="bg-[#F2F2F2]">
+                                                            <th className="px-4 py-3 text-center">ID PEMBELIAN</th>
+                                                            <th className="px-4 py-3 text-center">STATUS PENGIRIMAN</th>
+                                                            <th className="px-4 py-3 text-center">METODE PENGIRIMAN</th>
+                                                            <th className="px-4 py-3 text-center">TANGGAL PENGIRIMAN</th>
+                                                            <th className="px-4 py-3 text-center">DETAILS</th>
+                                                            <th className="px-4 py-3 text-center">ACTIONS</th>
 
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        {chunk.map((item, rowIndex) => (
+                                                            <tr key={rowIndex} className="border-b">
+                                                                <td className="py-3 text-center break-words">{item.id_pembelian}</td>
+                                                                <td className="px-4 py-3 text-center">{item.status_pengiriman}</td>
+                                                                <td className="px-4 py-3 text-center">{item.metode_pengiriman}</td>
                                                                 {item.tanggal_pengiriman === null ? (
-                                                                    <>
-                                                                        <Button
-                                                                            color="red"
-                                                                            className="cursor-pointer"
-                                                                            onClick={() => {
-                                                                                handleAssignClick(item.id_pembelian);
-                                                                            }}
-                                                                        >
-                                                                            Assign Date
-                                                                        </Button>
-                                                                    </>
-
+                                                                    <td className="px-4 py-3 text-center">Unassigned</td>
                                                                 ) : (
-                                                                    <Button
-                                                                        color="red"
-                                                                        className="cursor-pointer"
-                                                                        onClick={() => {
-                                                                            handleSelesai(item.id_pembelian);
-                                                                        }}
-                                                                    >
-                                                                        Selesai Transaksi
-                                                                    </Button>
-
-                                                                )
-
-                                                                }
-
-                                                                {item?.tanggal_pengiriman !== null && (
-                                                                    <>
-                                                                        {item.metode_pengiriman?.toLowerCase() === "diantar".toLowerCase() && (
-                                                                            <Button
-                                                                                color="blue"
-                                                                                className="cursor-pointer"
-                                                                                onClick={() => handlePrintNota(item.id_pembelian)}
-                                                                            >
-                                                                                Print Nota
-                                                                            </Button>
-                                                                        )}
-
-                                                                        {item.metode_pengiriman?.toLowerCase() === "diambil".toLowerCase() && (
-                                                                            <Button
-                                                                                color="green"
-                                                                                className="cursor-pointer"
-                                                                                onClick={() => handlePrintNotaDiambil(item.id_pembelian)}
-                                                                            >
-                                                                                Print Nota
-                                                                            </Button>
-                                                                        )}
-                                                                    </>
+                                                                    <td className="px-4 py-3 text-center">{item.tanggal_pengiriman}</td>
                                                                 )}
-                                                            </div>
-                                                        </td>
+                                                                <td
+                                                                    className="px-4 py-3 text-center text-[#00B207] hover:underline cursor-pointer"
+                                                                    onClick={() => handleClick(item.id_pembelian)}
+                                                                >
+                                                                    View Details
+                                                                </td>
+                                                                <td className="px-4 py-3 flex justify-center">
+                                                                    <div className="flex gap-4">
 
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </CarouselItem>
-                            ))}
+                                                                        {item.tanggal_pengiriman === null ? (
+                                                                            <>
+                                                                                <Button
+                                                                                    color="red"
+                                                                                    className="cursor-pointer"
+                                                                                    onClick={() => {
+                                                                                        handleAssignClick(item.id_pembelian);
+                                                                                    }}
+                                                                                >
+                                                                                    Assign Date
+                                                                                </Button>
+                                                                            </>
+
+                                                                        ) : (
+                                                                            <Button
+                                                                                color="red"
+                                                                                className="cursor-pointer"
+                                                                                onClick={() => {
+                                                                                    handleSelesai(item.id_pembelian);
+                                                                                }}
+                                                                            >
+                                                                                Selesai Transaksi
+                                                                            </Button>
+
+                                                                        )
+
+                                                                        }
+
+                                                                        {item?.tanggal_pengiriman !== null && (
+                                                                            <>
+                                                                                {item.metode_pengiriman?.toLowerCase() === "diantar".toLowerCase() && (
+                                                                                    <Button
+                                                                                        color="blue"
+                                                                                        className="cursor-pointer"
+                                                                                        onClick={() => handlePrintNota(item.id_pembelian)}
+                                                                                    >
+                                                                                        Print Nota
+                                                                                    </Button>
+                                                                                )}
+
+                                                                                {item.metode_pengiriman?.toLowerCase() === "diambil".toLowerCase() && (
+                                                                                    <Button
+                                                                                        color="green"
+                                                                                        className="cursor-pointer"
+                                                                                        onClick={() => handlePrintNotaDiambil(item.id_pembelian)}
+                                                                                    >
+                                                                                        Print Nota
+                                                                                    </Button>
+                                                                                )}
+                                                                            </>
+                                                                        )}
+                                                                    </div>
+                                                                </td>
+
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </CarouselItem>
+                                    ))}
+                                </>
+
+                            )}
                         </CarouselContent>
 
                         <div className="flex justify-center gap-4 mt-4">

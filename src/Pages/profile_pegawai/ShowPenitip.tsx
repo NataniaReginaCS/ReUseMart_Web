@@ -8,7 +8,6 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import Frieren from "../../assets/images/Frieren.jpg";
 import { FetchBarangByPenitip } from "../../api/ApiPenitip";
 import SidebarNavPenitip from "../../Components2/SideBarNavPenitip";
-import ModalDetailTitipan from "./ModalDetailTItipan";
 import {
     Carousel,
     CarouselContent,
@@ -22,31 +21,20 @@ import {
     faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-type Barang = {
-    id_barang: number;
-    id_penitipan: number;
-    id_kategori: string;
-    id_hunter: string;
-    nama_barang: string;
-    deskripsi: string;
-    foto: string;
-    berat: number;
-    isGaransi: boolean;
-    akhir_garansi: string;
-    status_perpanjangan: string;
-    harga: number;
-    tanggal_akhir: string;
-    batas_ambil: string;
-    status_barang: string;
-    tanggal_ambil: string;
+import { FetchPenitip } from "../../api/ApiGudang";
+type Penitip = {
+    id_penitip: number;
+    nama: string;
+    email: string;
+    wallet: string;
 };
-const Titipan = () => {
+const ShowPenitip = () => {
     const [showCurrentPassword, setCurrentPassword] = useState(false);
     const [showNewPassword, setNewPassword] = useState(false);
     const [showConfirmPassword, setConfirmPassword] = useState(false);
     const navigate = useNavigate();
     const [currentIndex, setCurrentIndex] = useState(0)
-    const [data, setData] = useState<Barang[]>([]);
+    const [data, setData] = useState<Penitip[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -73,19 +61,16 @@ const Titipan = () => {
     };
     const filteredData = data.filter((item) => {
         const searchLower = searchTerm.toLowerCase();
-        const itemDate = new Date(item.tanggal_akhir);
 
         const matchesSearch =
-            item.id_barang.toString().includes(searchLower) ||
-            item.status_barang.toLowerCase().includes(searchLower) ||
-            item.harga.toString().includes(searchLower) ||
-            item.nama_barang.toLowerCase().includes(searchLower);
+            item.id_penitip.toString().includes(searchLower) ||
+            item.nama.toLowerCase().includes(searchLower) ||
+            item.wallet.toString().includes(searchLower) ||
+            item.email.toLowerCase().includes(searchLower);
 
-        const matchesDateRange =
-            (!startDate || itemDate >= new Date(startDate)) &&
-            (!endDate || itemDate <= new Date(endDate));
 
-        return matchesSearch && matchesDateRange;
+
+        return matchesSearch;
     });
 
     const chunkedData = chunkArray(filteredData, itemsPerPage);
@@ -100,7 +85,7 @@ const Titipan = () => {
 
     const fetchBarangByPenitip = () => {
         setIsLoading(true);
-        FetchBarangByPenitip()
+        FetchPenitip()
             .then((response) => {
                 setData(response.data);
                 setIsLoading(false);
@@ -176,7 +161,7 @@ const Titipan = () => {
             <div className="flex flex-row gap-4">
                 <SidebarNavPenitip />
                 <div className="flex flex-col max-w-[1200px] w-full min-h-[500px] mt-5 border-1 border-gray-300 rounded-lg">
-                    <p className="text-2xl font-bold ml-8 mt-5">Titipanz</p>
+                    <p className="text-2xl font-bold ml-8 mt-5">Show Penitip</p>
 
                     <div className="flex gap-4 items-center mb-4 px-6 mt-5">
                         <input
@@ -222,7 +207,6 @@ const Titipan = () => {
                                             <thead>
                                                 <tr className="bg-[#F2F2F2]">
                                                     <th className="px-4 py-3 text-center">NAMA BARANG</th>
-                                                    <th className="px-4 py-3 text-center">DATE</th>
                                                     <th className="px-4 py-3 text-center">TOTAL</th>
                                                     <th className="px-4 py-3 text-center">STATUS</th>
                                                     <th className="px-4 py-3 text-center">ACTIONS</th>
@@ -231,19 +215,13 @@ const Titipan = () => {
                                             <tbody>
                                                 {chunk.map((item, rowIndex) => (
                                                     <tr key={rowIndex} className="border-b">
-                                                        <td className="py-3 text-center break-words">{item.nama_barang}</td>
-                                                        <td className="px-4 py-3 text-center">
-                                                            {item?.tanggal_akhir ? new Date(item.tanggal_akhir).toLocaleDateString('en-US', {
-                                                                year: 'numeric',
-                                                                month: 'long',
-                                                                day: 'numeric'
-                                                            }) : ""}
-                                                        </td>
-                                                        <td className="px-4 py-3 text-center">Rp {item.harga}</td>
-                                                        <td className="px-4 py-3 text-center">{item.status_barang}</td>
+                                                        <td className="py-3 text-center break-words">{item.nama}</td>
+
+                                                        <td className="px-4 py-3 text-center">Rp {item.wallet}</td>
+                                                        <td className="px-4 py-3 text-center">{item.email}</td>
                                                         <td
                                                             className="px-4 py-3 text-center text-[#00B207] hover:underline cursor-pointer"
-                                                            onClick={() => handleClick(item.id_barang)}
+                                                            onClick={() => handleClick(item.id_penitip)}
                                                         >
                                                             View Details
                                                         </td>
@@ -266,21 +244,11 @@ const Titipan = () => {
                 </div>
 
             </div>
-            {showModal && (
-                <ModalDetailTitipan
-                    show={showModal}
-                    idBarang={tempIdBarang}
-                    onClose={() => {
-                        setShowModal(false);
-                        fetchBarangByPenitip();
-                    }}
 
-                />
-            )}
 
         </div>
     );
 };
 
-export default Titipan;
+export default ShowPenitip;
 

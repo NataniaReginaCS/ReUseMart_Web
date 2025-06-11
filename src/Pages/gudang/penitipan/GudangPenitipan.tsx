@@ -313,7 +313,7 @@ const GudangPenitipan = () => {
 
                 {isLoading ? (
                     <div className="justify-center items-center text-center">
-                        <SyncLoader color="#F5CB58" size={10} className="mx-auto" />
+                        <SyncLoader color="#F5CB58" size={10} className="mt-4 mx-auto" />
                         <h6 className="mt-2 mb-0">Loading...</h6>
                     </div>
                 ) : (
