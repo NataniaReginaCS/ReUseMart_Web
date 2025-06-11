@@ -52,9 +52,10 @@ import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
 import Checkout from "../Pages/Pembeli/Checkout";
 import CSMerchandise from "../Pages/Cs/Merchandise/CSMerhandise";
 import OwnerLaporan from "../Pages/owner/laporan/OwnerLaporan";
+import OwnerLaporanB from "../Pages/owner/laporan/OwnerLaporanB";
 
 const router = createBrowserRouter([
-	{	
+	{
 		path: "/unauthorized",
 		element: <Unauthorized />,
 	},
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
 			{
 				path: "laporan",
 				element: <OwnerLaporan />,
+			},
+			{
+				path: "laporanB",
+				element: <OwnerLaporanB />,
 			}
 
 		],
@@ -140,12 +145,12 @@ const router = createBrowserRouter([
 				element: <CSPenitip />
 			},
 			{
-				path : "payment-verification",
-				element : <PaymentVerification />
+				path: "payment-verification",
+				element: <PaymentVerification />
 			},
 			{
-				path : "merchandise-verification",
-				element : <CSMerchandise />
+				path: "merchandise-verification",
+				element: <CSMerchandise />
 			}
 		]
 	},
@@ -244,7 +249,7 @@ const router = createBrowserRouter([
 			// 	path: "/shop",
 			// 	element: <Shop />,
 			// },
-			
+
 			// {
 			// 	path: "/about",
 			// 	element: <About />,

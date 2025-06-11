@@ -158,7 +158,7 @@ const OwnerLaporan = () => {
                                         })}
                                     </tbody>
                                 </table>
-                            </div>                                        
+                            </div>
                         </div>
                     </div>
                 )}
