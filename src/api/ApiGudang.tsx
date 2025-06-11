@@ -117,4 +117,24 @@ export const selesaiTransaksi = async (id_pembelian: number) => {
     } catch (error: any) {
         throw error.response.data;
     }
+
+
+};
+
+export const FetchPenitip = async () => {
+    try {
+        const response = await useAxios.get(`/fetchShowPenitip`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        });
+
+        return response.data;
+
+    } catch (error: any) {
+        throw error.response.data;
+    }
+
+
 };

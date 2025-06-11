@@ -54,7 +54,7 @@ export const showOrganisasi = async () => {
     }
 }
 
-export const updateDetailDonasi = async (data: any, id: number  ) => {
+export const updateDetailDonasi = async (data: any, id: number) => {
     try {
         const response = await useAxios.post(`/updateDonasi/${id}`, data, {
             headers: {
@@ -97,6 +97,34 @@ export const fetchBarangForDonasi = async () => {
 export const FetchAllBarang = async () => {
     try {
         const response = await useAxios.get(`/fetchAllBarang`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response?.data || error;
+    }
+}
+
+
+export const fetchLaporanBarangHabis = async () => {
+    try {
+        const response = await useAxios.get(`/laporanBarangHabis`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response?.data || error;
+    }
+}
+
+
+export const fetchLaporanBarangTerjual = async () => {
+    try {
+        const response = await useAxios.get(`/laporanBarangTerjual`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },

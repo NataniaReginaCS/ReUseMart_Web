@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "sonner";
 import MainLayout from "../Layout/MainLayout";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
@@ -52,9 +53,11 @@ import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
 import Checkout from "../Pages/Pembeli/Checkout";
 import CSMerchandise from "../Pages/Cs/Merchandise/CSMerhandise";
 import OwnerLaporan from "../Pages/owner/laporan/OwnerLaporan";
+import ShowPenitip from "../Pages/profile_pegawai/ShowPenitip";
+import OwnerLaporanB from "../Pages/owner/laporan/OwnerLaporanB";
 
 const router = createBrowserRouter([
-	{	
+	{
 		path: "/unauthorized",
 		element: <Unauthorized />,
 	},
@@ -119,6 +122,10 @@ const router = createBrowserRouter([
 			{
 				path: "laporan",
 				element: <OwnerLaporan />,
+			},
+			{
+				path: "laporanB",
+				element: <OwnerLaporanB />,
 			}
 
 		],
@@ -140,12 +147,12 @@ const router = createBrowserRouter([
 				element: <CSPenitip />
 			},
 			{
-				path : "payment-verification",
-				element : <PaymentVerification />
+				path: "payment-verification",
+				element: <PaymentVerification />
 			},
 			{
-				path : "merchandise-verification",
-				element : <CSMerchandise />
+				path: "merchandise-verification",
+				element: <CSMerchandise />
 			}
 		]
 	},
@@ -186,6 +193,10 @@ const router = createBrowserRouter([
 			{
 				path: "manage",
 				element: <ManageTransaksi />,
+			},
+			{
+				path: "showpenitip",
+				element: <ShowPenitip />,
 			},
 		],
 	},
@@ -244,7 +255,7 @@ const router = createBrowserRouter([
 			// 	path: "/shop",
 			// 	element: <Shop />,
 			// },
-			
+
 			// {
 			// 	path: "/about",
 			// 	element: <About />,

@@ -127,12 +127,10 @@ const Header = () => {
 
 
 
-                {/* Right Section (Cart + Profile OR Login/Register) */}
                 <div className="flex items-center gap-4 font-semibold ml-auto">
                     {role ? (
                         <>
 
-                            {/* Profile picture based on role */}
                             {role === 'Admin' && (
                                 <a
                                     href="/admin/organisasi"
@@ -149,14 +147,7 @@ const Header = () => {
                                     <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
                                 </a>
                             )}
-                            {role === 'Gudang' && (
-                                <a
-                                    href="/gudang/penitipan"
-                                    className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
-                                >
-                                    <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
-                                </a>
-                            )}
+
                             {role === 'Owner' && (
                                 <a
                                     href="/owner/donasi"
@@ -200,9 +191,6 @@ const Header = () => {
                                 </>
                             )}{role === 'Gudang' && (
                                 <>
-                                    <a href="/cart" className="bg-gray-500 py-2 px-4 rounded-md">
-                                        Cart
-                                    </a>
 
                                     <a
                                         href="/gudang/manage"
