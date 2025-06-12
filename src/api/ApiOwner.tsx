@@ -105,7 +105,25 @@ export const FetchAllBarang = async () => {
     } catch (error: any) {
         throw error.response?.data || error;
     }
+
+  
 }
+
+  export const FetchAllPenitip = async () =>{
+    try{
+        const response = await useAxios.get(`/getAllPenitip`, {
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${getToken()}`,
+            },
+        });
+
+        return response.data;
+    }catch(error: any) {
+        throw error.response?.data || error;
+    }
+  }
+
 
 export const fetchLaporanBarangHabis = async () => {
     try {
@@ -132,4 +150,4 @@ export const fetchLaporanBarangTerjual = async () => {
     } catch (error: any) {
         throw error.response?.data || error;
     }
-
+}

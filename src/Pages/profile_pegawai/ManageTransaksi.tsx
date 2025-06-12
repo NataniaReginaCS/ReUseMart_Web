@@ -19,9 +19,9 @@ import {
 import { confirmAlert } from 'react-confirm-alert';
 
 import {
-    faSearch,
-    faHouse,
-    faChevronRight,
+	faSearch,
+	faHouse,
+	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { FetchDataNota, FetchDataPegawai, FetchTransaksiByGudang, FetchTransaksiGudangById, selesaiTransaksi } from "../../api/ApiGudang";
@@ -92,20 +92,18 @@ const ManageTransaksi = () => {
     const [endDate, setEndDate] = useState<string>("");
     const [showModalAssign, setShowModalAssign] = useState(false);
 
-    const [showModal, setShowModal] = useState(false);
-    const [tempIdBarang, setTempIdBarang] = useState(0);
+	const [showModal, setShowModal] = useState(false);
+	const [tempIdBarang, setTempIdBarang] = useState(0);
 
-    const handleClick = (id_pembelian: number) => {
-        setShowModal(true);
-        setTempIdBarang(id_pembelian);
+	const handleClick = (id_pembelian: number) => {
+		setShowModal(true);
+		setTempIdBarang(id_pembelian);
+	};
 
-    }
-
-    const handleAssignClick = (id_pembelian: number) => {
-        setShowModalAssign(true);
-        setTempIdBarang(id_pembelian);
-
-    }
+	const handleAssignClick = (id_pembelian: number) => {
+		setShowModalAssign(true);
+		setTempIdBarang(id_pembelian);
+	};
 
 
     const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
@@ -671,4 +669,3 @@ const ManageTransaksi = () => {
 };
 
 export default ManageTransaksi;
-

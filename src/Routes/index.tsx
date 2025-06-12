@@ -53,6 +53,7 @@ import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
 import Checkout from "../Pages/Pembeli/Checkout";
 import CSMerchandise from "../Pages/Cs/Merchandise/CSMerhandise";
 import OwnerLaporan from "../Pages/owner/laporan/OwnerLaporan";
+import PenitipLaporan from "../Pages/owner/laporan/PenitipLaporan";
 
 import ShowPenitip from "../Pages/profile_pegawai/ShowPenitip";
 import OwnerLaporanB from "../Pages/owner/laporan/OwnerLaporanB";
@@ -125,6 +126,11 @@ const router = createBrowserRouter([
 				element: <OwnerLaporan />,
 			},
 			{
+				path: "penitip",
+				element: <PenitipLaporan />,
+				
+			},
+			{
 				path: "laporanB",
 				element: <OwnerLaporanB />,
 			}
@@ -183,7 +189,7 @@ const router = createBrowserRouter([
 		path: "/gudang",
 		element: (
 			<ProtectedRoutes allowedRoles={["Gudang"]}>
-				<MainLayout />
+				<Outlet />
 			</ProtectedRoutes>
 		),
 		children: [

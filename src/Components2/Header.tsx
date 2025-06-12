@@ -66,13 +66,6 @@ const Header = () => {
     return (
         <header className='sticky w-full top-0 z-50'>
             <div className="bg-[#1F510F] text-white flex  items-center h-20 px-8">
-                {/* Logo (always visible) */}
-                <div className="flex items-center w-24 h-24 cursor-pointer" onClick={() => navigate("/")}>
-                    <img src={logo} alt="Logo" />
-                </div>
-
-
-
                 {!isPrivileged && (
                     <>
                         <div className="flex items-center font-semibold space-x-4 h-full ml-6">
@@ -130,7 +123,6 @@ const Header = () => {
                 <div className="flex items-center gap-4 font-semibold ml-auto">
                     {role ? (
                         <>
-
                             {role === 'Admin' && (
                                 <a
                                     href="/admin/organisasi"
@@ -147,7 +139,6 @@ const Header = () => {
                                     <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
                                 </a>
                             )}
-
                             {role === 'Owner' && (
                                 <a
                                     href="/owner/donasi"
