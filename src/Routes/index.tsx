@@ -52,6 +52,7 @@ import GudangPenitipan from "../Pages/gudang/penitipan/GudangPenitipan";
 import Checkout from "../Pages/Pembeli/Checkout";
 import CSMerchandise from "../Pages/Cs/Merchandise/CSMerhandise";
 import OwnerLaporan from "../Pages/owner/laporan/OwnerLaporan";
+import PenitipLaporan from "../Pages/owner/laporan/PenitipLaporan";
 
 const router = createBrowserRouter([
 	{	
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
 			{
 				path: "laporan",
 				element: <OwnerLaporan />,
+			},
+			{
+				path: "penitip",
+				element: <PenitipLaporan />,
 			}
 
 		],

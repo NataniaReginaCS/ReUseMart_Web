@@ -12,6 +12,7 @@ type Pembelian = {
 	total: number;
 	nomor_nota: string;
 	tanggal_laku: Date;
+	poin_didapat:number;
 };
 
 const Checkout = () => {
@@ -143,6 +144,14 @@ const Checkout = () => {
 						<span className="font-bold text-green-600">
 							Rp {pembelian.total}
 						</span>
+						
+					</div>
+					<div className="flex justify-between">
+					<span className="font-semibold">Poin yang anda dapatkan:</span>
+						<span className="font-bold text-green-600">
+							{pembelian.poin_didapat}
+						</span>
+
 					</div>
 				</div>
 
