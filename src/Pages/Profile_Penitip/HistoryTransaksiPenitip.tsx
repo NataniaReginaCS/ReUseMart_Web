@@ -21,7 +21,7 @@ import { SyncLoader } from "react-spinners";
 import ModalDetailHistory from "./ModalDetailHistory";
 
 const HistoryTransaksiPenitip = () => {
-	const [dataHistory, setDataHistory] = useState<any>(null);
+	const [dataHistory, setDataHistory] = useState<any[]>([]);
 	const [showModal, setShowModal] = useState(false);
 	const [tempIdBarang, setTempIdBarang] = useState(0);
 	const fetchHistoryTransaksi = async () => {
@@ -136,7 +136,7 @@ const HistoryTransaksiPenitip = () => {
 										</td>
 									</tr>
 									{dataHistory === null ? (
-										<p className="text-center my-10">Loading...</p>
+										<p className="text-center my-10">No Transaction Found</p>
 									) : (
 										dataHistory.map((item: any, index: number) => (
 											<tr

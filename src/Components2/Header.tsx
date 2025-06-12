@@ -120,11 +120,9 @@ const Header = () => {
 
 
 
-                {/* Right Section (Cart + Profile OR Login/Register) */}
                 <div className="flex items-center gap-4 font-semibold ml-auto">
                     {role ? (
                         <>
-                            {/* Profile picture based on role */}
                             {role === 'Admin' && (
                                 <a
                                     href="/admin/organisasi"
