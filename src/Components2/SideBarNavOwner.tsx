@@ -13,6 +13,7 @@ const SidebarNavOwner = () => {
     const navItems = [
         { label: "Donation", icon: <MdDashboard />, path: "/owner/donasi" },
         { label: "History Donation", icon: <FaArrowsRotate />, path: "/owner/history" },
+        { label: "Laporan Penitip", icon: <FaArrowsRotate />, path: "/owner/penitip" },
         { label: "Laporan", icon: <HiDocumentReport />, path: "/owner/laporan" },
     ];
 

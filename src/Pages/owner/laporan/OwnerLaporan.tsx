@@ -7,16 +7,16 @@ import { Button } from "flowbite-react";
 import SideBarNavOwner from "../../../Components2/SideBarNavOwner";
 
 type Report = {
-    id: number;
-    title: string;
+	id: number;
+	title: string;
 };
 
 const BASE_URL = "http://127.0.0.1:8000";
 
 const OwnerLaporan = () => {
-    const [isLoading] = useState<boolean>(false);
-    const [downloadLoading, setDownloadLoading] = useState<number | null>(null);
-    const [searchTerm, setSearchTerm] = useState<string>("");
+	const [isLoading] = useState<boolean>(false);
+	const [downloadLoading, setDownloadLoading] = useState<boolean>(false);
+	const [searchTerm, setSearchTerm] = useState<string>("");
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     const [selectedMonth, setSelectedMonth] = useState<string>("");
     
@@ -32,6 +32,15 @@ const OwnerLaporan = () => {
                     break;
                 case 3:
                     endpoint = "/api/laporan/stok-gudang/download";
+                    break;
+                case 4:
+                    endpoint = "/api/laporan/donasi-barang/download";
+                    break;
+                case 5:
+                    endpoint = "/api/laporan/request-donasi/download";
+                    break;
+                case 6:
+                    endpoint = "/api/laporan/donasi-elektronik	/download";
                     break;
                 default:
                     throw new Error("Laporan tidak ditemukan.");
@@ -53,68 +62,88 @@ const OwnerLaporan = () => {
         }
     };
 
-    const reports: Report[] = [
-        { id: 1, title: "Laporan penjualan bulanan keseluruhan (dalam tabel dan grafik)" },
-        { id: 2, title: "Laporan komisi bulanan per produk" },
-        { id: 3, title: "Laporan Stok Gudang" },
-        { id: 3, title: "Laporan Stok Gudang" },
-    ];
+	const reports: Report[] = [
+		{
+			id: 1,
+			title: "Laporan penjualan bulanan keseluruhan (dalam tabel dan grafik)",
+		},
+		{ id: 2, title: "Laporan komisi bulanan per produk" },
+		{ id: 3, title: "Laporan Stok Gudang" },
+		{ id: 4, title: "Laporan Donasi Barang" },
+		{ id: 5, title: "Laporan Rekap Request Donasi " },
+		{ id: 6, title: "Laporan Donasi Barang Elektronik " },
+	];
 
-    const handleDownload = async (reportId: number) => {
-        try {
-            setDownloadLoading(reportId);
-            let endpoint = "";
-            let fileName = "";
+	const handleDownload = async (reportId: number) => {
+		try {
+			setDownloadLoading(true);
+			let endpoint = "";
+			let fileName = "";
 
-            switch (reportId) {
-                case 1:
-                    endpoint = "/api/laporan/penjualan-bulanan/download";
-                    fileName = "Laporan_Penjualan_Bulanan";
-                    break;
-                case 2:
-                    endpoint = `/api/laporan/komisi-bulanan/download?year=${selectedYear}&month=${selectedMonth}`;
-                    fileName = `Laporan_Komisi_Bulanan_${selectedYear}_${selectedMonth}`;
-                    break;
-                case 3:
-                    endpoint = "/api/laporan/stok-gudang/download";
-                    fileName = "Laporan_Stok_Gudang";
-                    break;
-                default:
-                    throw new Error("Laporan tidak ditemukan.");
-            }
+			switch (reportId) {
+				case 1:
+					endpoint = "/api/laporan/penjualan-bulanan/download";
+					fileName = "Laporan_Penjualan_Bulanan";
+					break;
+				case 2:
+					endpoint = `/api/laporan/komisi-bulanan/download?year=${selectedYear}&month=${selectedMonth}`;
+					fileName = `Laporan_Komisi_Bulanan_${selectedYear}_${selectedMonth}`;
+					break;
+				case 3:
+					endpoint = "/api/laporan/stok-gudang/download";
+					fileName = "Laporan_Stok_Gudang";
+					break;
+				case 4:
+					endpoint = "/api/laporan/donasi-barang/download";
+					fileName = "Laporan_Donasi_Barang";
+					break;
+				case 5:
+					endpoint = "/api/laporan/request-donasi/download";
+					fileName = "Laporan_Rekap_Request_Donasi";
+					break;
+				case 6:
+					endpoint = "/api/laporan/donasi-elektronik	/download";
+					fileName = "Laporan_Rekap_Donasi_Barang_Elektronik";
+					break;
+				default:
+					throw new Error("Laporan tidak ditemukan.");
+			}
 
-            const fullUrl = `${BASE_URL}${endpoint}`;
-            const response = await fetch(fullUrl, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-                    Accept: "application/pdf",
-                },
-            });
+			const fullUrl = `${BASE_URL}${endpoint}`;
+			const response = await fetch(fullUrl, {
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+					Accept: "application/pdf",
+				},
+			});
 
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", `${fileName}_${new Date().toISOString().split("T")[0]}.pdf`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            toast.success("PDF berhasil diunduh!");
-        } catch (error: any) {
-            toast.error(error.message || "Gagal mengunduh PDF.");
-            console.error("Download error:", error.message);
-        } finally {
-            setDownloadLoading(null);
-        }
-    };
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute(
+				"download",
+				`${fileName}_${new Date().toISOString().split("T")[0]}.pdf`
+			);
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+			toast.success("PDF berhasil diunduh!");
+		} catch (error: any) {
+			toast.error(error.message || "Gagal mengunduh PDF.");
+			console.error("Download error:", error.message);
+		} finally {
+			setDownloadLoading(false);
+		}
+	};
 
-    const filteredData = reports.filter((item) => {
-        return (
-            item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.id.toString().includes(searchTerm)
-        );
-    });
+	const filteredData = reports.filter((item) => {
+		return (
+			item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			item.id.toString().includes(searchTerm)
+		);
+	});
 
     const TABLE_HEAD = ["No", "Judul Laporan", "Aksi"];
 
@@ -253,7 +282,7 @@ const OwnerLaporan = () => {
                                         })}
                                     </tbody>
                                 </table>
-                            </div>                                        
+                            </div>
                         </div>
                     </div>
                 )}

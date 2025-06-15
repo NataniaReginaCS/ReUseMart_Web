@@ -12,6 +12,7 @@ type Pembelian = {
 	total: number;
 	nomor_nota: string;
 	tanggal_laku: Date;
+	poin_didapat:number;
 };
 
 const Checkout = () => {
@@ -43,7 +44,7 @@ const Checkout = () => {
 				// Hitung waktu sisa pembayaran (15 menit dari tanggal_laku)
 				const tanggalLaku = new Date(response.pembelian.tanggal_laku);
 				const now = new Date();
-				const targetTime = new Date(tanggalLaku.getTime() + 15 * 60 * 1000);
+				const targetTime = new Date(tanggalLaku.getTime() + 1 * 60 * 1000);
 				const diffSeconds = Math.max(
 					0,
 					Math.floor((targetTime.getTime() - now.getTime()) / 1000)
@@ -143,6 +144,14 @@ const Checkout = () => {
 						<span className="font-bold text-green-600">
 							Rp {pembelian.total}
 						</span>
+						
+					</div>
+					<div className="flex justify-between">
+					<span className="font-semibold">Poin yang anda dapatkan:</span>
+						<span className="font-bold text-green-600">
+							{pembelian.poin_didapat}
+						</span>
+
 					</div>
 				</div>
 

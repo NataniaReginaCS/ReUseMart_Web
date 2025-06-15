@@ -205,9 +205,9 @@ const Cart = () => {
 
 		try {
 			const data = {
-				metode_pengiriman: delivery ? "diantar" : "ambil_sendiri",
+				metode_pengiriman: delivery ? "diantar" : "diambil",
 				id_alamat: delivery ? AlamatUtama?.id_alamat : undefined,
-				status_pengiriman: delivery ? "on progress" : "ambil_sendiri",
+				status_pengiriman: delivery ? "on progress" : "diambil",
 				poin_digunakan: poinUsed,
 			};
 
@@ -247,17 +247,15 @@ const Cart = () => {
 					<div className="flex justify-center mt-4 text-lg font-bold text-black">
 						<button
 							onClick={() => setDelivery(true)}
-							className={`border border-gray-300 rounded-tl-lg bg-white w-full max-w-[250px] h-full flex items-center justify-center p-2 ${
-								delivery ? "border-b-2 border-b-black" : ""
-							}`}
+							className={`border border-gray-300 rounded-tl-lg bg-white w-full max-w-[250px] h-full flex items-center justify-center p-2 ${delivery ? "border-b-2 border-b-black" : ""
+								}`}
 						>
 							<p>Delivery</p>
 						</button>
 						<button
 							onClick={() => setDelivery(false)}
-							className={`border border-gray-300 rounded-tr-lg bg-white w-full max-w-[250px] h-full flex items-center justify-center p-2 ${
-								!delivery ? "border-b-2 border-b-black" : ""
-							}`}
+							className={`border border-gray-300 rounded-tr-lg bg-white w-full max-w-[250px] h-full flex items-center justify-center p-2 ${!delivery ? "border-b-2 border-b-black" : ""
+								}`}
 						>
 							<p>Pickup</p>
 						</button>
@@ -412,7 +410,8 @@ const Cart = () => {
 											{item.barang.nama}
 										</p>
 										<p className=" font-normal text-gray-400 text-lg">
-											{item.barang.barang_penitipan.penitipan_penitip.nama}
+											{item.barang.barang_penitipan?.penitipan_penitip?.nama || "Unknown Penitip"}
+
 										</p>
 										<p className=" font-normal text-gray-400 text-lg">
 											Description: {item.barang.deskripsi}

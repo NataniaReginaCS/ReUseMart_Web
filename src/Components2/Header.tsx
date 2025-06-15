@@ -66,13 +66,6 @@ const Header = () => {
     return (
         <header className='sticky w-full top-0 z-50'>
             <div className="bg-[#1F510F] text-white flex  items-center h-20 px-8">
-                {/* Logo (always visible) */}
-                <div className="flex items-center w-24 h-24 cursor-pointer" onClick={() => navigate("/")}>
-                    <img src={logo} alt="Logo" />
-                </div>
-
-
-
                 {!isPrivileged && (
                     <>
                         <div className="flex items-center font-semibold space-x-4 h-full ml-6">
@@ -127,12 +120,9 @@ const Header = () => {
 
 
 
-                {/* Right Section (Cart + Profile OR Login/Register) */}
                 <div className="flex items-center gap-4 font-semibold ml-auto">
                     {role ? (
                         <>
-
-                            {/* Profile picture based on role */}
                             {role === 'Admin' && (
                                 <a
                                     href="/admin/organisasi"
@@ -144,14 +134,6 @@ const Header = () => {
                             {role === 'Organisasi' && (
                                 <a
                                     href="/profile-organisasi"
-                                    className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
-                                >
-                                    <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
-                                </a>
-                            )}
-                            {role === 'Gudang' && (
-                                <a
-                                    href="/gudang/penitipan"
                                     className="w-12 h-12 rounded-full overflow-hidden border-2 border-white"
                                 >
                                     <img src={Freiren} alt="Profile" className="w-full h-full object-cover" />
@@ -200,9 +182,6 @@ const Header = () => {
                                 </>
                             )}{role === 'Gudang' && (
                                 <>
-                                    <a href="/cart" className="bg-gray-500 py-2 px-4 rounded-md">
-                                        Cart
-                                    </a>
 
                                     <a
                                         href="/gudang/manage"
