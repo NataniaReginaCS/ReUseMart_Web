@@ -9,6 +9,12 @@ import SidebarNavCS from "../../../Components2/SideBarNavCS";
 import { fetchPenukaranPoin } from "../../../api/ApiMerchandise";
 import ModalEditConfirmationMerchandise from "./ModalEditMerchandise";
 
+declare global {
+    interface Window {
+        filterAmbil?: string;
+    }
+}
+
 type PenukaranPoin = {
     id_penukaranpoin: number;
     id_merchandise: number;
@@ -25,6 +31,7 @@ type PenukaranPoin = {
 };
 
 const CSMerchandise = () => {
+    const [filterAmbil, setFilterAmbil] = useState<string>(window.filterAmbil || "all");
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<PenukaranPoin[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -61,14 +68,26 @@ const CSMerchandise = () => {
     };
 
     const filteredData = data.filter((item) => {
-        return (
+        const matchesSearch =
             item.id_penukaranpoin.toString().includes(searchTerm) ||
             item.tanggal_penukaran?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.tanggal_ambil?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.status_verifikasi?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.pen_poin_pembeli?.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.pen_poin_merchandise?.nama_merchandise.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+            item.pen_poin_merchandise?.nama_merchandise.toLowerCase().includes(searchTerm.toLowerCase());
+        if (searchTerm === "") {
+        }
+
+        const matchesFilter =
+            filterAmbil === "all"
+            ? true
+            : filterAmbil === "belum"
+            ? !item.tanggal_ambil
+            : filterAmbil === "sudah"
+            ? !!item.tanggal_ambil
+            : true;
+
+        return matchesSearch && matchesFilter;
     });
 
     const indexOfLastData = currentPage * dataPerPage;
@@ -108,21 +127,42 @@ const CSMerchandise = () => {
                             <p>
                                 <strong>Merchandise Verification</strong>
                             </p>
-                            <div className="relative w-full sm:w-1/2">
-                                <FontAwesomeIcon
-                                    icon={faSearch}
-                                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"
-                                />
-                                <input
-                                    type="text"
-                                    value={searchTerm}
-                                    onChange={(e) => {
-                                        setSearchTerm(e.target.value);
-                                        setCurrentPage(1);
-                                    }}
-                                    className="w-full h-10 bg-[#F0F0F0] rounded-4xl pl-10 pr-4 py-2 focus:outline-none"
-                                    placeholder="Search..."
-                                />
+                            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-1/2">
+                                <div className="relative flex-1">
+                                    <FontAwesomeIcon
+                                        icon={faSearch}
+                                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"
+                                    />
+                                    <input
+                                        type="text"
+                                        value={searchTerm}
+                                        onChange={(e) => {
+                                            setSearchTerm(e.target.value);
+                                            setCurrentPage(1);
+                                        }}
+                                        className="w-full h-10 bg-[#F0F0F0] rounded-4xl pl-10 pr-4 py-2 focus:outline-none"
+                                        placeholder="Search..."
+                                    />
+                                </div>
+                                <div>
+                                    <select
+                                        className="h-10 bg-[#F0F0F0] rounded-4xl px-4 py-2 focus:outline-none"
+                                        value={
+                                            (searchTerm === "" && !window.filterAmbil) ? "all" : window.filterAmbil || "all"
+                                        }
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            window.filterAmbil = value === "all" ? "" : value;
+                                            setSearchTerm("");
+                                            setCurrentPage(1);
+                                            setFilterAmbil(value);
+                                        }}
+                                    >
+                                        <option value="all">Semua</option>
+                                        <option value="belum">Belum Diambil</option>
+                                        <option value="sudah">Sudah Diambil</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
