@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { SyncLoader } from "react-spinners";
 import { Label, Modal, ModalBody, ModalHeader, Select } from "flowbite-react";
-import { updatePenukaranPoin } from "../../../api/ApiMerchandise";
+import { fetchPenukaranPoin, updatePenukaranPoin } from "../../../api/ApiMerchandise";
 
 interface ModalEditConfirmationMerchandiseProps {
     dataPenukaranPoin: {
@@ -32,6 +32,7 @@ const ModalEditConfirmationMerchandise = ({
 
     const handleClose = () => {
         setShowConfirmModal(false);
+        fetchPenukaranPoin
         onClose();
     };
 
@@ -50,8 +51,25 @@ const ModalEditConfirmationMerchandise = ({
             toast.error("Tanggal Ambil tidak boleh ada jika status verifikasi adalah Declined.");
             return;
         }
+        if (data.tanggal_ambil) {
+            const tanggalAmbil = new Date(data.tanggal_ambil);
+            const today = new Date();
+            const yesterday = new Date();
+            yesterday.setDate(today.getDate() - 1);
+
+            tanggalAmbil.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            yesterday.setHours(0, 0, 0, 0);
+
+            if (
+                tanggalAmbil.getTime() !== today.getTime() &&
+                tanggalAmbil.getTime() !== yesterday.getTime()
+            ) {
+                toast.error("Tanggal Ambil harus hari ini atau kemarin.");
+                return;
+            }
+        }
         setShowConfirmModal(true);
-        
     };
 
     const handleConfirmSubmit = async () => {
@@ -102,21 +120,24 @@ const ModalEditConfirmationMerchandise = ({
                                 Edit Penukaran Poin
                             </h3>
                             <div>
-                                <div className="mb-2 block">
-                                    <Label htmlFor="status_verifikasi">Status Verifikasi</Label>
-                                </div>
-                                <Select
-                                    id="status_verifikasi"
-                                    name="status_verifikasi"
-                                    value={data.status_verifikasi}
-                                    onChange={handleChange}
-                                >
-                                    <option value="Pending">Pilih satu</option>
-                                    <option value="Approved">Approved</option>
-                                    <option value="Declined">Declined</option>
-                                </Select>
+                                {data.status_verifikasi === "Pending" && (
+                                <><div className="mb-2 block">
+                                        <Label htmlFor="status_verifikasi">Status Verifikasi</Label>
+                                    </div><Select
+                                        id="status_verifikasi"
+                                        name="status_verifikasi"
+                                        value={data.status_verifikasi}
+                                        onChange={handleChange}
+                                    >
+                                            <option value="Pending">Pilih satu</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Declined">Declined</option>
+                                        </Select></>
+                                )}
                             </div>
                             <div>
+                                {data.status_verifikasi === "Approved" && (
+                                <>
                                 <div className="mb-2 block">
                                     <Label htmlFor="tanggal_ambil">Tanggal Ambil</Label>
                                 </div>
@@ -127,7 +148,8 @@ const ModalEditConfirmationMerchandise = ({
                                     value={data.tanggal_ambil}
                                     onChange={handleChange}
                                     className="w-full border border-gray-300 rounded px-2 py-1"
-                                />
+                                /></>
+                                )}
                             </div>
                             <div className="w-full rounded-2xl bg-[#1F510F] p-2 text-center text-white cursor-pointer">
                                 <button type="submit" className="w-full cursor-pointer">
