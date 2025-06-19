@@ -189,7 +189,7 @@ const router = createBrowserRouter([
 		path: "/gudang",
 		element: (
 			<ProtectedRoutes allowedRoles={["Gudang"]}>
-				<Outlet />
+				<MainLayout />
 			</ProtectedRoutes>
 		),
 		children: [

@@ -6,6 +6,7 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { fetchPembeli } from "../../../api/ApiPembeli";
 import { getAlamatUtama } from "../../../api/ApiPembeli";
 import SidebarNav from "../../../Components2/SideBarNav";
+import noprofile from "../../../assets/images/noprofile.jpg";
 import {
 	faHouse,
 } from "@fortawesome/free-solid-svg-icons";
@@ -161,8 +162,8 @@ const Profile = () => {
 					<div className="flex flex-row gap-4 mt-5">
 						<div className="flex flex-row w-2/5 bg-white rounded-lg border-1 border-gray-300 justify-center items-center gap-10">
 							<img
-								src={`${"http://127.0.0.1:8000"}/storage/${profile?.foto}`}
-								alt=""
+								src={noprofile}
+								alt="Profile Placeholder"
 								className="w-50 h-50 rounded-full max-sm:w-20 max-sm:h-20"
 							/>
 							<div className="text-center">

@@ -25,7 +25,7 @@ const SidebarNav = () => {
 		{ label: "Profile", icon: <MdDashboard />, path: "/profile" },
 		{ label: "Order History", icon: <FaArrowsRotate />, path: "/order" },
 		{ label: "Shopping Cart", icon: <HiOutlineShoppingBag />, path: "/cart" },
-		{ label: "Merchandise", icon: <HiOutlineShoppingBag />, path: "/cart" },
+		
 	];
 
 	return (
