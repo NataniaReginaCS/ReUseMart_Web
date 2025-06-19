@@ -8,6 +8,7 @@ import { Label } from "@radix-ui/react-label";
 import { FetchBarangById, FetchRelatedProducts, getPenitip } from "../api/ApiBarang";
 import { FetchDiskusi, AddDiskusi } from "../api/ApiDiskusi";
 import { getToken } from "../api/ApiPembeli";
+import nopic from "../assets/images/noprofile.jpg";
 import { toast } from "react-toastify";
 import { AddKeranjang } from "../api/ApiKeranjang";
 import { SyncLoader } from "react-spinners";
@@ -207,12 +208,12 @@ const Item = () => {
 				<p className="font-bold text-green-500">Detail Product</p>
 			</div>
 
-			<div className="flex flex-col lg:flex-row mt-4 gap-6 lg:gap-12">
-				<div className="w-full lg:w-1/3 h-96 lg:h-[600px] bg-gray-500">
+			<div className="flex flex-col lg:flex-row mt-4 gap-6 lg:gap-12 max-h-[500px]">
+				<div className="w-full lg:w-1/3 h-96 lg:h-[400px] bg-gray-500">
 					<img
 						src={barang.foto}
 						alt={barang.nama}
-						className="w-full h-full object-cover rounded-lg"
+						className="w-full h-full object-cover rounded-lg  "
 					/>
 				</div>
 
@@ -299,7 +300,7 @@ const Item = () => {
 				</div>
 			</div>
 
-			<div className="flex flex-col w-full mt-16 items-center">
+			<div className="flex flex-col w-full items-center">
 				<p className="text-2xl md:text-3xl font-semibold text-black mb-6">
 					Related Products
 				</p>
@@ -364,7 +365,7 @@ const Item = () => {
 						<div className="flex gap-4 items-center" key={index}>
 							<img
 								className="rounded-full w-12 h-12 bg-gray-500"
-								src={data.foto}
+								src={nopic}
 								alt=""
 							/>
 							<div className="flex flex-col w-full">

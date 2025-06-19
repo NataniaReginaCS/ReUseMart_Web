@@ -1,6 +1,7 @@
 import { MdDashboard } from "react-icons/md";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { MdLockReset } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logout } from "../api/apiAuth";
@@ -19,18 +20,11 @@ const SidebarNavAdmin = () => {
 		},
 		{
 			label: "Reset Password",
-			icon: <HiOutlineShoppingBag />,
+			icon: <MdLockReset size={20} />,
 			path: "/admin/reset-password-pegawai",
 		},
-		{
-			label: "Penitip",
-			icon: <HiOutlineShoppingBag />,
-			path: "/admin/penitip",
-		},
+		
 
-		{ label: "Buyer", icon: <HiOutlineShoppingBag />, path: "/cart" },
-		{ label: "Merchandise", icon: <HiOutlineShoppingBag />, path: "/cart" },
-		{ label: "Discussion", icon: <HiOutlineShoppingBag />, path: "/CS/diskusi" },
 	];
 
 	const handleLogout = () => {

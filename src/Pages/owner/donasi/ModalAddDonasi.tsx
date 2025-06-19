@@ -2,7 +2,7 @@ import { use, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { SyncLoader } from "react-spinners";
 import { Label, Modal, ModalBody, ModalHeader, TextInput, FileInput } from "flowbite-react";
-import { addDetailDonasi } from "../../../api/ApiOwner";
+import { addDetailDonasi, fetchBarangForDonasi } from "../../../api/ApiOwner";
 import { FetchBarang } from "../../../api/ApiBarang";
 
 type Barang = {
@@ -82,7 +82,7 @@ const ModalAddDonasi = ({ onClose, show, onSuccessAdd, requestData }: ModalAddDo
 
     const fetchBarang = () => {  
 		setIsLoading(true);
-		FetchBarang()
+		fetchBarangForDonasi()
 			.then((response) => {
 				setBarang(response.data);
 				setIsLoading(false);
