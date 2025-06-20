@@ -23,7 +23,6 @@ const SidebarNavOrg = () => {
     };
     const navItems = [
         { label: "Profile", icon: <MdDashboard />, path: "/profile-organisasi" },
-        { label: "Donation", icon: <FaArrowsRotate />, path: "/order-organisasi" },
         { label: "Request Donation", icon: <HiOutlineShoppingBag />, path: "/request-donasi" },
     ];
 

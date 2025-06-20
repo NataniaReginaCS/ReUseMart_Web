@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { Button } from "flowbite-react";
-
 import SideBarNavOwner from "../../../Components2/SideBarNavOwner";
+import { fetchLaporanBarangHabis, fetchLaporanBarangTerjual } from "../../../api/ApiOwner";
+import jsPDF from "jspdf";
+import dayjs from "dayjs";
 
 type Report = {
 	id: number;
@@ -16,8 +18,235 @@ const BASE_URL = "http://127.0.0.1:8000";
 
 const OwnerLaporan = () => {
 	const [isLoading] = useState<boolean>(false);
-	const [downloadLoading, setDownloadLoading] = useState<boolean>(false);
+	const [downloadLoading, setDownloadLoading] = useState<Number>(0);
 	const [searchTerm, setSearchTerm] = useState<string>("");
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+    const [selectedMonth, setSelectedMonth] = useState<string>("");
+    
+        const handlePrintLaporanBarangHabis = async () => {
+            try {
+                const response = await fetchLaporanBarangHabis();
+                const data = response.data;
+    
+                const doc = new jsPDF();
+                const marginLeft = 15;
+                let y = 20;
+    
+                doc.setFontSize(14);
+                doc.text("Laporan Barang yang Masa Penitipannya Sudah Habis", marginLeft, y);
+                y += 8;
+                doc.setFontSize(12);
+                doc.text("ReUse Mart", marginLeft, y);
+                y += 6;
+                doc.text("Jl. Green Eco Park No. 456 Yogyakarta", marginLeft, y);
+                y += 10;
+    
+                const formattedDate = dayjs().locale('id').format('D MMMM YYYY');
+                doc.setFontSize(11);
+                doc.text(`Tanggal cetak: ${formattedDate}`, marginLeft, y);
+                y += 10;
+    
+                const headers = [
+                    "Kode Produk", "Nama Produk", "Id Penitip", "Nama Penitip",
+                    "Tanggal Masuk", "Tanggal Akhir", "Batas Ambil"
+                ];
+                const colWidths = [30, 40, 25, 40, 30, 30, 30];
+                const tableStartY = y;
+    
+                let x = marginLeft;
+                doc.setFontSize(10);
+                doc.setFont("helvetica", 'bold');
+                headers.forEach((header, i) => {
+                    doc.text(header, x, y);
+                    x += colWidths[i];
+                });
+    
+                y += 8;
+                doc.setFont("helvetica", 'normal');
+    
+                data.forEach((item: any) => {
+                    const tglMasuk = dayjs(item.tanggal_masuk).format("D/M/YYYY");
+                    const tglAkhir = dayjs(item.tanggal_akhir).format("D/M/YYYY");
+                    const batasAmbil = dayjs(item.tanggal_akhir).add(7, 'day').format("D/M/YYYY");
+    
+                    const row = [
+                        item.nama.charAt(0).toUpperCase() + item.id_barang,
+                        item.nama,
+                        item.id_penitip.toString(),
+                        item.nama_penitip,
+                        tglMasuk,
+                        tglAkhir,
+                        batasAmbil
+                    ];
+    
+                    let x = marginLeft;
+                    row.forEach((text, i) => {
+                        doc.text(String(text), x, y);
+                        x += colWidths[i];
+                    });
+    
+                    y += 8;
+                    if (y > 280) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                });
+    
+                doc.save("Laporan-Barang-Masa-Penitipan-Habis.pdf");
+    
+            } catch (error) {
+                console.error("Gagal mencetak laporan", error);
+                alert("Gagal mencetak laporan");
+            }
+        };
+    
+    
+        const handlePrintLaporanBarangTerjual = async () => {
+            try {
+                const response = await fetchLaporanBarangTerjual();
+                const data = response.data;
+    
+                const doc = new jsPDF();
+                const marginLeft = 15;
+                let y = 20;
+    
+                const currentYear = dayjs().year();
+                const formattedDate = dayjs().locale('id').format('D MMMM YYYY');
+    
+                doc.setFontSize(14);
+                doc.text("Laporan penjualan per kategori barang (dalam 1 tahun)", marginLeft, y);
+                y += 8;
+                doc.setFontSize(12);
+                doc.text("ReUse Mart", marginLeft, y);
+                y += 6;
+                doc.text("Jl. Green Eco Park No. 456 Yogyakarta", marginLeft, y);
+                y += 10;
+    
+                doc.setFontSize(11);
+                doc.text(`Tahun: ${currentYear}`, marginLeft, y);
+                y += 6;
+                doc.text(`Tanggal cetak: ${formattedDate}`, marginLeft, y);
+                y += 10;
+    
+                // Table header
+                const headers = ["Kategori", "Jumlah item terjual", "Jumlah item gagal terjual"];
+                const colWidths = [80, 50, 50];
+    
+                doc.setFontSize(10);
+                doc.setFont("helvetica", 'bold');
+    
+                let x = marginLeft;
+                headers.forEach((header, i) => {
+                    doc.text(header, x, y);
+                    x += colWidths[i];
+                });
+    
+                y += 8;
+                doc.setFont("helvetica", 'normal');
+    
+                let totalTerjual = 0;
+                let totalGagal = 0;
+    
+                data.forEach((item: any) => {
+                    const kategori = item.nama || "-";
+                    const jumlahTerjual = Number(item.jumlah_terjual ?? 0);
+                    const jumlahGagal = Number(item.jumlah_gagal ?? 0);
+    
+    
+                    totalTerjual += jumlahTerjual;
+                    totalGagal += jumlahGagal;
+    
+                    const row = [
+                        kategori,
+                        jumlahTerjual.toString(),
+                        jumlahGagal.toString(),
+                    ];
+    
+                    let x = marginLeft;
+                    row.forEach((text, i) => {
+                        doc.text(String(text), x, y);
+                        x += colWidths[i];
+                    });
+    
+                    y += 8;
+    
+                    if (y > 280) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                });
+    
+                // Total row
+                doc.setFont("helvetica", 'bold');
+                doc.text("Total", marginLeft, y);
+                doc.text(totalTerjual.toString(), marginLeft + colWidths[0], y);
+                doc.text(totalGagal.toString(), marginLeft + colWidths[0] + colWidths[1], y);
+    
+                doc.save("Laporan-Penjualan-Kategori-Barang.pdf");
+            } catch (error) {
+                console.error("Gagal mencetak laporan", error);
+                alert("Gagal mencetak laporan");
+            }
+        };
+    
+    
+       
+        const handleDownload2 = async (id: number) => {
+            try {
+                if (id === 7) {
+                    await handlePrintLaporanBarangHabis(); // for "Barang Habis"
+                } else if (id === 8) {
+                    await handlePrintLaporanBarangTerjual(); // for "Barang Terjual"
+                } else {
+                    alert("Laporan tidak dikenali.");
+                }
+            } catch (error) {
+                alert("Gagal mencetak laporan.");
+                console.error(error);
+            } finally {
+            }
+        };
+    const handleView = async (reportId: number) => {
+        try {
+            let endpoint = "";
+            switch (reportId) {
+                case 1:
+                    endpoint = "/api/laporan/penjualan-bulanan/download";
+                    break;
+                case 2:
+                    endpoint = `/api/laporan/komisi-bulanan/download?year=${selectedYear}&month=${selectedMonth}`;
+                    break;
+                case 3:
+                    endpoint = "/api/laporan/stok-gudang/download";
+                    break;
+                case 4:
+                    endpoint = "/api/laporan/donasi-barang/download";
+                    break;
+                case 5:
+                    endpoint = "/api/laporan/request-donasi/download";
+                    break;
+                case 6:
+                    endpoint = "/api/laporan/donasi-elektronik	/download";
+                    break;
+                default:
+                    throw new Error("Laporan tidak ditemukan.");
+            }
+            const fullUrl = `${BASE_URL}${endpoint}`;
+            const response = await fetch(fullUrl, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                    Accept: "application/pdf",
+                },
+            });
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            window.open(url, "_blank");
+        } catch (error: any) {
+            toast.error(error.message || "Gagal menampilkan PDF.");
+            console.error("View error:", error.message);
+        }
+    };
 
 	const reports: Report[] = [
 		{
@@ -29,11 +258,13 @@ const OwnerLaporan = () => {
 		{ id: 4, title: "Laporan Donasi Barang" },
 		{ id: 5, title: "Laporan Rekap Request Donasi " },
 		{ id: 6, title: "Laporan Donasi Barang Elektronik " },
+        { id: 7, title: "Laporan Barang Masa Penitipan Sudah Habis " },
+        { id: 8, title: "Laporan Penjualan Per Kategori " },
 	];
 
 	const handleDownload = async (reportId: number) => {
 		try {
-			setDownloadLoading(true);
+			setDownloadLoading(1);
 			let endpoint = "";
 			let fileName = "";
 
@@ -43,8 +274,8 @@ const OwnerLaporan = () => {
 					fileName = "Laporan_Penjualan_Bulanan";
 					break;
 				case 2:
-					endpoint = "/api/laporan/komisi-bulanan/download";
-					fileName = "Laporan_Komisi_Bulanan";
+					endpoint = `/api/laporan/komisi-bulanan/download?year=${selectedYear}&month=${selectedMonth}`;
+					fileName = `Laporan_Komisi_Bulanan_${selectedYear}_${selectedMonth}`;
 					break;
 				case 3:
 					endpoint = "/api/laporan/stok-gudang/download";
@@ -62,6 +293,12 @@ const OwnerLaporan = () => {
 					endpoint = "/api/laporan/donasi-elektronik	/download";
 					fileName = "Laporan_Rekap_Donasi_Barang_Elektronik";
 					break;
+                case 7:
+                    handleDownload2(7);
+                    break;
+                case 8:
+                    handleDownload2(8);
+                    break;
 				default:
 					throw new Error("Laporan tidak ditemukan.");
 			}
@@ -88,10 +325,9 @@ const OwnerLaporan = () => {
 			link.remove();
 			toast.success("PDF berhasil diunduh!");
 		} catch (error: any) {
-			toast.error(error.message || "Gagal mengunduh PDF.");
 			console.error("Download error:", error.message);
 		} finally {
-			setDownloadLoading(false);
+			setDownloadLoading(0);
 		}
 	};
 
@@ -102,7 +338,22 @@ const OwnerLaporan = () => {
 		);
 	});
 
-	const TABLE_HEAD = ["No", "Judul Laporan", "Aksi"];
+    const TABLE_HEAD = ["No", "Judul Laporan", "Aksi"];
+
+    const months = [
+        { value: "1", label: "Januari" },
+        { value: "2", label: "Februari" },
+        { value: "3", label: "Maret" },
+        { value: "4", label: "April" },
+        { value: "5", label: "Mei" },
+        { value: "6", label: "Juni" },
+        { value: "7", label: "Juli" },
+        { value: "8", label: "Agustus" },
+        { value: "9", label: "September" },
+        { value: "10", label: "Oktober" },
+        { value: "11", label: "November" },
+        { value: "12", label: "Desember" },
+    ];
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -156,22 +407,67 @@ const OwnerLaporan = () => {
                                                     <td className="px-4 py-3">{report.id}</td>
                                                     <td className="px-4 py-3 text-left">{report.title}</td>
                                                     <td className="py-3 px-4">
-                                                        <div className="flex justify-center">
-                                                            <Button
-                                                                size="sm"
-                                                                onClick={() => handleDownload(report.id)}
-                                                                disabled={downloadLoading}
-                                                                className="bg-green-500 hover:bg-green-600 text-white items-center flex justify-center"
-                                                            >
-                                                                {downloadLoading ? (
-                                                                    <SyncLoader size={6} color="#ffffff" className="ml-1" />
-                                                                ) : (
-                                                                    <>
-                                                                        <FontAwesomeIcon icon={faDownload} />
-                                                                        <span className="ml-2">Unduh</span>
-                                                                    </>
-                                                                )}
-                                                            </Button>
+                                                        <div className="flex flex-col items-center gap-2">
+                                                            {report.id === 2 && (
+                                                                <div className="flex gap-2 mb-2">
+                                                                    <input
+                                                                        type="number"
+                                                                        min="2000"
+                                                                        max="2099"
+                                                                        placeholder="Tahun"
+                                                                        value={selectedYear}
+                                                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                                                        className="border rounded px-2 py-1 w-24"
+                                                                    />
+                                                                    <select
+                                                                        value={selectedMonth}
+                                                                        onChange={(e) => setSelectedMonth(e.target.value)}
+                                                                        className="border rounded px-2 py-1"
+                                                                    >
+                                                                        <option value="" disabled>Bulan</option>
+                                                                        {months.map((m) => (
+                                                                            <option key={m.value} value={m.value}>{m.label}</option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                            )}
+                                                            <div className="flex flex-row gap-2">
+                                                                <Button
+                                                                    size="sm"
+                                                                    onClick={async () => {
+                                                                        if (report.id === 2 && !selectedMonth) {
+                                                                            toast.error("Silakan pilih bulan terlebih dahulu.");
+                                                                            return;
+                                                                        }
+                                                                        await handleView(report.id);
+                                                                    }}
+                                                                    className="bg-blue-500 hover:bg-blue-600 text-white items-center flex justify-center mb-2"
+                                                                >
+                                                                    <FontAwesomeIcon icon={faDownload} />
+                                                                    <span className="ml-2">View</span>
+                                                                </Button>
+                                                                <Button
+                                                                    size="sm"
+                                                                    onClick={() => {
+                                                                        if (report.id === 2 && !selectedMonth) {
+                                                                            toast.error("Silakan pilih bulan terlebih dahulu.");
+                                                                            return;
+                                                                        }
+                                                                        handleDownload(report.id);
+                                                                    }}
+                                                                    disabled={downloadLoading === report.id}
+                                                                    className="bg-green-500 hover:bg-green-600 text-white items-center flex justify-center"
+                                                                >
+                                                                    {downloadLoading === report.id ? (
+                                                                        <SyncLoader size={6} color="#ffffff" className="ml-1" />
+                                                                    ) : (
+                                                                        <>
+                                                                            <FontAwesomeIcon icon={faDownload} />
+                                                                            <span className="ml-2">Unduh</span>
+                                                                        </>
+                                                                    )}
+                                                                </Button>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -187,5 +483,4 @@ const OwnerLaporan = () => {
         </div>
     );
 };
-
 export default OwnerLaporan;
