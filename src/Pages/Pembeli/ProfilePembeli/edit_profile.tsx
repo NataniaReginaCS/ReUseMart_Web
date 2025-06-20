@@ -207,72 +207,7 @@ const Edit_profile = () => {
 						</li>
 					</ol>
 				</div>
-				<div className="w-full bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10">
-					<div className="">
-						<div className="border-b-1 border-gray-300 w-full">
-							<p className=" p-2 px-4">
-								<strong>ACCOUNT SETTINGS</strong>
-							</p>
-						</div>
-						<div className="flex flex-row flex-initial justify-between">
-							<div className="flex flex-col flex-1/3 gap-2 p-4">
-								<label htmlFor="first-name">
-									<strong>First Name</strong>
-								</label>
-								<input
-									type="text"
-									id="first-name"
-									className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
-								/>
-
-								<label htmlFor="last-name">
-									<strong>Last Name</strong>
-								</label>
-								<div className="relative">
-									<input
-										type="text"
-										id="last-name"
-										className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
-										placeholder=""
-									/>
-								</div>
-
-								<label htmlFor="email">
-									<strong>Email</strong>
-								</label>
-								<div className="relative">
-									<input
-										type="text"
-										id="email"
-										className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
-										placeholder=""
-									/>
-								</div>
-
-								<button className="bg-[#1F510F] text-white p-3 mt-4 w-1/6 rounded-3xl">
-									<strong>Save Changes</strong>
-								</button>
-							</div>
-							<div className="flex flex-col items-center justify-center  align-middle p-15">
-								<img src={Frieren} alt="" className="h-50 w-50 rounded-full" />
-								<div className="text-center mt-4">
-									<label
-										htmlFor="upload-image"
-										className="cursor-pointer text-[#00B207] border-4 border-[#00B207] p-3 inline-block rounded-lg"
-									>
-										<strong>Choose Image</strong>
-									</label>
-									<input
-										id="upload-image"
-										type="file"
-										className="hidden"
-										onChange={(e) => {}}
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 				<div className="w-full bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10">
 					<div className="">
 						<div className="border-b-1 border-gray-300 w-full">

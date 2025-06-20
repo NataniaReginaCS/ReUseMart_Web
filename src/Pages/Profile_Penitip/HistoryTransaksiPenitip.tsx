@@ -50,7 +50,7 @@ const HistoryTransaksiPenitip = () => {
 	}
 
 	return (
-		<div className="h-full px-10 py-5">
+		<div className="h-screen px-10 py-5">
 			<div className="mt-5 max-sm:mt-0">
 				<ol className="inline-flex items-center space-x-1 md:space-x-3">
 					<li className="inline-flex items-center">
@@ -113,7 +113,7 @@ const HistoryTransaksiPenitip = () => {
 					<p className="text-2xl font-bold ml-8 mt-5">Order History</p>
 					<Carousel>
 						<CarouselContent>
-							<CarouselItem>
+							
 								<table className="w-full  justify-center text-center mt-5 mb-5">
 									<tr className="flex justify-center items-center py-6 bg-[#F2F2F2]">
 										<td className="w-full flex justify-center items-center">
@@ -138,7 +138,9 @@ const HistoryTransaksiPenitip = () => {
 									{dataHistory === null ? (
 										<p className="text-center my-10">No Transaction Found</p>
 									) : (
+										
 										dataHistory.map((item: any, index: number) => (
+											<CarouselItem key={index}>
 											<tr
 												key={index}
 												className="flex justify-center items-center py-6 "
@@ -162,12 +164,12 @@ const HistoryTransaksiPenitip = () => {
 													<button className="text-[#00B207] w-full cursor-pointer" onClick={() => handleClick(item.id_barang)}>View Details</button>
 												</td>
 											</tr>
+										</CarouselItem>
 										))
 									)}
 								</table>
-							</CarouselItem>
-							<CarouselItem>...</CarouselItem>
-							<CarouselItem>...</CarouselItem>
+							
+							
 						</CarouselContent>
 						<div className="flex justify-center gap-4 mt-4">
 							<CarouselPrevious className="static relative" />

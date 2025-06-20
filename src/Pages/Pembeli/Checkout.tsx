@@ -41,7 +41,6 @@ const Checkout = () => {
 				const response = await GetOngoingPembelian(nomor_nota as string);
 				setPembelian(response.pembelian);
 
-				// Hitung waktu sisa pembayaran (15 menit dari tanggal_laku)
 				const tanggalLaku = new Date(response.pembelian.tanggal_laku);
 				const now = new Date();
 				const targetTime = new Date(tanggalLaku.getTime() + 1 * 60 * 1000);
@@ -59,7 +58,6 @@ const Checkout = () => {
 		fetchTransaksiPembelian();
 	}, [nomor_nota, navigate]);
 
-	// Countdown logic + redirect saat waktu habis
 	useEffect(() => {
 		if (secondsLeft === null) return;
 		if (secondsLeft <= 0) {
@@ -73,7 +71,7 @@ const Checkout = () => {
 		return () => clearInterval(interval);
 	}, [secondsLeft, navigate]);
 
-	// Menunggu data transaksi
+	
 	if (!pembelian || secondsLeft === null) {
 		return (
 			<div className="h-screen flex items-center justify-center">

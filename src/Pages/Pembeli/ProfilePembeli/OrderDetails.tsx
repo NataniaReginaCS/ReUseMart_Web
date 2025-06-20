@@ -177,7 +177,7 @@ const OrderDetails = () => {
 	};
 
 	return (
-		<div className="h-full px-10 py-5">
+		<div className="h-screen px-10 py-5">
 			<ToastContainer position="top-right" autoClose={3000} />
 			<div className="mt-5 max-sm:mt-0">
 				<ol className="inline-flex items-center space-x-1 md:space-x-3">

@@ -87,7 +87,7 @@ const Order = () => {
     }, []);
 
     return (
-        <div className="h-full px-10 py-5">
+        <div className="h-screen px-10 py-5">
             <div className="mt-5 max-sm:mt-0">
                 <ol className="inline-flex items-center space-x-1 md:space-x-3">
                     <li className="inline-flex items-center">

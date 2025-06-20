@@ -40,8 +40,8 @@ const categories = [
 
 const team = [
     { name: "Natania Regina Clarabella Serafina", role: "CEO & Founder", sosmed: "@nataniareginaa", image: rere, },
-    { name: "Kalvin Lawinata", role: "CEO & Founder", sosmed: "@asu", image: item1, },
-    { name: "Nathanael Esmond", role: "CEO & Founder", sosmed: "@asu", image: item1, },
+    { name: "Kalvin Lawinata", role: "CEO & Founder", sosmed: "@kalvinlawinata", image: item1, },
+    { name: "Nathanael Esmond", role: "CEO & Founder", sosmed: "@nathanesmond", image: item1, },
     { name: "Raka Pratama", role: "CEO & Founder", sosmed: "@rakapratama", image: item1, },
 ]
 

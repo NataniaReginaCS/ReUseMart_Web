@@ -181,14 +181,11 @@ const Profile = () => {
 							<p>
 								<strong>200 times</strong>
 							</p>
-							<p className="text-[#999999]">DATE JOIN</p>
-							<p>
-								<strong>20 November 2025</strong>
-							</p>
+						
 						</div>
 					</div>
 					<div className="flex flex-row gap-x-10">
-						<div className="flex flex-col w-2/5 bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10">
+						{/* <div className="flex flex-col w-2/5 bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10">
 							<div className="flex- flex-col">
 								<p className="border-b-1 border-gray-300 p-2 px-4">
 									<strong>CHANGE PASSWORD</strong>
@@ -264,7 +261,7 @@ const Profile = () => {
 									</button>
 								</div>
 							</div>
-						</div>
+						</div> */}
 						<div className="flex flex-col w-1/5  bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10">
 							<p className="border-b-1 border-gray-300 p-2 px-4">
 								<strong>BILLING ADDRESS</strong>
