@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { FetchDataPegawai, FetcHDataPembelian, FetchTransaksiGudangById, updateTanggalPengiriman } from "../../api/ApiGudang"; // Make sure path is correct
+import { FetchDataPegawai, FetcHDataPembelian,  updateTanggalPengiriman } from "../../api/ApiGudang"; // Make sure path is correct
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
 import { Button } from "../../components/ui/button";
-import { FetchBarangPenitipById } from "../../api/ApiPenitip";
+
 import { confirmAlert } from "react-confirm-alert";
 
 type Pembelian = {

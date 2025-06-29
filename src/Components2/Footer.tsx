@@ -1,14 +1,11 @@
-import { useState } from 'react'
+
 import logo from '../assets/images/LOGO.png'
-import { Button } from '../components/ui/button';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faFacebook,
-    faTwitter,
+
     faInstagram,
-    faLinkedin,
-    faGithub,
-    faYoutube,
+
     faTiktok,
 } from '@fortawesome/free-brands-svg-icons';
 const Footer = () => {

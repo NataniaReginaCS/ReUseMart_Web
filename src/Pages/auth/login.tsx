@@ -32,7 +32,7 @@ const Login = () => {
 				if (response.role === 'Pembeli') {
 					navigate('/');
 				} else if (response.role === 'Organisasi') {
-					navigate('/profile-organisasi');
+					navigate('/request-donasi');
 				} else if (response.role === 'CS') {
 					navigate('/CS/penitip');
 				} else if (response.role === 'Admin') {

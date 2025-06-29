@@ -159,12 +159,12 @@ const GudangPenitipan = () => {
     };
 
     const getNamaPenitip = (id: number) => {
-        const namapenitip = penitip.find((item) => item.id_penitip === id);
+        const namapenitip = penitip.find((item) => item.id_penitip.toString() === id.toString());
         return namapenitip?.nama ?? "Unknown";
     };
 
     const getNamaPegawai = (id: number) => {
-        const namapegawai = pegawai.find((item) => item.id_pegawai === id);
+        const namapegawai = pegawai.find((item) => item.id_pegawai.toString() === id.toString());
         return namapegawai?.nama ?? "Unknown";
     };
 
@@ -191,7 +191,7 @@ const GudangPenitipan = () => {
                 : String(org.tanggal_masuk).toLowerCase()
             ).includes(searchTerm.toLowerCase()) ||
             data
-                .filter((item) => item.id_penitipan === org.id_penitipan)
+                .filter((item) => item.id_penitipan.toString() === org.id_penitipan.toString())
                 .some(
                     (item) =>
                         item.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -213,13 +213,13 @@ const GudangPenitipan = () => {
 
     const handlePrintNota = (id_penitipan: number) => {
         try {
-            const penitipanData = penitipan.find((p) => p.id_penitipan === id_penitipan);
+            const penitipanData = penitipan.find((p) => p.id_penitipan.toString() === id_penitipan.toString());
             if (!penitipanData) {
                 alert("Penitipan data not found.");
                 return;
             }
 
-            const barangList = data.filter((item) => item.id_penitipan === id_penitipan);
+            const barangList = data.filter((item) => item.id_penitipan.toString() === id_penitipan.toString());
             const penitipName = getNamaPenitip(penitipanData.id_penitip);
             const pegawaiName = getNamaPegawai(penitipanData.id_pegawai);
 
@@ -366,7 +366,7 @@ const GudangPenitipan = () => {
                                 <tbody className="bg-white divide-y divide-gray-200 text-sm text-center">
                                     {currentData.map((org) => {
                                         const barangList = data.filter(
-                                            (item) => item.id_penitipan === org.id_penitipan
+                                            (item) => item.id_penitipan.toString() === org.id_penitipan.toString()
                                         );
                                         return (
                                             <tr

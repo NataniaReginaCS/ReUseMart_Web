@@ -1,4 +1,4 @@
-import { data } from "react-router-dom";
+
 import useAxios from ".";
 import { getToken } from "./ApiPembeli";
 

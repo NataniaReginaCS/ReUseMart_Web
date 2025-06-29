@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import useAxios from "../api";
 import { toast } from "react-toastify";
 

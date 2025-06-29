@@ -1,7 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import Frieren from "../../../assets/images/Frieren.jpg";
-import { useNavigate } from "react-router-dom";
 import { FetchAlamat } from "../../../api/ApiAlamat";
 import { AddAlamat } from "../../../api/ApiAlamat";
 import { faSearch, faHouse } from "@fortawesome/free-solid-svg-icons";

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "../../components/ui/button";
 import { useNavigate } from "react-router-dom";
-// import { Button } from "flowbite-react";
+
 
 import { FetchKeranjangByPembeli } from "../../api/ApiKeranjang";
 import { FaLocationDot } from "react-icons/fa6";
@@ -127,6 +127,7 @@ const Cart = () => {
 		FetchKeranjangByPembeli(controller.signal)
 			.then((response) => {
 				setBarang(response.keranjang);
+				console.log(response.keranjang);
 			})
 			.catch((error) => {
 				if (error.name === "CanceledError") return;
@@ -140,7 +141,7 @@ const Cart = () => {
 	};
 	useEffect(() => {
 		const newSubtotal = barang.reduce(
-			(sum, item) => sum + item.barang.harga,
+			(sum, item) => Number(sum) + Number(item.barang.harga),
 			0
 		);
 		setSubtotal(newSubtotal);
@@ -401,7 +402,7 @@ const Cart = () => {
 							>
 								<div className="flex items-center gap-2 w-full">
 									<img
-										src={item.barang.foto}
+										src={`https://laravelkalvin.barioth.web.id/storage/${item.barang.foto}`}
 										alt={item.barang.nama}
 										className="h-[60%] w-full max-w-[150px] max-h-[150px] object-contain"
 									/>

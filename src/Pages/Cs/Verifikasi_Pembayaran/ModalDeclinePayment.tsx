@@ -1,6 +1,6 @@
 import { Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { DeleteOrganisasi, DeletePenitip } from "../../../api/ApiAdmin";
+
 import { toast } from "react-toastify";
 import { DeclinePayment } from "../../../api/ApiTransaksiPembelian";
 

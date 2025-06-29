@@ -8,7 +8,7 @@ import {
 import { useState, useEffect } from "react";
 import { ambilBarangPenitip, FetchBarangPenitipById } from "../../api/ApiPenitip";
 import { SyncLoader } from "react-spinners";
-import Frieren from "../../assets/images/Frieren.jpg";
+
 import { extendBarangPenitip } from "../../api/ApiPenitip";
 import { confirmAlert } from "react-confirm-alert";
 type Barang = {
@@ -58,6 +58,7 @@ const ModalDetailTitipan = ({ idBarang, show, onClose }: any) => {
                     onClick: async () => {
                         try {
                             const response = await extendBarangPenitip(id_barang);
+                            console.log(response);
                             confirmAlert({
                                 title: 'Sukses',
                                 message: "Berhasil melakukan Extend Penitipan",
@@ -93,6 +94,7 @@ const ModalDetailTitipan = ({ idBarang, show, onClose }: any) => {
                     onClick: async () => {
                         try {
                             const response = await ambilBarangPenitip(id_barang);
+                            console.log(response);
                             confirmAlert({
                                 title: 'Sukses',
                                 message: "Barang dalam masa pengambilan",

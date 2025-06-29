@@ -17,7 +17,6 @@ type Diskusi = {
 	nama_pembeli: string;
 	tanggal_diskusi: string;
 	foto_pembeli: string;
-
 };
 
 
@@ -33,6 +32,7 @@ const Diskusi = () => {
 
 	const fetchDiskusiCS = () => {
 		setIsLoading(true);
+		
 		FetchDiskusiCS()
 			.then((response) => {
 				setData(response.diskusi);

@@ -5,7 +5,7 @@ import { SyncLoader } from "react-spinners";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { GetUnverifiedPayment } from "../../../api/ApiTransaksiPembelian";
 import { FaEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+
 import Header from "../../../Components2/Header";
 import SidebarNavCS from "../../../Components2/SideBarNavCS";
 import { FaRegCheckCircle } from "react-icons/fa";

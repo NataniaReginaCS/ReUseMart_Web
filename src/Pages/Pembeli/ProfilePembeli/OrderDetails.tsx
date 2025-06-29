@@ -304,7 +304,8 @@ const OrderDetails = () => {
 										<p className="text-md font-semibold text-[#999999]">Total:</p>
 										<p className="text-md text-green-500">
 											Rp{" "}
-											{((pembelian?.total || 0) + (pembelian?.ongkir || 0)).toLocaleString(
+											{(
+												Number(pembelian?.total || 0) + Number(pembelian?.ongkir || 0)).toLocaleString(
 												"id-ID"
 											)}
 										</p>

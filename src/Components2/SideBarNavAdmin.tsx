@@ -1,6 +1,6 @@
 import { MdDashboard } from "react-icons/md";
 import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi";
+
 import { MdLockReset } from "react-icons/md";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -31,6 +31,7 @@ const SidebarNavAdmin = () => {
 		Logout()
 			.then((response) => {
 				sessionStorage.removeItem("token");
+				console.log("Logout successful:", response);
 				toast.success("Logout successful!");
 				navigate("/");
 			})

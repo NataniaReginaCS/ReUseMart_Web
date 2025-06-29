@@ -2,13 +2,13 @@ import { useState } from "react";
 import { SyncLoader } from "react-spinners";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faDownload } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
+
 import { Button } from "flowbite-react";
 
 import SideBarNavOwner from "../../../Components2/SideBarNavOwner";
 import { fetchLaporanBarangHabis, fetchLaporanBarangTerjual } from "../../../api/ApiOwner";
 import jsPDF from "jspdf";
-import autoTable from 'jspdf-autotable';
+
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 
@@ -55,7 +55,7 @@ const OwnerLaporanB = () => {
                 "Tanggal Masuk", "Tanggal Akhir", "Batas Ambil"
             ];
             const colWidths = [30, 40, 25, 40, 30, 30, 30];
-            const tableStartY = y;
+        
 
             let x = marginLeft;
             doc.setFontSize(10);

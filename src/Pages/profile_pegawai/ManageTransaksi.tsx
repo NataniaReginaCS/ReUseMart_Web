@@ -1,13 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { RiLogoutBoxRLine } from "react-icons/ri";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import Frieren from "../../assets/images/Frieren.jpg";
-import { FetchBarangByPenitip } from "../../api/ApiPenitip";
-import SidebarNavPenitip from "../../Components2/SideBarNavPenitip";
+
 import ModalDetailTransaksi from "./ModalDetailTransaksi";
 import {
     Carousel,
@@ -19,12 +12,12 @@ import {
 import { confirmAlert } from 'react-confirm-alert';
 
 import {
-	faSearch,
+
 	faHouse,
-	faChevronRight,
+	
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import { FetchDataNota, FetchDataPegawai, FetchTransaksiByGudang, FetchTransaksiGudangById, selesaiTransaksi } from "../../api/ApiGudang";
+
+import { FetchDataNota, FetchTransaksiByGudang, FetchTransaksiGudangById, selesaiTransaksi } from "../../api/ApiGudang";
 import SideBarNavGudang from "../../Components2/SideBarNavGudang";
 import { Button } from "../../components/ui/button";
 import ModalAssignDate from "./ModalAssignDate";
@@ -55,39 +48,14 @@ type Barang = {
 };
 
 
-type Nota = {
-    id_pembelian: number;
-    nomor_nota: number;
-    tanggal_laku: string;
-    tanggal_lunas: string;
-    tanggal_pengiriman: string;
-    nama: string;
-    email: string;
-    nama_alamat: string;
-    nama_kota: string;
-    nama_barang: string;
-    total: number;
-    ongkir: number;
-    poin_digunakan: number;
-    poin_didapat: number;
-    poin: number;
-    nama_pegawai: string;
-    id_qc: number;
-    nama_qc: string;
-}
 const ManageTransaksi = () => {
-    const [showCurrentPassword, setCurrentPassword] = useState(false);
-    const [showNewPassword, setNewPassword] = useState(false);
-    const [showConfirmPassword, setConfirmPassword] = useState(false);
-    const navigate = useNavigate();
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [dataBarang, setDataBarang] = useState<any>(null);
-    const [dataNota, setDataNota] = useState<Nota>();
+   
+   
     const [data, setData] = useState<Barang[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+  
     const [startDate, setStartDate] = useState<string>("");
     const [endDate, setEndDate] = useState<string>("");
     const [showModalAssign, setShowModalAssign] = useState(false);
@@ -133,11 +101,7 @@ const ManageTransaksi = () => {
     const chunkedData = chunkArray(filteredData, itemsPerPage);
 
 
-    const pageCount = Math.ceil(filteredData.length / itemsPerPage);
-    const paginatedData = filteredData.slice(
-        currentPage * itemsPerPage,
-        currentPage * itemsPerPage + itemsPerPage
-    );
+   
 
 
 
@@ -155,20 +119,7 @@ const ManageTransaksi = () => {
             });
     }
 
-    const fetchTransaksiGudang = async (id_pembelian: number) => {
-        try {
-            FetchTransaksiGudangById(id_pembelian)
-                .then((response) => {
-                    console.log(response);
-                    setDataBarang(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Gagal mengambil data history", error);
-                });
-        } catch (error: any) {
-            throw error.response.data;
-        }
-    };
+   
 
 
 
@@ -415,63 +366,8 @@ const ManageTransaksi = () => {
 
 
     return (
-        <div className="h-full px-10 py-5">
-            <div className="mt-5 max-sm:mt-0">
-                <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                    <li className="inline-flex items-center">
-                        <a
-                            href="/"
-                            className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-green-300"
-                        >
-                            <FontAwesomeIcon
-                                className="text-gray-500 text-sm"
-                                icon={faHouse}
-                            />
-                        </a>
-                    </li>
-                    <li>
-                        <div className="flex items-center">
-                            <svg
-                                className="w-6 h-6 text-gray-400"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd"
-                                ></path>
-                            </svg>
-                            <a
-                                href="/marketplace"
-                                className="ml-1 text-sm font-medium text-gray-500 md:ml-2"
-                            >
-                                Account
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex items-center">
-                            <svg
-                                className="w-6 h-6 text-gray-400"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd"
-                                ></path>
-                            </svg>
-                            <span className="ml-1 text-sm font-medium text-[#00B207] md:ml-2">
-                                Profile
-                            </span>
-                        </div>
-                    </li>
-                </ol>
-            </div>
+        <div className="h-screen px-10 py-5">
+           
             <div className="flex flex-row gap-4">
                 <SideBarNavGudang />
                 <div className="flex flex-col max-w-[1200px] w-full min-h-[500px] mt-5 border-1 border-gray-300 rounded-lg">
@@ -633,8 +529,8 @@ const ManageTransaksi = () => {
                         </CarouselContent>
 
                         <div className="flex justify-center gap-4 mt-4">
-                            <CarouselPrevious className="static relative" />
-                            <CarouselNext className="static relative" />
+                            <CarouselPrevious className="static " />
+                            <CarouselNext className="static " />
                         </div>
                     </Carousel>
 

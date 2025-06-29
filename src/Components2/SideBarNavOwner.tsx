@@ -21,6 +21,7 @@ const SidebarNavOwner = () => {
         Logout()
             .then((response) => {
                 sessionStorage.removeItem("token");
+                console.log("Logout successful:", response);
                 toast.success("Logout successful!");
                 navigate("/");
             })

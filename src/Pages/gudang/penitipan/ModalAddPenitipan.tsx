@@ -486,7 +486,7 @@ const ModalAddPenitipan: React.FC<ModalAddPenitipanProps> = ({ show, onClose, on
                                                 >
                                                     <option value="">Pilih QC</option>
                                                     {pegawai
-                                                        .filter((item) => item.id_role === 5)
+                                                        .filter((item) => item.id_role.toString() === "5")
                                                         .map((item) => (
                                                             <option key={item.id_pegawai} value={item.id_pegawai}>
                                                                 {item.nama}
@@ -727,7 +727,7 @@ const ModalAddPenitipan: React.FC<ModalAddPenitipanProps> = ({ show, onClose, on
                                         >
                                             <option value="">Pilih Hunter</option>
                                             {pegawai
-                                                .filter((item) => item.id_role === 4)
+                                                .filter((item) => item.id_role.toString() === "4")
                                                 .map((item) => (
                                                     <option key={item.id_pegawai} value={item.id_pegawai}>
                                                         {item.nama}

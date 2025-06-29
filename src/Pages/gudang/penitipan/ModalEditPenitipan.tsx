@@ -10,19 +10,6 @@ interface Kategori {
     nama: string;
 }
 
-interface Penitip {
-    id_penitip: number;
-    nama: string;
-    wallet: string;
-    telepon: string;
-    email: string;
-    password: string;
-    foto_ktp: File;
-    no_ktp: number;
-    badges: string;
-    total_rating: number;
-    poin: number;
-}
 
 interface Pegawai {
     id_organisasi: number;
@@ -84,20 +71,20 @@ const ModalEditPenitipan = ({ dataPenitipan, onClose, show, onSuccessEdit }: Mod
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [kategori, setKategori] = useState<Kategori[]>([]);
     const [pegawai, setPegawai] = useState<Pegawai[]>([]);
-    const [penitip, setPenitip] = useState<Penitip[]>([]);
+
     const [errors, setErrors] = useState<FormErrors>({});
 
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const [kategoriRes, pegawaiRes, penitipRes] = await Promise.all([
+            const [kategoriRes, pegawaiRes] = await Promise.all([
                 FetchKategori(),
                 fetchPegawai(),
                 fetchPenitip(),
             ]);
             setKategori(kategoriRes.data);
             setPegawai(pegawaiRes.data);
-            setPenitip(penitipRes.penitip);
+        
         } catch (err) {
             console.error(err);
             toast.error("Gagal memuat data", { position: "top-right", autoClose: 3000 });

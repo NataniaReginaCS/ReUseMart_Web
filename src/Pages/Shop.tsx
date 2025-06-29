@@ -34,7 +34,7 @@ const Shop = () => {
     const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
 
     const [searchTerm, setSearchTerm] = useState<string>("")
-    const [isLoading, setIsLoading] = useState(false);
+
     const [data, setData] = useState<Barang[]>([]);
     const navigate = useNavigate();
     const [penitip, setPenitip] = useState<{ [id_barang: number]: string }>({});
@@ -79,20 +79,18 @@ const Shop = () => {
             setData(allData);
             return;
         }
-        setIsLoading(true);
+       
         try {
             const response = await FetchSearchBarang(query);
             setData(response.data);
             setSearchTerm("");
         } catch (err) {
             console.error(err);
-        } finally {
-            setIsLoading(false);
         }
     };
 
     const handleApplyFilter = async () => {
-        setIsLoading(true);
+       
         try {
             let filteredData: Barang[] = [...allData];
 
@@ -130,54 +128,52 @@ const Shop = () => {
             setData(filteredData);
         } catch (err) {
             console.error("Error saat apply filter:", err);
-        } finally {
-            setIsLoading(false);
         }
     };
 
     const fetchBarangById = (id_barang: number) => {
-        setIsLoading(true);
+       
         FetchBarangById(id_barang)
             .then((response) => {
                 const barang = response.data;
-                setIsLoading(false);
+                
                 navigate('/item', { state: { barang } });
             })
             .catch((err) => {
                 console.log(err);
-                setIsLoading(false);
+                
             });
     };
 
     const fetchBarang = () => {
 
-        setIsLoading(true);
+       
         FetchBarang()
             .then((response) => {
                 setData(response.data);
                 setAllData(response.data);
-                setIsLoading(false);
+                
                 console.log("Data fetched:", response.data);
             })
             .catch((err) => {
                 console.log(err);
-                setIsLoading(false);
+                
             });
     };
 
     const location = useLocation();
 
     const fetchdariHome = (id_kategori: string) => {
-        setIsLoading(true);
+        
         FetchBarangByKategori(id_kategori)
             .then((response) => {
                 setData(response.data);
                 setAllData(response.data);
-                setIsLoading(false);
+                
             })
             .catch((err) => {
                 console.log(err);
-                setIsLoading(false);
+                
             });
     }
 

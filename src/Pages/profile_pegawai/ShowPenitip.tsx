@@ -1,12 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { RiLogoutBoxRLine } from "react-icons/ri";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import Frieren from "../../assets/images/Frieren.jpg";
-import { FetchBarangByPenitip } from "../../api/ApiPenitip";
+
 import SidebarNavPenitip from "../../Components2/SideBarNavPenitip";
 import {
     Carousel,
@@ -16,11 +10,11 @@ import {
     CarouselPrevious,
 } from "../../components/ui/carousel"
 import {
-    faSearch,
+
     faHouse,
-    faChevronRight,
+
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+
 import { FetchPenitip } from "../../api/ApiGudang";
 type Penitip = {
     id_penitip: number;
@@ -29,27 +23,14 @@ type Penitip = {
     wallet: string;
 };
 const ShowPenitip = () => {
-    const [showCurrentPassword, setCurrentPassword] = useState(false);
-    const [showNewPassword, setNewPassword] = useState(false);
-    const [showConfirmPassword, setConfirmPassword] = useState(false);
-    const navigate = useNavigate();
-    const [currentIndex, setCurrentIndex] = useState(0)
+
     const [data, setData] = useState<Penitip[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+
     const [startDate, setStartDate] = useState<string>("");
     const [endDate, setEndDate] = useState<string>("");
 
-    const [showModal, setShowModal] = useState(false);
-    const [tempIdBarang, setTempIdBarang] = useState(0);
-
-    const handleClick = (idBarang: number) => {
-        setShowModal(true);
-        setTempIdBarang(idBarang);
-
-    }
 
 
     const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
@@ -76,24 +57,18 @@ const ShowPenitip = () => {
     const chunkedData = chunkArray(filteredData, itemsPerPage);
 
 
-    const pageCount = Math.ceil(filteredData.length / itemsPerPage);
-    const paginatedData = filteredData.slice(
-        currentPage * itemsPerPage,
-        currentPage * itemsPerPage + itemsPerPage
-    );
-
 
     const fetchBarangByPenitip = () => {
-        setIsLoading(true);
+    
         FetchPenitip()
             .then((response) => {
                 setData(response.data);
-                setIsLoading(false);
+                
                 console.log(response);
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
-                setIsLoading(false);
+                
             });
     }
     useEffect(() => {
@@ -221,8 +196,7 @@ const ShowPenitip = () => {
                                                         <td className="px-4 py-3 text-center">{item.email}</td>
                                                         <td
                                                             className="px-4 py-3 text-center text-[#00B207] hover:underline cursor-pointer"
-                                                            onClick={() => handleClick(item.id_penitip)}
-                                                        >
+                                                                                                                    >
                                                             View Details
                                                         </td>
                                                     </tr>
@@ -235,8 +209,8 @@ const ShowPenitip = () => {
                         </CarouselContent>
 
                         <div className="flex justify-center gap-4 mt-4">
-                            <CarouselPrevious className="static relative" />
-                            <CarouselNext className="static relative" />
+                            <CarouselPrevious className="static" />
+                            <CarouselNext className="static" />
                         </div>
                     </Carousel>
 

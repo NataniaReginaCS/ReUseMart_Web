@@ -2,7 +2,7 @@ import LoginImage from "../../assets/images/login_image.png";
 import useAxios from "../../api";
 import { SyncLoader } from "react-spinners";
 import React, { useState } from "react";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import {  useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ResetPassword = () => {
@@ -15,8 +15,7 @@ const ResetPassword = () => {
 
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
-	const [message, setMessage] = useState("");
-
+	
 	const [loading, setLoading] = useState(false);
 	const handleReset = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -33,7 +32,7 @@ const ResetPassword = () => {
 			setTimeout(() => navigate("/login"), 2000);
 		} catch (error: any) {
 			toast.error("Password dan Konfirmasi Password tidak sesuai!");
-			setMessage(error.response?.data?.message || "Terjadi kesalahan.");
+			
 		} finally {
 			setLoading(false);
 		}

@@ -2,66 +2,44 @@ import {
 	Button,
 	Modal,
 	ModalBody,
-	ModalFooter,
+
 	ModalHeader,
 } from "flowbite-react";
 import { useState, useEffect } from "react";
 
 import { SyncLoader } from "react-spinners";
-import Frieren from "../../assets/images/Frieren.jpg";
+
 import { FetchBarangById } from "../../../api/ApiBarang";
-import { useNavigate } from "react-router-dom";
+
 import { FetchDiskusi } from "../../../api/ApiDiskusi";
 import { toast } from "react-toastify";
 import { AddDiskusi } from "../../../api/ApiDiskusi";
 import { Textarea } from "../../../components/ui/textarea";
 import { Label } from "@radix-ui/react-label";
 
-type Barang = {
-	id_barang: number;
-	id_penitipan: number;
-	id_kategori: string;
-	id_hunter: string;
-	nama: string;
-	deskripsi: string;
-	foto: string;
-	berat: number;
-	isGaransi: boolean;
-	akhir_garansi: string;
-	status_perpanjangan: string;
-	harga: number;
-	tanggal_akhir: string;
-	batas_ambil: string;
-	status_barang: string;
-	tanggal_ambil: string;
-};
-type Diskusi = {
-	pesan: string;
-	nama: string;
-	tanggal: string;
-	role: string;
-	foto: string;
-};
+
+
+
 
 const ModalDetailDiskusi = ({ idBarang, show, onClose }: any) => {
-	const navigate = useNavigate();
+	
 	const [data, setData] = useState<any>(null);
-	const [isLoading, setIsLoading] = useState(false);
+	
 	const [diskusi, setDiskusi] = useState<any[]>([]);
-	const [barang, setBarang] = useState<Barang[]>([]);
+
 	const [pesan, setPesan] = useState<string>("");
 
 	const fetchBarangById = (id_barang: number) => {
-		setIsLoading(true);
+		
 		FetchBarangById(id_barang)
 			.then((response) => {
 				const barang = response.data;
 				setData(barang);
-				setIsLoading(false);
+				
 			})
 			.catch((err) => {
 				console.log(err);
-				setIsLoading(false);
+				
 			});
 	};
 	const addDiskusi = (id_barang: number) => {
@@ -69,17 +47,16 @@ const ModalDetailDiskusi = ({ idBarang, show, onClose }: any) => {
 			toast.error("Please enter a message");
 			return;
 		}
-		setIsLoading(true);
+	
 
 		AddDiskusi(pesan, id_barang)
 			.then((response) => {
-				setIsLoading(false);
-
+				toast.success(response.message);
 				fetchDiskusi(id_barang);
 			})
 			.catch((err) => {
 				console.log(err);
-				setIsLoading(false);
+				
 			});
 	};
 
@@ -88,16 +65,16 @@ const ModalDetailDiskusi = ({ idBarang, show, onClose }: any) => {
 	};
 
 	const fetchDiskusi = (id_barang: number) => {
-		setIsLoading(true);
+		
 		FetchDiskusi(id_barang)
 			.then((response) => {
 				console.log(response);
 				setDiskusi(response.diskusi);
-				setIsLoading(false);
+				
 			})
 			.catch((err) => {
 				console.log(err);
-				setIsLoading(false);
+				
 			});
 	};
 

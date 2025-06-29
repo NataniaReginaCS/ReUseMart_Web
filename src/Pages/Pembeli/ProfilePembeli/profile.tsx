@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { fetchPembeli } from "../../../api/ApiPembeli";
 import { getAlamatUtama } from "../../../api/ApiPembeli";
 import SidebarNav from "../../../Components2/SideBarNav";
@@ -186,83 +185,7 @@ const Profile = () => {
 						</div>
 					</div>
 					<div className="flex flex-row gap-x-10">
-						{/* <div className="flex flex-col w-2/5 bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10">
-							<div className="flex- flex-col">
-								<p className="border-b-1 border-gray-300 p-2 px-4">
-									<strong>CHANGE PASSWORD</strong>
-								</p>
-								<div className="flex flex-col gap-2 p-4">
-									<label htmlFor="current-password">
-										<strong>Current Password</strong>
-									</label>
-									<div className="relative">
-										<input
-											type={showCurrentPassword ? "text" : "password"}
-											id="current-password"
-											className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
-										/>
-										<span
-											className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-											onClick={toggleCurrentPasswordVisibility}
-										>
-											{showCurrentPassword ? (
-												<IoEyeOutline size={20} />
-											) : (
-												<IoEyeOffOutline size={20} />
-											)}
-										</span>
-									</div>
-
-									<label htmlFor="new-password">
-										<strong>New Password</strong>
-									</label>
-									<div className="relative">
-										<input
-											type={showNewPassword ? "text" : "password"}
-											id="new-password"
-											className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
-											placeholder="8+ characters"
-										/>
-										<span
-											className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-											onClick={toggleNewPasswordVisibility}
-										>
-											{showNewPassword ? (
-												<IoEyeOutline size={20} />
-											) : (
-												<IoEyeOffOutline size={20} />
-											)}
-										</span>
-									</div>
-
-									<label htmlFor="new-password">
-										<strong>New Password</strong>
-									</label>
-									<div className="relative">
-										<input
-											type={showConfirmPassword ? "text" : "password"}
-											id="new-password"
-											className="border-1 border-gray-300 rounded-lg p-2 w-full pr-10"
-											placeholder="8+ characters"
-										/>
-										<span
-											className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-											onClick={toggleConfirmPasswordVisibility}
-										>
-											{showConfirmPassword ? (
-												<IoEyeOutline size={20} />
-											) : (
-												<IoEyeOffOutline size={20} />
-											)}
-										</span>
-									</div>
-
-									<button className="bg-[#1F510F] text-white p-3 mt-4 w-1/2">
-										<strong>CHANGE PASSWORD</strong>
-									</button>
-								</div>
-							</div>
-						</div> */}
+						
 						<div className="flex flex-col w-1/5  bg-white  border-1 py-1  border-gray-300 text-start gap-y-4 mt-10">
 							<p className="border-b-1 border-gray-300 p-2 px-4">
 								<strong>BILLING ADDRESS</strong>

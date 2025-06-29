@@ -8,10 +8,9 @@ import {
 	ModalBody,
 	ModalHeader,
 	TextInput,
-	FileInput,
+	
 } from "flowbite-react";
 
-import { UpdateOrganisasi } from "../../../../api/ApiAdmin";
 import { UpdateAlamat } from "../../../../api/ApiAlamat";
 
 interface ModalEditAlamatProps {

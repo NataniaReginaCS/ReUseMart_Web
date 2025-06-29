@@ -105,4 +105,50 @@ const DeclinePayment = async (nomor_nota : string) =>{
     }
 }
 
-export { CreatePembelian, GetOngoingPembelian, AddBuktiPembayaran, GetUnverifiedPayment, VerifyPayment, DeclinePayment };
+const getTransaksiDisiapkan = async () =>{
+    try{
+        const response = await useAxios.get("/getTransaksiDisiapkan",{
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+
+        return response.data;
+    }catch(error:any){
+        console.error("Error fetching prepared transactions:", error.message);
+        throw error;
+    }
+}
+
+const GetCurrentTransaksi = async (id_pembelian: number) =>{
+    try{
+        const response = await useAxios.get(`/getCurrentTransaksi/${id_pembelian}`, {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+        return response.data;
+    }catch (error:any){
+        console.error("Error fetching current transaction:", error.message);
+        throw error;
+    }
+}
+
+const CancelTransaksi = async (id_pembelian: number) => {
+    try{
+        const response = await useAxios.post(`/cancelTransaksi/${id_pembelian}`, {}, {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+            }
+        })
+        return response.data;
+    }catch (error:any){
+        console.error("Error canceling transaction:", error.message);
+        throw error;
+    }
+}
+
+export { CreatePembelian, GetOngoingPembelian, AddBuktiPembayaran, GetUnverifiedPayment, VerifyPayment, DeclinePayment, getTransaksiDisiapkan, GetCurrentTransaksi, CancelTransaksi };

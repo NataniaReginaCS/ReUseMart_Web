@@ -16,7 +16,7 @@ import {
 
 import { toast } from "react-toastify";
 
-import { SyncLoader } from "react-spinners";
+
 
 import ModalDetailHistory from "./ModalDetailHistory";
 
@@ -32,6 +32,7 @@ const HistoryTransaksiPenitip = () => {
 					console.log(response.data);
 				})
 				.catch((error: any) => {
+					console.log(error.response.data);
 					toast.error("Gagal mengambil data history");
 				});
 		} catch (error: any) {
@@ -172,8 +173,8 @@ const HistoryTransaksiPenitip = () => {
 							
 						</CarouselContent>
 						<div className="flex justify-center gap-4 mt-4">
-							<CarouselPrevious className="static relative" />
-							<CarouselNext className="static relative" />
+							<CarouselPrevious className="static " />
+							<CarouselNext className="static " />
 						</div>
 					</Carousel>
 				</div>

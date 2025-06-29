@@ -2,7 +2,7 @@ import { Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { deleteRequestDonasi } from "../../api/ApiOrganisasi";
 import { toast } from "react-toastify";
-import RequestDonasi from "./RequestDonasi";
+
 
 interface ModalDeleteRequestDonasiProps {
     onClose: () => void;

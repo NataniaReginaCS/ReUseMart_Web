@@ -40,31 +40,14 @@ type Organisasi = {
 	foto: File;
 };
 
-type Barang = {
-    id_barang: number;
-    id_penitipan: number;
-    id_kategori: string;
-    id_hunter: string;
-    nama: string;
-    deskripsi: string;
-    foto: string;
-    berat: number;
-    isGaransi: boolean;
-    akhir_garansi: string;
-    status_perpanjangan: string;
-    harga: number;
-    tanggal_akhir: string;
-    batas_ambil: string;
-    status_barang: string;
-    tanggal_ambil: string;
-};
+
 
 const OwnerDonasi = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [data, setData] = useState<DetailDonasi[]>([]);
     const [requestData, setRequestData] = useState<RequestDonasi[]>([]);
 	const [organisasi, setOrganisasi] = useState<Organisasi[]>([]);
-	const [barang, setBarang] = useState<Barang[]>([]);
+	
 	const [currentPage, setCurrentPage] = useState(1);
 	const [dataPerPage, setDataPerPage] = useState(10);
 	const [searchTerm, setSearchTerm] = useState("");
@@ -119,7 +102,7 @@ const OwnerDonasi = () => {
 	}, []);
 
     const getNamaOrganisasi = (id_organisasi: number) => {
-		const org = organisasi.find((org) => org.id_organisasi === id_organisasi);
+		const org = organisasi.find((org) => org.id_organisasi.toString() === id_organisasi.toString());
 		return org ? org.nama : "Unknown";
     };
 
@@ -190,7 +173,7 @@ const OwnerDonasi = () => {
 						</div>
 
 						<div className="overflow-x-auto">
-							<table className="w-10 min-w-max table-auto text-left">
+							<table className="w-full min-w-max table-auto text-left">
 								<thead className="bg-[#2A3042] text-white text-center">
 									<tr>
 										{TABLE_HEAD.map((head) => (
@@ -230,7 +213,7 @@ const OwnerDonasi = () => {
 														<button
 														className="font-medium bg-[#F3B200] rounded-3xl text-white w-20  cursor-pointer flex text-center items-center justify-center gap-1 p-1"
 														onClick={() => {
-															const detail = data.find((item) => item.id_request === org.id_request);
+															const detail = data.find((item) => item.id_request.toString() === org.id_request.toString());
 													
 															setSelectedDonasi({
 																id_detaildonasi: detail ? detail.id_detaildonasi : 0, 
@@ -249,7 +232,7 @@ const OwnerDonasi = () => {
 
 														<button className="font-medium bg-blue-500 text-white rounded-3xl w-20 flex cursor-pointer text-center items-center justify-center gap-1 p-1"
 														onClick={() => {
-															const detail = data.find((item) => item.id_request === org.id_request);
+															const detail = data.find((item) => item.id_request.toString() === org.id_request.toString());
 													
 															setSelectedDonasi({
 																id_detaildonasi: detail ? detail.id_detaildonasi : 0, 

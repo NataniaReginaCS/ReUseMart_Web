@@ -6,7 +6,7 @@ import RegisterImage from "../../assets/images/registerImage.png";
 import { SyncLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterOrganisasi } from "../../api/apiAuth";
-import { FileInput, HelperText, Label } from "flowbite-react";
+import { FileInput, Label } from "flowbite-react";
 
 interface RegisterOrganisasiProps {
 	nama: string;

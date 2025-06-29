@@ -79,23 +79,23 @@ const OwnerHistory = () => {
     }, []);
 
     const getNamaOrganisasi = (id_organisasi: number) => {
-        const org = organisasiList.find((org) => org.id_organisasi === id_organisasi);
+        const org = organisasiList.find((org) => org.id_organisasi.toString() === id_organisasi.toString());
         return org ? org.nama : "Unknown";
     };
 
     const getDateDonasi = (id_request: number) => {
-        const donasi = detailDonasiData.find((donasi) => donasi.id_request === id_request);
+        const donasi = detailDonasiData.find((donasi) => donasi.id_request.toString() === id_request.toString());
         return donasi ? donasi.tanggal_donasi : null;
     };
 
     const getNamaPenerima = (id_request: number) => {
-        const donasi = detailDonasiData.find((donasi) => donasi.id_request === id_request);
+        const donasi = detailDonasiData.find((donasi) => donasi.id_request.toString() === id_request.toString());
         return donasi ? donasi.nama_penerima : "Unknown";
     };
 
     const relasiBarang = (id_request: number) => {
-        const donasi = detailDonasiData.find((donasi) => donasi.id_request === id_request);
-        const brng = barang.find((brng) => brng.id_barang === donasi?.id_barang);
+        const donasi = detailDonasiData.find((donasi) => donasi.id_request.toString() === id_request.toString());
+        const brng = barang.find((brng) => brng.id_barang.toString() === donasi?.id_barang.toString());
         return brng ? brng.nama : "Unknown";
     };
 

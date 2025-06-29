@@ -1,11 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { RiLogoutBoxRLine } from "react-icons/ri";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import Frieren from "../../assets/images/Frieren.jpg";
+
 import { FetchBarangByPenitip } from "../../api/ApiPenitip";
 import SidebarNavPenitip from "../../Components2/SideBarNavPenitip";
 import ModalDetailTitipan from "./ModalDetailTItipan";
@@ -17,11 +12,11 @@ import {
     CarouselPrevious,
 } from "../../components/ui/carousel"
 import {
-    faSearch,
+   
     faHouse,
-    faChevronRight,
+  
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+
 type Barang = {
     id_barang: number;
     id_penitipan: number;
@@ -41,16 +36,13 @@ type Barang = {
     tanggal_ambil: string;
 };
 const Titipan = () => {
-    const [showCurrentPassword, setCurrentPassword] = useState(false);
-    const [showNewPassword, setNewPassword] = useState(false);
-    const [showConfirmPassword, setConfirmPassword] = useState(false);
-    const navigate = useNavigate();
-    const [currentIndex, setCurrentIndex] = useState(0)
+
+    
     const [data, setData] = useState<Barang[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+
     const [startDate, setStartDate] = useState<string>("");
     const [endDate, setEndDate] = useState<string>("");
 
@@ -91,24 +83,20 @@ const Titipan = () => {
     const chunkedData = chunkArray(filteredData, itemsPerPage);
 
 
-    const pageCount = Math.ceil(filteredData.length / itemsPerPage);
-    const paginatedData = filteredData.slice(
-        currentPage * itemsPerPage,
-        currentPage * itemsPerPage + itemsPerPage
-    );
+
+
 
 
     const fetchBarangByPenitip = () => {
-        setIsLoading(true);
         FetchBarangByPenitip()
             .then((response) => {
                 setData(response.data);
-                setIsLoading(false);
+                
                 console.log(response);
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
-                setIsLoading(false);
+                
             });
     }
     useEffect(() => {
@@ -257,8 +245,8 @@ const Titipan = () => {
                         </CarouselContent>
 
                         <div className="flex justify-center gap-4 mt-4">
-                            <CarouselPrevious className="static relative" />
-                            <CarouselNext className="static relative" />
+                            <CarouselPrevious className="static " />
+                            <CarouselNext className="static " />
                         </div>
                     </Carousel>
 

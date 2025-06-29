@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
@@ -14,7 +14,7 @@ import { FetchPenitipByLogin } from "../../api/ApiPenitip";
 
 
 const ProfilePenitip = () => {
-	const navigate = useNavigate();
+	
 	const [profile, setProfile] = useState<any>();
 	const [showCurrentPassword, setCurrentPassword] = useState(false);
 

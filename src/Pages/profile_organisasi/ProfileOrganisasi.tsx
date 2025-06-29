@@ -1,21 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
-import { RiLogoutBoxRLine } from "react-icons/ri";
+
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import Frieren from "../../assets/images/Frieren.jpg";
-import { Logout } from "../../api/apiAuth";
-import { toast } from "react-toastify";
+
 import { fetchPembeli } from "../../api/ApiPembeli";
 import { getAlamatUtama } from "../../api/ApiPembeli";
 import SidebarNavOrg from "../../Components2/SideBarNavOrg";
 import {
-    faSearch,
+
     faHouse,
-    faChevronRight,
+
 } from "@fortawesome/free-solid-svg-icons";
 
 interface Pembeli {

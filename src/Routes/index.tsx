@@ -57,6 +57,7 @@ import PenitipLaporan from "../Pages/owner/laporan/PenitipLaporan";
 
 import ShowPenitip from "../Pages/profile_pegawai/ShowPenitip";
 import OwnerLaporanB from "../Pages/owner/laporan/OwnerLaporanB";
+import PembatalanTransaksi from "../Pages/Pembeli/ProfilePembeli/PembatalanTransaksi";
 
 const router = createBrowserRouter([
 	{
@@ -258,23 +259,7 @@ const router = createBrowserRouter([
 			</ProtectedRoutes>
 		),
 		children: [
-			// {
-			// 	path: "/shop",
-			// 	element: <Shop />,
-			// },
-
-			// {
-			// 	path: "/about",
-			// 	element: <About />,
-			// },
-			// {
-			// 	path: "/profile",
-			// 	element: <Profile />,
-			// },
-			// {
-			// 	path: "/edit_profile",
-			// 	element: <EditProfile />,
-			// },
+			
 			{
 				path: "/profile",
 				element: <Profile />,
@@ -298,6 +283,10 @@ const router = createBrowserRouter([
 			{
 				path: "/checkout/:nomor_nota",
 				element: <Checkout />,
+			},
+			{
+				path: "/pembatalan-transaksi",
+				element: <PembatalanTransaksi />,
 			}
 
 		],

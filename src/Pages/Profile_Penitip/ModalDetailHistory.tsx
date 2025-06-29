@@ -1,5 +1,5 @@
 import {
-	Button,
+
 	Modal,
 	ModalBody,
 	ModalFooter,

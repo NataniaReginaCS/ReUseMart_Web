@@ -1,5 +1,5 @@
 import { MdDashboard } from "react-icons/md";
-import { FaArrowsRotate } from "react-icons/fa6";
+
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const SidebarNavOrg = () => {
     const handleLogout = () => {
         Logout()
             .then((response) => {
+                console.log("Logout successful:", response);
                 sessionStorage.removeItem("token");
 
                 toast.success("Logout successful!");
@@ -22,7 +23,7 @@ const SidebarNavOrg = () => {
             });
     };
     const navItems = [
-        { label: "Profile", icon: <MdDashboard />, path: "/profile-organisasi" },
+       
         { label: "Request Donation", icon: <HiOutlineShoppingBag />, path: "/request-donasi" },
     ];
 

@@ -1,6 +1,6 @@
-import React from "react";
+
 import LoginImage from "../../assets/images/login_image.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useState } from "react";
 import useAxios from "../../api";
 import { toast } from "react-toastify";
@@ -8,24 +8,25 @@ import { SyncLoader } from "react-spinners";
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState("");
-	const [message, setMessage] = useState("");
+	
 	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		setLoading(true);
-		setMessage("");
+		
 		console.log('Email yang dikirim: ', email);
 		try {
 
 			const response = await useAxios.post("/forgot-password", { email }
 			);
+
 			toast.success("Berhasil Mengirim Email");
-			setMessage(response.data.message);
+			console.log(response.data.message);
 
 		} catch (error: any) {
 
-			setMessage(error.response?.data?.message || "Terjadi kesalahan.");
+			
 			toast.error("Gagal Mengirim Email");
 		} finally {
 			setLoading(false);

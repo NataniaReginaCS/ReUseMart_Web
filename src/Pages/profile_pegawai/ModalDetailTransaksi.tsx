@@ -6,10 +6,9 @@ import {
     ModalHeader,
 } from "flowbite-react";
 import { useState, useEffect } from "react";
-import { ambilBarangPenitip, FetchBarangPenitipById } from "../../api/ApiPenitip";
-import { SyncLoader } from "react-spinners";
+
 import Frieren from "../../assets/images/Frieren.jpg";
-import { extendBarangPenitip } from "../../api/ApiPenitip";
+
 import { FetchTransaksiGudangById } from "../../api/ApiGudang";
 type Barang = {
     id_barang: number;

@@ -30,6 +30,7 @@ const AddDiskusi = async (pesan: string, idBarang: number) => {
 
 const FetchDiskusiCS = async () => {
 	try {
+		
 		const response = await useAxios.get("/fetchDiskusiCS", {
 			headers: {
 				"Content-Type": "application/json",

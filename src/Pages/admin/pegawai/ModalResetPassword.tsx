@@ -25,6 +25,7 @@ const ModalResetPegawai = ({
                 toast.success("Password reset successfully");
                 onSuccessDelete();
                 handleClose();
+				console.log(response);
             })
             .catch((err) => {
                 toast.error(err.response);

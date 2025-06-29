@@ -3,32 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import aboutimage from '../assets/images/aboutimage.png';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import discord from '../assets/images/discord.png';
-import whatsapp from '../assets/images/whatsapp.png';
-import telegram from '../assets/images/telegram.png';
-import gmap from '../assets/images/gmap.png';
-import address from '../assets/images/Address.png';
-import tiktok from '../assets/images/Tiktok.png';
-import facebook from '../assets/images/Facebook.png';
-import instagram from '../assets/images/Instagram.png';
-import email from '../assets/images/Email.png';
-import phone from '../assets/images/Rotary Dial Telephone.png';
+
 import { FaDiscord, FaEnvelope, FaFacebook, FaInstagram, FaMap, FaPhone, FaTelegram, FaTiktok, FaWhatsapp } from 'react-icons/fa6';
 
-const socials = [
-    { name: "Whatsapp", image: whatsapp, link: "https://www.whatsapp.com/?lang=id" },
-    { name: "Telegram", image: telegram, link: "https://web.telegram.org/" },
-    { name: "Discord", image: discord, link: "https://discord.com/" },
-]
 
-const contacts = [
-    { name: "Jl. Babarsari No.43, Janti, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281", image: address, },
-    { name: "(0274) 487711", image: phone, },
-    { name: "reusemart@gmail.com ", image: email, },
-    { name: "@reusemart", image: tiktok, },
-    { name: "@reusemart", image: facebook, },
-    { name: "@reusemart", image: instagram, },
-]
+
 
 const About = () => {
     return (

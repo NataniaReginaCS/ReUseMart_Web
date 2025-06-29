@@ -15,7 +15,7 @@ type Penitip = {
 	telepon: string;
 	wallet: number;
 };
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://laravelkalvin.barioth.web.id";
 
 const PenitipLaporan = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -29,14 +29,18 @@ const PenitipLaporan = () => {
 
 	useEffect(() => {
 		setDownloadLoading(true);
+		setIsLoading(true);
 		Promise.all([FetchAllPenitip()])
 			.then(([penitipRes]) => {
 				setDataPenitip(penitipRes.data);
 				setDownloadLoading(false);
+				setIsLoading(false);
 				console.log(penitipRes.data);
 			})
 			.catch((err) => {
 				console.error(err);
+				toast.error("Gagal mengambil data penitip");
+				setIsLoading(false);
 				setDownloadLoading(false);
 			});
 	}, []);

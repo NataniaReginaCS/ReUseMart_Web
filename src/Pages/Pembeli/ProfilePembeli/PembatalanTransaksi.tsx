@@ -1,43 +1,43 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+
 import { SyncLoader } from "react-spinners";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
-import { IoPersonCircleOutline } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 
-import Header from "../../../Components2/Header";
-import SideBarNavAdmin from "../../../Components2/SideBarNavAdmin";
-import { FetchPegawai } from "../../../api/ApiAdmin";
-import ModalResetPassword from "./ModalResetPassword";
+import SideBarNav from "../../../Components2/SideBarNav";
 
-interface Pegawai {
-	id_organisasi: number;
-	id_pegawai: number;
-	id_role: number;
-	nama: string;
-	email: string;
-	password: string;
-	tanggal_masuk: Date;
-	tanggal_lahir: Date;
-	wallet: number;
-}
+import { getTransaksiDisiapkan } from "../../../api/ApiTransaksiPembelian";
+import ModalBatalTransaksi from "./ModalBatalTransaksi";
 
-const ResetPasswordPegawai = () => {
+type TransaksiPembelian = {
+	id_pembelian: number;
+	tanggal_lunas: Date;
+	total: number;
+    status_pengiriman: string;
+	poin_didapat: number;
+    poin_pembeli:number;
+	
+};
+
+const PembatalanTransaksi = () => {
 	const [isLoading, setIsLoading] = useState(false);
-	const [data, setData] = useState<Pegawai[]>([]);
+	const [data, setData] = useState<TransaksiPembelian[]>([]);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [dataPerPage, setDataPerPage] = useState(10);
 	const [searchTerm, setSearchTerm] = useState("");
-
-	const [selectedPegawai, setSelectedPegawai] = useState<Pegawai | null>(null);
+	const [showModal, setShowModal] = useState(false);
+	const [selectedOrganisasi, setSelectedOrganisasi] = useState<TransaksiPembelian | null>(null);
 	const [showModalDelete, setShowModalDelete] = useState(false);
 
-	const fetchPegawai = () => {
+
+    const fetchTransaksiDisiapkan = () => {
 		setIsLoading(true);
-		FetchPegawai()
+		getTransaksiDisiapkan()
 			.then((response) => {
-				setData(response.data);
+				setData(response.pembelian);
 				setIsLoading(false);
 			})
 			.catch((err) => {
@@ -46,19 +46,27 @@ const ResetPasswordPegawai = () => {
 			});
 	};
 
+
 	useEffect(() => {
-		fetchPegawai();
+		fetchTransaksiDisiapkan();
 	}, []);
 
-	const handleResetClick = (data: Pegawai) => {
-		setSelectedPegawai(data);
+	const handleEditClick = (data: TransaksiPembelian) => {
+		setSelectedOrganisasi(data);
+		setShowModal(true);
+	};
+
+	const handleDeleteClick = (data: TransaksiPembelian) => {
+		setSelectedOrganisasi(data);
 		setShowModalDelete(true);
 	};
 
 	const filteredData = data.filter(
 		(org) =>
-			org.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			org.email.toLowerCase().includes(searchTerm.toLowerCase())
+			org.id_pembelian.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+			org.poin_didapat.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+			org.status_pengiriman.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			org.tanggal_lunas.toString().toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	const indexOfLastData = currentPage * dataPerPage;
@@ -73,21 +81,19 @@ const ResetPasswordPegawai = () => {
 	};
 
 	const TABLE_HEAD = [
-		"Employee ID",
-		"Role",
-		"Name",
-		"Email",
-		"Hire Date",
-		"Born Date",
-		"Wallet",
+		"Nomor Transaksi",
+		"Tanggal Transaksi",
+		"Total Transaksi",
+		"Status Transaksi",
 		"Action",
 	];
 
 	return (
 		<>
-			<Header />
+		
 			<div className="flex max-lg:flex-wrap p-5 gap-5 lg:flex-nowrap lg:p-20 lg:gap-10 ">
-				<SideBarNavAdmin></SideBarNavAdmin>
+
+				<SideBarNav></SideBarNav>
 
 				{isLoading ? (
 					<div className="justify-center items-center text-center">
@@ -98,7 +104,7 @@ const ResetPasswordPegawai = () => {
 					<div className="bg-white w-full lg:w-full border border-gray-300 text-start gap-y-4 shadow-md mt-5">
 						<div className="px-4 py-6 flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
 							<p>
-								<strong>EMPLOYEES</strong>
+								<strong>Transaction</strong>
 							</p>
 							<div className="relative w-full sm:w-1/2">
 								<FontAwesomeIcon
@@ -141,39 +147,25 @@ const ResetPasswordPegawai = () => {
 											? "p-4"
 											: "p-4 border-b border-blue-gray-50";
 										return (
-											<tr key={org.id_pegawai}>
+											<tr key={org.id_pembelian}>
 												<td className={classes}>
-													<p className="font-normal">{org.id_pegawai}</p>
+													<p className="font-normal">{org.id_pembelian}</p>
 												</td>
 												<td className={classes}>
-													<p className="font-normal">{org.id_role}</p>
+													<p className="font-normal">{org.tanggal_lunas}</p>
 												</td>
 												<td className={classes}>
-													<p className="font-normal">{org.nama}</p>
+													<p className="font-normal">{org.total}</p>
 												</td>
 												<td className={classes}>
-													<p className="font-normal">{org.email}</p>
+													<p className="font-normal">{org.status_pengiriman}</p>
 												</td>
 												<td className={classes}>
-													<p className="font-normal">{org.tanggal_masuk}</p>
-												</td>
-												<td className={classes}>
-													<p className="font-normal">{org.tanggal_lahir}</p>
-												</td>
-												<td className={classes}>
-													<p className="font-normal">
-														{org.wallet !== null && org.wallet !== undefined
-															? org.wallet
-															: "0"}
-													</p>
-												</td>
-												<td className={classes}>
-													<div className="flex flex-row justify-evenly gap-2">
-														<button
-															className="font-medium  bg-[#F3B200] rounded-3xl text-white w-30  cursor-pointer flex text-center items-center justify-center gap-1 p-1 "
-															onClick={() => handleResetClick(org)}
+													<div className="flex flex-row justify-evenly gap-2">													
+														<button className="font-medium bg-red-500 text-white rounded-3xl w-30 flex cursor-pointer text-center items-center justify-center gap-1 p-1"
+															onClick={() => handleDeleteClick(org)}
 														>
-															<IoPersonCircleOutline size={20} /> Reset
+															<MdDelete size={20} /> Cancel
 														</button>
 													</div>
 												</td>
@@ -233,17 +225,21 @@ const ResetPasswordPegawai = () => {
 						</div>
 					</div>
 				)}
+			
+
+				{showModalDelete && selectedOrganisasi && (
+					<ModalBatalTransaksi
+						show={showModalDelete}
+						idPembelian={selectedOrganisasi.id_pembelian}
+						onClose={() => setShowModalDelete(false)}
+						onSuccessDelete={fetchTransaksiDisiapkan}
+                        dataTransaksi={selectedOrganisasi}
+					/>
+				)}  
 			</div>
-			{showModalDelete && selectedPegawai && (
-				<ModalResetPassword
-					show={showModalDelete}
-					idPegawai={selectedPegawai.id_pegawai}
-					onClose={() => setShowModalDelete(false)}
-					onSuccessDelete={fetchPegawai}
-				/>
-			)}
 		</>
+
 	);
 };
 
-export default ResetPasswordPegawai;
+export default PembatalanTransaksi;
